@@ -1,37 +1,56 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Button, ScrollView } from 'react-native';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'firebase/auth';
+import { View, Text, TextInput, Button, ScrollView, Alert } from 'react-native';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, updateProfile } from 'firebase/auth';
 import { styles } from '../assets/style';
-import { auth } from '../firebaseConfig'
+import { auth } from '../firebaseConfig';
+import AuthenticatedScreen from './home'; // Import the new component
 
 interface AuthScreenProps {
+  username: string;
+  setUsername: (username: string) => void;
   email: string;
   setEmail: (email: string) => void;
   password: string;
   setPassword: (password: string) => void;
+  confirmPassword: string;
+  setConfirmPassword: (password: string) => void;
   isLogin: boolean;
   setIsLogin: (isLogin: boolean) => void;
   handleAuthentication: () => void;
 }
 
 const AuthScreen: React.FC<AuthScreenProps> = ({
+  username,
+  setUsername,
   email,
   setEmail,
   password,
   setPassword,
+  confirmPassword,
+  setConfirmPassword,
   isLogin,
   setIsLogin,
   handleAuthentication,
 }) => {
   return (
     <View style={styles.authContainer}>
-      <Text style={styles.title}>{isLogin ? 'Let the adventure begin!' : 'Sign Up'}</Text>
+      <Text style={styles.title}>{isLogin ? 'Let the Adventure Begin!' : 'Sign Up'}</Text>
+      {!isLogin && (
+        <TextInput
+          style={styles.input}
+          value={username}
+          onChangeText={setUsername}
+          placeholder="Username"
+        />
+      )}
       <TextInput
         style={styles.input}
         value={email}
         onChangeText={setEmail}
         placeholder="Email"
         autoCapitalize="none"
+        keyboardType="email-address"
+        textContentType="emailAddress"
       />
       <TextInput
         style={styles.input}
@@ -40,36 +59,32 @@ const AuthScreen: React.FC<AuthScreenProps> = ({
         placeholder="Password"
         secureTextEntry
       />
+      {!isLogin && (
+        <TextInput
+          style={styles.input}
+          value={confirmPassword}
+          onChangeText={setConfirmPassword}
+          placeholder="Re-type Password"
+          secureTextEntry
+        />
+      )}
       <View style={styles.buttonContainer}>
         <Button title={isLogin ? 'Login' : 'Sign Up'} onPress={handleAuthentication} color="#90C8AC" />
       </View>
       <View style={styles.bottomContainer}>
         <Text style={styles.toggleText} onPress={() => setIsLogin(!isLogin)}>
-          {isLogin ? 'Need an account? Sign Up Now!' : 'Already have an account? Sign In'}
+          {isLogin ? 'Need an account? Sign Up' : 'Already have an account? Sign In'}
         </Text>
       </View>
     </View>
   );
 }
 
-interface AuthenticatedScreenProps {
-  user: { email: string } | null;
-  handleAuthentication: () => void;
-}
-
-const AuthenticatedScreen: React.FC<AuthenticatedScreenProps> = ({ user, handleAuthentication }) => {
-  return (
-    <View style={styles.authContainer}>
-      <Text style={styles.title}>Welcome</Text>
-      {user && <Text style={styles.emailText}>{user.email}</Text>}
-      <Button title="Logout" onPress={handleAuthentication} color="#e74c3c" />
-    </View>
-  );
-};
-
 export default function Login() {
+  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [user, setUser] = useState<{ email: string } | null>(null);
   const [isLogin, setIsLogin] = useState(true);
 
@@ -82,31 +97,35 @@ export default function Login() {
   }, []);
 
   const handleAuthentication = async () => {
-    try {
-      if (user) { // User is logged in
-        await signOut(auth);
-        console.log('User logged out successfully!');
-      } else { // User not logged
-        if (isLogin) { // Successful login
-          await signInWithEmailAndPassword(auth, email, password);
-          console.log('User signed in successfully!');
-        }
-        else { // Create new user
-          await createUserWithEmailAndPassword(auth, email, password);
-          console.log('User created successfully!');
-        }
-      }
-    } catch (error) {
-      let errorMessage = "Failed to do something exceptional";
-      if (error instanceof Error) {
-        errorMessage = error.message;
-      }
-      console.error('Authentication error:', errorMessage)
-      let msg = (isLogin ? 'login' : 'Sign up');
-      msg = "Failed to " + msg + " please try again";
-      alert(msg);
+    if (!email || !password || (!isLogin && password !== confirmPassword)) {
+      Alert.alert('Error', 'Please make sure all fields are filled correctly and passwords match.');
+      return;
     }
 
+    try {
+      if (user) {
+        await signOut(auth);
+        console.log('User logged out successfully!');
+      } else {
+        if (isLogin) {
+          await signInWithEmailAndPassword(auth, email, password);
+          console.log('User signed in successfully!');
+          
+          const { displayName } = auth.currentUser
+          console.log(displayName);
+        } else {
+          const { user } = await createUserWithEmailAndPassword(auth, email, password);
+          await updateProfile(user, { displayName: username });
+          console.log('User created successfully!');
+
+          const { displayName } = auth.currentUser
+          console.log(displayName);
+        }
+      }
+    } catch (error) { // !TODO Improve errors messages
+      console.error('Authentication error:', error.message);
+      Alert.alert('Authentication error', error.message);
+    }
   };
 
   return (
@@ -115,10 +134,14 @@ export default function Login() {
         <AuthenticatedScreen user={user} handleAuthentication={handleAuthentication} />
       ) : (
         <AuthScreen
+          username={username}
+          setUsername={setUsername}
           email={email}
           setEmail={setEmail}
           password={password}
           setPassword={setPassword}
+          confirmPassword={confirmPassword}
+          setConfirmPassword={setConfirmPassword}
           isLogin={isLogin}
           setIsLogin={setIsLogin}
           handleAuthentication={handleAuthentication}

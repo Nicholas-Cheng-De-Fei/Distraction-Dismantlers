@@ -1,10 +1,7 @@
-import { Text, View, Image, ActivityIndicator} from "react-native";
-import { styles } from "../assets/style";
 import React, { useEffect } from "react";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { doc, getDoc, getFirestore } from "firebase/firestore";
-import {database} from "../firebaseConfig"
+
 
 import Onboarding from "../components/Onboarding";
 import Login from "./Login";
