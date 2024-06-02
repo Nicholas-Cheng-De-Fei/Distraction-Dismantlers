@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Button, ScrollView, Alert } from 'react-native';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, updateProfile } from 'firebase/auth';
-import { styles } from '../assets/style';
+import { styles } from '@/assets/style';
 import { auth } from '../firebaseConfig';
-import AuthenticatedScreen from './home'; // Import the new component
+import Home from './home'; // Import the new component
 
 interface AuthScreenProps {
   username: string;
@@ -156,7 +156,7 @@ export default function Login() {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       {user ? ( // If user successfully logs in then route to home page
-        <AuthenticatedScreen user={user} handleAuthentication={handleAuthentication} />
+        <Home user={user} handleAuthentication={handleAuthentication} />
       ) : (
         <AuthScreen
           username={username}
