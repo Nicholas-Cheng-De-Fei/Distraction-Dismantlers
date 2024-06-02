@@ -27,34 +27,30 @@ export default function Timer () {
     const minutes = createArray(60, "Minute");
 
     const [selectedHour, setSelectedHour] = React.useState(0);
-    const [selectedMinute, setSelectedMinute] = React.useState(2);
+    const [selectedMinute, setSelectedMinute] = React.useState(5);
     const [isTimerActive, setIsTimerActive] = React.useState(false);
     const [duration, setDuration] = React.useState(0);
 
     const startTimer = () => {
 
-        console.log(selectedMinute);
+        let val = selectedHour * 60 * 60 + selectedMinute * 60
 
-        console.log(duration);
+        setDuration(val);
 
-        setDuration(selectedHour * 60 * 60 + selectedMinute * 60);
-        
-        if (duration != 0) {
-            setIsTimerActive(true);
-            console.log("Timer Start");
-        }
-   
+        setTimeout (() => {
+            if (duration == val && val != 0) {
+                setIsTimerActive(true);
+            }
+        },0)
     }
 
     const endTimer = () => {
         setIsTimerActive(false);
         setSelectedMinute(selectedMinute)
-        console.log("Timer Stoped");
-        console.log(selectedMinute);
     }
 
 
-    const renderCountdownTimer = () => (
+    const renderCountdownTimer = (duration : number) => (
         <CountdownCircleTimer
           isPlaying
           duration={duration}
@@ -81,8 +77,9 @@ export default function Timer () {
             <Text style = {styles.timerHeaderTextStyle}>Hour</Text>
             <ScrollPicker
             dataSource={hours}
-            onValueChange={(selectedIndex) => {
-                setSelectedHour(selectedIndex);
+            onValueChange={(selectedHour) => {
+                setDuration(selectedHour * 60 * 60 + selectedMinute * 60)
+                setSelectedHour(selectedHour)
               }}
               selectedIndex={selectedHour}
               highlightBorderWidth = {2}
@@ -97,8 +94,10 @@ export default function Timer () {
                 <Text style = {styles.timerHeaderTextStyle}>Minutes</Text>
                 <ScrollPicker
                 dataSource={minutes}
-                onValueChange={(selectedIndex) => {
-                    setSelectedMinute(selectedIndex);
+                onValueChange={(selectedMinute) => {
+                    console.log(selectedMinute)
+                    setDuration(selectedHour * 60 * 60 + selectedMinute * 60)
+                    setSelectedMinute(selectedMinute)
                 }}
                 selectedIndex={selectedMinute / 5}
                 highlightBorderWidth = {2}
@@ -116,7 +115,7 @@ export default function Timer () {
     return (
         <View style = {styles.centerContentContainer}>
             {isTimerActive
-                ? renderCountdownTimer()
+                ? renderCountdownTimer(duration)
                 : renderPicker()
             }
             <View style = {{paddingTop : 30}}>
