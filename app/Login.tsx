@@ -97,11 +97,25 @@ export default function Login() {
   }, []);
 
   const handleAuthentication = async () => {
-    if (!email || !password || (!isLogin && password !== confirmPassword)) {
-      Alert.alert('Error', 'Please make sure all fields are filled correctly and passwords match.');
-      return;
-    }
+    if (user) { // Ensure that users can logout
 
+    }
+    else if (!isLogin) { // Sign up errors
+      if (!email || !password || !confirmPassword || !username) {
+        Alert.alert('Sign Up Error (Empty fields)', 'Please make sure all fields are filled.');
+        return;
+      }
+      else if ((password !== confirmPassword)) {
+        Alert.alert('Sign Up Error (Password)', 'Please make sure that you entered the same password in both fields.');
+        return;
+      }
+    }
+    else if (isLogin) {// Login Errors
+      if (!email || !password) {
+        Alert.alert('Sign In Error (Empty fields)', 'Please make sure all fields are filled.');
+        return;
+      }
+    }
     try {
       if (user) {
         await signOut(auth);
@@ -110,27 +124,38 @@ export default function Login() {
         if (isLogin) {
           await signInWithEmailAndPassword(auth, email, password);
           console.log('User signed in successfully!');
-          
-          const { displayName } = auth.currentUser
-          console.log(displayName);
+
         } else {
           const { user } = await createUserWithEmailAndPassword(auth, email, password);
           await updateProfile(user, { displayName: username });
           console.log('User created successfully!');
 
-          const { displayName } = auth.currentUser
-          console.log(displayName);
+          // const { displayName } = auth.currentUser;
+          // console.log(displayName);
         }
       }
-    } catch (error) { // !TODO Improve errors messages
-      console.error('Authentication error:', error.message);
-      Alert.alert('Authentication error', error.message);
+    } catch (error: any) { // Custom Error Messages
+      var header = "Authentication Error";
+      let errMsg: string = error.message;
+
+      var invalidLogin = "Firebase: Error (auth/invalid-credential).";
+
+      if (invalidLogin == (errMsg)) {
+        errMsg = "Incorrect email or password"
+      }
+      else {
+        header = 'Authentication Error (Too many Attempts)';
+        errMsg = errMsg.slice(10);
+      }
+
+
+      Alert.alert(header, errMsg);
     }
   };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      {user ? (
+      {user ? ( // If user successfully logs in then route to home page
         <AuthenticatedScreen user={user} handleAuthentication={handleAuthentication} />
       ) : (
         <AuthScreen
