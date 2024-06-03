@@ -132,20 +132,6 @@ export default function Timer () {
                     }
                 </View>
             </View>
-            <View style = {{backgroundColor : "white", width : width, height : 70, justifyContent : "space-around", alignItems : "center", flexDirection : "row"}}>
-                    <View style = {{alignItems : "center", justifyContent : "center"}}>
-                        <Image source = {require('../assets/images/Navbar-icon/communication.png')} style = {{height: 40,width: 40, resizeMode: 'contain'}}></Image>
-                        <Text>Thread</Text>
-                    </View>
-                    <View style = {{alignItems : "center", justifyContent : "center"}}>
-                        <Image source = {require('../assets/images/Navbar-icon/home.png')} style = {{height: 40,width: 40, resizeMode: 'contain'}}></Image>
-                        <Text>Home</Text>
-                    </View>
-                    <View style = {{alignItems : "center", justifyContent : "center"}}>
-                        <Image source = {require('../assets/images/Navbar-icon/user.png')} style = {{height: 40,width: 40, resizeMode: 'contain'}}></Image>
-                        <Text>Profile</Text>
-                    </View>
-            </View>
         </View>
     )
 }
