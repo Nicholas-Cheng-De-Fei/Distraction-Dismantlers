@@ -1,8 +1,9 @@
 import React from 'react';
-import { View, Text, Button, Pressable} from 'react-native';
+import { Dimensions, Image ,View, Text, Button, Pressable, BackHandler} from 'react-native';
 import { styles } from '@/assets/style';
 import ScrollPicker from "react-native-wheel-scrollview-picker";
 import { CountdownCircleTimer } from 'react-native-countdown-circle-timer'
+const { width, height } = Dimensions.get('window');
 
 const createArray = (length: number, type : String) => {
     const arr = [];
@@ -113,21 +114,37 @@ export default function Timer () {
     )
 
     return (
-        <View style = {styles.centerContentContainer}>
-            {isTimerActive
-                ? renderCountdownTimer(duration)
-                : renderPicker()
-            }
-            <View style = {{paddingTop : 30}}>
+        <View>
+            <View style = {[styles.centerContentContainer, {height : height * 0.8}]}>
                 {isTimerActive
-                    ? <Pressable style = {styles.stopTimerButton} onPress={() => endTimer()}>
-                        <Text style = {{color:"white", fontFamily: "Avalon-Bold", fontSize: 20}}>Stop Timer</Text>
-                    </Pressable>
-
-                    : <Pressable style = {styles.startTimerButton} onPress={() => startTimer()}>
-                        <Text style = {{color:"white", fontFamily: "Avalon-Bold", fontSize: 20}}>Start Timer</Text>
-                    </Pressable>
+                    ? renderCountdownTimer(duration)
+                    : renderPicker()
                 }
+                <View style = {{paddingTop : 30}}>
+                    {isTimerActive
+                        ? <Pressable style = {styles.stopTimerButton} onPress={() => endTimer()}>
+                            <Text style = {{color:"white", fontFamily: "Avalon-Bold", fontSize: 20}}>Stop Timer</Text>
+                        </Pressable>
+
+                        : <Pressable style = {styles.startTimerButton} onPress={() => startTimer()}>
+                            <Text style = {{color:"white", fontFamily: "Avalon-Bold", fontSize: 20}}>Start Timer</Text>
+                        </Pressable>
+                    }
+                </View>
+            </View>
+            <View style = {{backgroundColor : "white", width : width, height : 70, justifyContent : "space-around", alignItems : "center", flexDirection : "row"}}>
+                    <View style = {{alignItems : "center", justifyContent : "center"}}>
+                        <Image source = {require('../assets/images/Navbar-icon/communication.png')} style = {{height: 40,width: 40, resizeMode: 'contain'}}></Image>
+                        <Text>Thread</Text>
+                    </View>
+                    <View style = {{alignItems : "center", justifyContent : "center"}}>
+                        <Image source = {require('../assets/images/Navbar-icon/home.png')} style = {{height: 40,width: 40, resizeMode: 'contain'}}></Image>
+                        <Text>Home</Text>
+                    </View>
+                    <View style = {{alignItems : "center", justifyContent : "center"}}>
+                        <Image source = {require('../assets/images/Navbar-icon/user.png')} style = {{height: 40,width: 40, resizeMode: 'contain'}}></Image>
+                        <Text>Profile</Text>
+                    </View>
             </View>
         </View>
     )

@@ -13,7 +13,7 @@ const Home: React.FC<AuthenticatedScreenProps> = ({ user, handleAuthentication }
     const { displayName } = auth.currentUser;
     return (
         <View>
-            <View style={{justifyContent : "center", alignItems : "center", paddingBottom : 100}}>
+            <View style={{justifyContent : "center", alignItems : "center", paddingTop: 80}}>
                 {/* <Text style={styles.title}>Greetings!</Text>
                 {user && <Text style={styles.emailText}>{displayName}</Text>} */}
                 <Button title="Logout" onPress={handleAuthentication} color="#e74c3c" />
