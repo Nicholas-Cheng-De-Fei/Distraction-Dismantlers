@@ -1,12 +1,13 @@
 import { Dimensions, StyleSheet } from "react-native";
-import * as Font from "expo-font";
 const { width, height } = Dimensions.get('window');
+import * as Font from "expo-font"
 
 const getFonts = () => {
   return (
     Font.loadAsync({
-      'Avalon-Medium': require('../assets/fonts/Avalon-Medium.ttf'),
-      'Avalon-Bold': require('../assets/fonts/Avalon-Bold.ttf')
+      'Roboto-Medium': require('../assets/fonts/Roboto-Medium.ttf'),
+      'Roboto-Bold': require('../assets/fonts/Roboto-Bold.ttf'),
+      'Roboto-Regular': require('../assets/fonts/Roboto-Regular.ttf'),
     })
   )
 }
@@ -59,18 +60,18 @@ export const styles = StyleSheet.create({
   },
 
   timerHeaderTextStyle: {
-    fontFamily : "Avalon-Bold",
+    fontFamily : "Roboto-Bold",
     fontSize : 25,
     paddingBottom : 20,
   },
 
   scrollerOptionsTextStyle : {
-    fontFamily : "Avalon-Bold",
+    fontFamily : "Roboto-Bold",
     fontSize : 50,
   },
 
   scrollerSelectedOptionTextStyle : {
-    fontFamily : "Avalon-Bold",
+    fontFamily : "Roboto-Bold",
     fontSize : 50,
     color : "#EDB458",
   },
@@ -104,13 +105,13 @@ export const styles = StyleSheet.create({
     elevation: 3,
   },
   title: {
-    fontFamily: 'Avalon-Bold',
+    fontFamily: 'Roboto-Bold',
     fontSize: 24,
     marginBottom: 16,
     textAlign: 'center',
   },
   input: {
-    fontFamily : 'Avalon-Medium',
+    fontFamily : 'Roboto-Medium',
     height: 40,
     borderColor: '#ddd',
     borderWidth: 1,
@@ -122,7 +123,7 @@ export const styles = StyleSheet.create({
     marginBottom: 16,
   },
   toggleText: {
-    fontFamily : 'Avalon-Medium',
+    fontFamily : 'Roboto-Medium',
     color: '#38868c',
     textAlign: 'center',
   },
@@ -144,13 +145,13 @@ export const styles = StyleSheet.create({
   },
 
   onboardTextTitle: {
-    fontFamily: 'Avalon-Bold',
+    fontFamily: 'Roboto-Bold',
     fontSize: 35,
     height: height * 0.06,
   },
 
   onboardTextContent: {
-    fontFamily: 'Avalon-Medium',
+    fontFamily: 'Roboto-Medium',
     fontSize: 25,
     textAlign: 'center',
     height: height * 0.1,

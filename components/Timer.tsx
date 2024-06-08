@@ -65,7 +65,7 @@ export default function Timer () {
                 const minutes = Math.floor((remainingTime.remainingTime % 3600) / 60)
                 const seconds = remainingTime.remainingTime % 60
 
-                return <Text style = {{fontFamily : "Avalon-Medium", fontSize : 30}}>{hours}:{minutes}:{seconds}</Text>
+                return <Text style = {{fontFamily : "Roboto-Medium", fontSize : 30}}>{hours}:{minutes}:{seconds}</Text>
             }
           }
         >
@@ -123,11 +123,11 @@ export default function Timer () {
                 <View style = {{paddingTop : 30}}>
                     {isTimerActive
                         ? <Pressable style = {styles.stopTimerButton} onPress={() => endTimer()}>
-                            <Text style = {{color:"white", fontFamily: "Avalon-Bold", fontSize: 20}}>Stop Timer</Text>
+                            <Text style = {{color:"white", fontFamily: "Roboto-Bold", fontSize: 20}}>Stop Timer</Text>
                         </Pressable>
 
                         : <Pressable style = {styles.startTimerButton} onPress={() => startTimer()}>
-                            <Text style = {{color:"white", fontFamily: "Avalon-Bold", fontSize: 20}}>Start Timer</Text>
+                            <Text style = {{color:"white", fontFamily: "Roboto-Bold", fontSize: 20}}>Start Timer</Text>
                         </Pressable>
                     }
                 </View>

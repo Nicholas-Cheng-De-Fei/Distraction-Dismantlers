@@ -5,6 +5,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import Onboarding from "../components/Onboarding";
 import Login from "./Login";
+import { Text, View } from "react-native";
+import { styles } from "@/assets/style";
 
 export default function Index() {
 
@@ -27,10 +29,6 @@ export default function Index() {
     checkFirstLaunched();
   }, [])
 
-  /**
-   @todo: remember to add loading screen component
-  **/
-
   return (
     <Stack.Navigator screenOptions={{
       headerShown: false,
@@ -38,7 +36,6 @@ export default function Index() {
       {hasLaunchedFirstTime ? <Stack.Screen name = "Onboarding" component = {Onboarding}></Stack.Screen> 
       : null}
       <Stack.Screen name = "Login" component = {Login}></Stack.Screen>
-    </Stack.Navigator>
-    
+    </Stack.Navigator>    
   );
 }
