@@ -32,7 +32,9 @@ export default function Index() {
   **/
 
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={{
+      headerShown: false,
+      }}>
       {hasLaunchedFirstTime ? <Stack.Screen name = "Onboarding" component = {Onboarding}></Stack.Screen> 
       : null}
       <Stack.Screen name = "Login" component = {Login}></Stack.Screen>

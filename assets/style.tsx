@@ -26,9 +26,68 @@ export const styles = StyleSheet.create({
     backgroundColor: '#E0FBE2'
   },
 
-  ///////////////////////////////
-  // For Login page//
-  ///////////////////////////////
+  ///////////////
+  // For Timer //
+  ///////////////
+
+  startTimerButton: {
+    borderRadius: 10,
+    borderColor: "white",
+    width: 150,
+    height: 50,
+    backgroundColor: '#41dc8e',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 2,
+  },
+
+  stopTimerButton: {
+    borderRadius: 10,
+    borderColor: "white",
+    width: 150,
+    height: 50,
+    backgroundColor: '#FF7F7F',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 2,
+  },
+
+  scrollerContainer: {
+    width : width * 0.4,
+    justifyContent : "center",
+    alignItems : "center",
+  },
+
+  timerHeaderTextStyle: {
+    fontFamily : "Avalon-Bold",
+    fontSize : 25,
+    paddingBottom : 20,
+  },
+
+  scrollerOptionsTextStyle : {
+    fontFamily : "Avalon-Bold",
+    fontSize : 50,
+  },
+
+  scrollerSelectedOptionTextStyle : {
+    fontFamily : "Avalon-Bold",
+    fontSize : 50,
+    color : "#EDB458",
+  },
+
+  timerProgressBar : {
+    width : 200,
+    height : 200,
+    borderRadius : 200/2,
+    borderWidth : 15,
+    borderColor : "black",
+    justifyContent : "center",
+    alignItems : "center",
+  },
+
+  ////////////////////
+  // For Login page //
+  ////////////////////
   container: {
     flexGrow: 1,
     justifyContent: 'center',
