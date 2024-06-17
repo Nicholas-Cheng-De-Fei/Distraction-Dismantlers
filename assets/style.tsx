@@ -1,18 +1,18 @@
 import { Dimensions, StyleSheet } from "react-native";
-const { width, height } = Dimensions.get('window');
+export const { width, height } = Dimensions.get('window');
 import * as Font from "expo-font"
 
-const getFonts = () => {
-  return (
-    Font.loadAsync({
-      'Roboto-Medium': require('../assets/fonts/Roboto-Medium.ttf'),
-      'Roboto-Bold': require('../assets/fonts/Roboto-Bold.ttf'),
-      'Roboto-Regular': require('../assets/fonts/Roboto-Regular.ttf'),
-    })
-  )
-}
+// const getFonts = () => {
+//   return (
+//     Font.loadAsync({
+//       'Roboto-Medium': require('../assets/fonts/Roboto-Medium.ttf'),
+//       'Roboto-Bold': require('../assets/fonts/Roboto-Bold.ttf'),
+//       'Roboto-Regular': require('../assets/fonts/Roboto-Regular.ttf'),
+//     })
+//   )
+// }
 
-getFonts();
+// getFonts();
 
 // Style sheet (CSS for the different components)
 export const styles = StyleSheet.create({
@@ -25,6 +25,16 @@ export const styles = StyleSheet.create({
   background: {
     flex: 1,
     backgroundColor: '#E0FBE2'
+  },
+
+  /////////////////
+  // Home Screen //
+  /////////////////
+  homeContainer: {
+    flexGrow: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#E0FBE2',
   },
 
   ///////////////
@@ -60,18 +70,18 @@ export const styles = StyleSheet.create({
   },
 
   timerHeaderTextStyle: {
-    fontFamily : "Roboto-Bold",
+    // fontFamily : "Roboto-Bold",
     fontSize : 25,
     paddingBottom : 20,
   },
 
   scrollerOptionsTextStyle : {
-    fontFamily : "Roboto-Bold",
+    // fontFamily : "Roboto-Bold",
     fontSize : 50,
   },
 
   scrollerSelectedOptionTextStyle : {
-    fontFamily : "Roboto-Bold",
+    // fontFamily : "Roboto-Bold",
     fontSize : 50,
     color : "#EDB458",
   },
@@ -89,7 +99,7 @@ export const styles = StyleSheet.create({
   ////////////////////
   // For Login page //
   ////////////////////
-  container: {
+  logincontainer: {
     flexGrow: 1,
     justifyContent: 'center',
     alignItems: 'center',
@@ -105,13 +115,13 @@ export const styles = StyleSheet.create({
     elevation: 3,
   },
   title: {
-    fontFamily: 'Roboto-Bold',
+    // fontFamily: 'Roboto-Bold',
     fontSize: 24,
     marginBottom: 16,
     textAlign: 'center',
   },
   input: {
-    fontFamily : 'Roboto-Medium',
+    // fontFamily : 'Roboto-Medium',
     height: 40,
     borderColor: '#ddd',
     borderWidth: 1,
@@ -123,7 +133,7 @@ export const styles = StyleSheet.create({
     marginBottom: 16,
   },
   toggleText: {
-    fontFamily : 'Roboto-Medium',
+    // fontFamily : 'Roboto-Medium',
     color: '#38868c',
     textAlign: 'center',
   },
@@ -145,13 +155,13 @@ export const styles = StyleSheet.create({
   },
 
   onboardTextTitle: {
-    fontFamily: 'Roboto-Bold',
+    // fontFamily: 'Roboto-Bold',
     fontSize: 35,
     height: height * 0.06,
   },
 
   onboardTextContent: {
-    fontFamily: 'Roboto-Medium',
+    // fontFamily: 'Roboto-Medium',
     fontSize: 25,
     textAlign: 'center',
     height: height * 0.1,

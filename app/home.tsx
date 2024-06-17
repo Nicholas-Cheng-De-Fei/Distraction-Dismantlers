@@ -1,13 +1,13 @@
 import React from 'react';
-import { View, Text, Button, Image, Pressable, Dimensions} from 'react-native';
-import { styles } from '@/assets/style';
+import { Text, View, Button, Dimensions} from 'react-native';
+import { styles, width, height } from '@/assets/style';
 import { auth } from '../firebaseConfig';
+import { NavigationContainer } from '@react-navigation/native';
 
 import Timer from '@/components/Timer';
 import Thread from '@/app/thread';
 import Profile from '@/app/profile';
-
-const { width, height } = Dimensions.get('window');
+import { Tabs } from './(tabs)/homeScreenTabs';
 
 interface AuthenticatedScreenProps {
     user: { email: string } | null;
@@ -21,36 +21,14 @@ const Home: React.FC<AuthenticatedScreenProps> = ({ user, handleAuthentication})
 
     return (
         <View>
+            <View style = {{width : width}}></View>
             <View style={{justifyContent : "center", alignItems : "center", paddingTop: 80}}>
                 <Button title="Logout" onPress={handleAuthentication} color="#e74c3c" />
             </View>
-            <Timer/>
-
-    
-            {/* <View style = {{backgroundColor : "white", width : width, height : 70, justifyContent : "space-around", alignItems : "center", flexDirection : "row"}}>
-                    <View style = {{alignItems : "center", justifyContent : "center"}}>
-                        <Image source = {require('../assets/images/Navbar-icon/communication.png')} style = {{height: 40,width: 40, resizeMode: 'contain'}}></Image>
-                        <Pressable onPress={() => setPage("Thread")}>
-                            <Text>Thread</Text>
-                        </Pressable>
-                    </View>
-                    <View style = {{alignItems : "center", justifyContent : "center"}}>
-                        <Image source = {require('../assets/images/Navbar-icon/home.png')} style = {{height: 40,width: 40, resizeMode: 'contain'}}></Image>
-                        <Pressable onPress={() => setPage("Timer")}>
-                            <Text>Home</Text>
-                        </Pressable>
-                    </View>
-                    <View style = {{alignItems : "center", justifyContent : "center"}}>
-                        <Image source = {require('../assets/images/Navbar-icon/user.png')} style = {{height: 40,width: 40, resizeMode: 'contain'}}></Image>
-                        <Pressable onPress={() => setPage("Profile")}>
-                            <Text>Home</Text>
-                        </Pressable>
-                    </View>
-            </View> */}
-
+            <NavigationContainer independent = {true}>
+                <Tabs/>
+            </NavigationContainer>
         </View>
-
-        
     );
 };
 

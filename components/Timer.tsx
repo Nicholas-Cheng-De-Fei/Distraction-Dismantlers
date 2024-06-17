@@ -1,9 +1,8 @@
 import React from 'react';
 import { Dimensions, Image ,View, Text, Button, Pressable, BackHandler} from 'react-native';
-import { styles } from '@/assets/style';
+import { styles, width, height } from '@/assets/style';
 import ScrollPicker from "react-native-wheel-scrollview-picker";
 import { CountdownCircleTimer } from 'react-native-countdown-circle-timer'
-const { width, height } = Dimensions.get('window');
 
 const createArray = (length: number, type : String) => {
     const arr = [];
@@ -65,7 +64,7 @@ export default function Timer () {
                 const minutes = Math.floor((remainingTime.remainingTime % 3600) / 60)
                 const seconds = remainingTime.remainingTime % 60
 
-                return <Text style = {{fontFamily : "Roboto-Medium", fontSize : 30}}>{hours}:{minutes}:{seconds}</Text>
+                return <Text style = {{fontSize : 30}}>{hours}:{minutes}:{seconds}</Text>
             }
           }
         >
@@ -115,7 +114,7 @@ export default function Timer () {
 
     return (
         <View>
-            <View style = {[styles.centerContentContainer, {height : height * 0.8}]}>
+            <View style = {[styles.centerContentContainer, {height: height}]}>
                 {isTimerActive
                     ? renderCountdownTimer(duration)
                     : renderPicker()
@@ -123,11 +122,11 @@ export default function Timer () {
                 <View style = {{paddingTop : 30}}>
                     {isTimerActive
                         ? <Pressable style = {styles.stopTimerButton} onPress={() => endTimer()}>
-                            <Text style = {{color:"white", fontFamily: "Roboto-Bold", fontSize: 20}}>Stop Timer</Text>
+                            <Text style = {{color:"white", fontSize: 20}}>Stop Timer</Text>
                         </Pressable>
 
                         : <Pressable style = {styles.startTimerButton} onPress={() => startTimer()}>
-                            <Text style = {{color:"white", fontFamily: "Roboto-Bold", fontSize: 20}}>Start Timer</Text>
+                            <Text style = {{color:"white", fontSize: 20}}>Start Timer</Text>
                         </Pressable>
                     }
                 </View>

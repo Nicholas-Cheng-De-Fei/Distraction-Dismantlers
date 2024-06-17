@@ -4,6 +4,7 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthState
 import { styles } from '@/assets/style';
 import { auth } from '../firebaseConfig';
 import Home from './home'; // Import the new component
+import { useNavigation } from '@react-navigation/native';
 
 interface AuthScreenProps {
   username: string;
@@ -81,6 +82,7 @@ const AuthScreen: React.FC<AuthScreenProps> = ({
 }
 
 export default function Login() {
+  
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -154,24 +156,28 @@ export default function Login() {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <View style = {{flexGrow : 1}}>
       {user ? ( // If user successfully logs in then route to home page
-        <Home user={user} handleAuthentication={handleAuthentication} />
+        <View style = {styles.homeContainer}>
+          <Home user={user} handleAuthentication={handleAuthentication} />
+        </View>
       ) : (
-        <AuthScreen
-          username={username}
-          setUsername={setUsername}
-          email={email}
-          setEmail={setEmail}
-          password={password}
-          setPassword={setPassword}
-          confirmPassword={confirmPassword}
-          setConfirmPassword={setConfirmPassword}
-          isLogin={isLogin}
-          setIsLogin={setIsLogin}
-          handleAuthentication={handleAuthentication}
-        />
+        <View style = {styles.logincontainer}>
+          <AuthScreen
+            username={username}
+            setUsername={setUsername}
+            email={email}
+            setEmail={setEmail}
+            password={password}
+            setPassword={setPassword}
+            confirmPassword={confirmPassword}
+            setConfirmPassword={setConfirmPassword}
+            isLogin={isLogin}
+            setIsLogin={setIsLogin}
+            handleAuthentication={handleAuthentication}
+          />
+        </View>
       )}
-    </ScrollView>
+    </View>
   );
 }
