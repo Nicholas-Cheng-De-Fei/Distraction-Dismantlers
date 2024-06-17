@@ -1,9 +1,9 @@
 export const pannelData = [
     {
         id : 1,
-        image : require('@/assets/images/App-icon/Orbital Icon (Black).png'),
-        title : "Hello and Welcome!",
-        content: "Learn more about us"
+        image : require('@/assets/images/App-icon/logo.png'),
+        title : "Hello!",
+        content: "Welcome to Distraction Dismantlers"
     },
     {
         id : 2,

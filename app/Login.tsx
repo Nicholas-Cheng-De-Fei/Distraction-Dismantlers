@@ -146,7 +146,7 @@ export default function Login() {
         errMsg = "Incorrect email or password"
       }
       else {
-        header = 'Authentication Error (Too many Attempts)';
+        // header = 'Authentication Error (Too many Attempts)';
         errMsg = errMsg.slice(10);
       }
 

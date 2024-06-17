@@ -19,7 +19,7 @@ export const styles = StyleSheet.create({
   centerContentContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#E0FBE2'
+    paddingTop:20
   },
 
   background: {
@@ -64,36 +64,36 @@ export const styles = StyleSheet.create({
   },
 
   scrollerContainer: {
-    width : width * 0.4,
-    justifyContent : "center",
-    alignItems : "center",
+    width: width * 0.4,
+    justifyContent: "center",
+    alignItems: "center",
   },
 
   timerHeaderTextStyle: {
     // fontFamily : "Roboto-Bold",
-    fontSize : 25,
-    paddingBottom : 20,
+    fontSize: 25,
+    paddingBottom: 20,
   },
 
-  scrollerOptionsTextStyle : {
+  scrollerOptionsTextStyle: {
     // fontFamily : "Roboto-Bold",
-    fontSize : 50,
+    fontSize: 50,
   },
 
-  scrollerSelectedOptionTextStyle : {
+  scrollerSelectedOptionTextStyle: {
     // fontFamily : "Roboto-Bold",
-    fontSize : 50,
-    color : "#EDB458",
+    fontSize: 50,
+    color: "#EDB458",
   },
 
-  timerProgressBar : {
-    width : 200,
-    height : 200,
-    borderRadius : 200/2,
-    borderWidth : 15,
-    borderColor : "black",
-    justifyContent : "center",
-    alignItems : "center",
+  timerProgressBar: {
+    width: 200,
+    height: 200,
+    borderRadius: 200 / 2,
+    borderWidth: 15,
+    borderColor: "black",
+    justifyContent: "center",
+    alignItems: "center",
   },
 
   ////////////////////
