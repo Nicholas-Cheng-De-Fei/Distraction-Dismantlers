@@ -1,4 +1,4 @@
-import { Dimensions, StyleSheet } from "react-native";
+import { Dimensions, StyleSheet, TouchableOpacity, View } from "react-native";
 export const { width, height } = Dimensions.get('window');
 import * as Font from "expo-font"
 
@@ -14,17 +14,44 @@ import * as Font from "expo-font"
 
 // getFonts();
 
+// Custom Props
+export const NavHomeButton = ({children, onPress}) => (
+  <TouchableOpacity
+    style = {{
+      top: -30,
+      justifyContent: 'center',
+      alignItems: 'center',
+      shadowOffset: {
+        width: 0,
+        height: 15,
+      },
+      shadowOpacity: 0.60,
+      shadowRadius: 16.0,
+    }}
+    onPress={onPress}
+  >
+    <View style = {{
+      width: 70,
+      height: 70,
+      borderRadius: 35,
+      backgroundColor: '#FF7F7F',
+    }}>
+      {children}
+    </View>
+  </TouchableOpacity>
+)
+
 // Style sheet (CSS for the different components)
 export const styles = StyleSheet.create({
   centerContentContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#E0FBE2'
+    backgroundColor: '#89cd8f',
   },
 
   background: {
     flex: 1,
-    backgroundColor: '#E0FBE2'
+    backgroundColor: '#89cd8f',
   },
 
   /////////////////
@@ -34,9 +61,29 @@ export const styles = StyleSheet.create({
     flexGrow: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#E0FBE2',
+    backgroundColor: '#89cd8f',
   },
 
+  /////////////
+  // Nav Bar //
+  /////////////
+
+  navContainer : {
+    position : "absolute",
+    bottom : 25,
+    left : 40,
+    right : 40,
+    borderRadius : 25,
+    height : height * 0.08,
+    shadowOffset: {
+      width: 0,
+      height: 15,
+    },
+    shadowOpacity: 0.60,
+    shadowRadius: 16.0,
+    backgroundColor: '#e4e4e4',
+  },
+  
   ///////////////
   // For Timer //
   ///////////////
@@ -104,7 +151,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 16,
-    backgroundColor: '#E0FBE2',
+    backgroundColor: '#89cd8f',
   },
   authContainer: {
     width: '80%',

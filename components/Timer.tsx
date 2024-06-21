@@ -36,6 +36,7 @@ export default function Timer () {
         let val = selectedHour * 60 * 60 + selectedMinute * 60
 
         setDuration(val);
+        console.log(val);
 
         setTimeout (() => {
             if (duration == val && val != 0) {
@@ -84,7 +85,7 @@ export default function Timer () {
               selectedIndex={selectedHour}
               highlightBorderWidth = {2}
               highlightColor="black"
-              wrapperBackground='#E0FBE2'
+              wrapperBackground='#89cd8f'
               itemTextStyle={styles.scrollerOptionsTextStyle}
               activeItemTextStyle={styles.scrollerSelectedOptionTextStyle}
               itemHeight={60}
@@ -95,14 +96,13 @@ export default function Timer () {
                 <ScrollPicker
                 dataSource={minutes}
                 onValueChange={(selectedMinute) => {
-                    console.log(selectedMinute)
                     setDuration(selectedHour * 60 * 60 + selectedMinute * 60)
                     setSelectedMinute(selectedMinute)
                 }}
                 selectedIndex={selectedMinute / 5}
                 highlightBorderWidth = {2}
                 highlightColor="black"
-                wrapperBackground='#E0FBE2'
+                wrapperBackground='#89cd8f'
                 itemTextStyle={styles.scrollerOptionsTextStyle}
                 activeItemTextStyle={styles.scrollerSelectedOptionTextStyle}
                 itemHeight={60}

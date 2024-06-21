@@ -4,7 +4,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
 import Onboarding from "../components/Onboarding";
-import Login from "./Login";
+import Login from "./login";
 import { Text, View } from "react-native";
 import { styles } from "@/assets/style";
 
