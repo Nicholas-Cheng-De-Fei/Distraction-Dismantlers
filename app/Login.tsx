@@ -82,27 +82,25 @@ const AuthScreen: React.FC<AuthScreenProps> = ({
 }
 
 export default function Login() {
-  
+
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [user, setUser] = useState<{ email: string } | null>(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [isLogin, setIsLogin] = useState(true);
 
+  // Need constant listener as even if auth.currentUser changes, react wouldnt update
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUser(user ? { email: user.email || '' } : null);
+    const listener  = onAuthStateChanged(auth, (user) => {
+      setIsAuthenticated(!!user);
     });
 
-    return () => unsubscribe();
+    return () => listener ();
   }, []);
 
   const handleAuthentication = async () => {
-    if (user) { // Ensure that users can logout
-
-    }
-    else if (!isLogin) { // Sign up errors
+    if (!isLogin) { // Sign up errors
       if (!email || !password || !confirmPassword || !username) {
         Alert.alert('Sign Up Error (Empty fields)', 'Please make sure all fields are filled.');
         return;
@@ -119,23 +117,27 @@ export default function Login() {
       }
     }
     try {
-      if (user) {
-        await signOut(auth);
-        console.log('User logged out successfully!');
+      if (isLogin) {
+        await signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
+          // Signed in 
+          const user3 = userCredential.user;
+          console.log(user3);
+        })
+        console.log('User signed in successfully!');
+
       } else {
-        if (isLogin) {
-          await signInWithEmailAndPassword(auth, email, password);
-          console.log('User signed in successfully!');
-
-        } else {
-          const { user } = await createUserWithEmailAndPassword(auth, email, password);
-          await updateProfile(user, { displayName: username });
+        await createUserWithEmailAndPassword(auth, email, password).then((userCredential) => {
+          // Signed up 
+          const user = userCredential.user;
+          updateProfile(user, { displayName: username });
           console.log('User created successfully!');
+        });
 
-          // const { displayName } = auth.currentUser;
-          // console.log(displayName);
-        }
+        // await signOut(auth); // User needs to login again
+        // Alert.alert('Sign Up Successful!', 'Please Login with your new account');
+
       }
+
     } catch (error: any) { // Custom Error Messages
       var header = "Authentication Error";
       let errMsg: string = error.message;
@@ -156,13 +158,13 @@ export default function Login() {
   };
 
   return (
-    <View style = {{flexGrow : 1}}>
-      {user ? ( // If user successfully logs in then route to home page
-        <View style = {styles.homeContainer}>
-          <Home user={user} handleAuthentication={handleAuthentication} />
+    <View style={{ flexGrow: 1 }}>
+      {isAuthenticated ? ( // If user successfully logs in then route to home page
+        <View style={styles.homeContainer}>
+          <Home />
         </View>
       ) : (
-        <View style = {styles.logincontainer}>
+        <View style={styles.logincontainer}>
           <AuthScreen
             username={username}
             setUsername={setUsername}
