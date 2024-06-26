@@ -13,8 +13,6 @@ import { Tabs } from './(tabs)/homeScreenTabs';
 export default function Home() {
     const [page, setPage] = React.useState("Timer")
 
-    console.log(auth.currentUser?.displayName);
-
     return (
         <View>
             <View style={{ width: width }}></View>

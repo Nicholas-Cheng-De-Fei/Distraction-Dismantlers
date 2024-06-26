@@ -25,10 +25,3 @@ export const database = getFirestore(app);
 export const auth = initializeAuth(app, {
   persistence: getReactNativePersistence(ReactNativeAsyncStorage),
 });
-
-/* 
-  const docRef = doc(database, "Users", "VdnPvW6BXGJTK2gHVhFl");
-  getDoc(docRef).then((snapshot) => {
-      console.log(snapshot.data())
-    });
-*/

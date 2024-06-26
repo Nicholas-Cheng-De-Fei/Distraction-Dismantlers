@@ -1,4 +1,4 @@
-import { Dimensions, StyleSheet } from "react-native";
+import { Dimensions, StyleSheet, TouchableOpacity, View } from "react-native";
 export const { width, height } = Dimensions.get('window');
 import * as Font from "expo-font"
 
@@ -14,6 +14,33 @@ import * as Font from "expo-font"
 
 // getFonts();
 
+// Custom Props
+export const NavHomeButton = ({children, onPress}) => (
+  <TouchableOpacity
+    style = {{
+      top: -30,
+      justifyContent: 'center',
+      alignItems: 'center',
+      shadowOffset: {
+        width: 0,
+        height: 15,
+      },
+      shadowOpacity: 0.60,
+      shadowRadius: 16.0,
+    }}
+    onPress={onPress}
+  >
+    <View style = {{
+      width: 70,
+      height: 70,
+      borderRadius: 35,
+      backgroundColor: '#FF7F7F',
+    }}>
+      {children}
+    </View>
+  </TouchableOpacity>
+)
+
 // Style sheet (CSS for the different components)
 export const styles = StyleSheet.create({
   centerContentContainer: {
@@ -24,7 +51,7 @@ export const styles = StyleSheet.create({
 
   background: {
     flex: 1,
-    backgroundColor: '#E0FBE2'
+    backgroundColor: '#bcdaec'
   },
 
   /////////////////
@@ -34,7 +61,27 @@ export const styles = StyleSheet.create({
     flexGrow: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#E0FBE2',
+    backgroundColor: '#bcdaec',
+  },
+
+  /////////////
+  // Nav Bar //
+  /////////////
+
+  navContainer : {
+    position : "absolute",
+    bottom : 25,
+    left : 40,
+    right : 40,
+    borderRadius : 25,
+    height : height * 0.08,
+    shadowOffset: {
+      width: 0,
+      height: 15,
+    },
+    shadowOpacity: 0.60,
+    shadowRadius: 16.0,
+    backgroundColor: '#e4e4e4',
   },
 
   ///////////////
@@ -104,7 +151,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 16,
-    backgroundColor: '#E0FBE2',
+    backgroundColor: '#bcdaec',
   },
   authContainer: {
     width: '80%',
@@ -145,9 +192,9 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 20,
   },
-  ///////////////////////////////
-  // For onboarding pannel page//
-  ///////////////////////////////
+  ////////////////////////////////
+  // For onboarding pannel page //
+  ////////////////////////////////
 
   onboardPannel: {
     alignItems: "center",
@@ -174,8 +221,8 @@ export const styles = StyleSheet.create({
   },
 
   onboardImage: {
-    height: 350,
-    width: 350,
+    height: 300,
+    width: 300,
     resizeMode: 'contain'
   },
 
@@ -204,4 +251,57 @@ export const styles = StyleSheet.create({
     borderWidth: 2,
   },
 
+  //////////////////////
+  // For profile page //
+  //////////////////////
+
+  streakBoxHeader : {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: width * 0.3,
+    height: height * 0.04,
+    left: width * 0.05,
+    zIndex: 2,
+    borderWidth: 2,
+    borderRadius: 20,
+    backgroundColor: 'white',
+  },
+
+  streakInfoBox : {
+    width: width * 0.45,
+    height: width * 0.25,
+    backgroundColor: 'white',
+    left: width * 0.04,
+    bottom: 15,
+    zIndex: 1,
+    borderWidth: 2,
+    borderRadius: 20,
+    alignItems : 'center', 
+    flexDirection: 'row',
+  },
+
+  focusBoxHeader : {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: width * 0.37,
+    height: height * 0.04,
+    left: width * 0.05,
+    zIndex: 2,
+    borderWidth: 2,
+    borderRadius: 20,
+    backgroundColor: 'white',
+  },
+
+  focusInfoBox : {
+    width: width * 0.45,
+    height: width * 0.25,
+    left: width * 0.02,
+    backgroundColor: 'white',
+    bottom: 15,
+    zIndex: 1,
+    borderWidth: 2,
+    borderRadius: 20,
+    alignItems : 'center', 
+    flexDirection: 'row',
+  },
 })
