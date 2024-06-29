@@ -4,7 +4,7 @@ import { styles, width, height } from '@/assets/style';
 import ScrollPicker from "react-native-wheel-scrollview-picker";
 import { CountdownCircleTimer } from 'react-native-countdown-circle-timer'
 import { auth, database } from '@/firebaseConfig';
-import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
+import { doc, getDoc, setDoc, updateDoc } from '@firebase/firestore';
 import { useIsFocused } from '@react-navigation/native';
 
 const createArray = (length: number, type : String) => {

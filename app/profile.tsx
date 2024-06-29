@@ -1,13 +1,13 @@
 import React from "react";
 import { View, Text, Dimensions, Button, Image } from "react-native";
 import { auth, database } from "@/firebaseConfig";
-import { signOut } from "firebase/auth";
+import { signOut } from "@firebase/auth";
 import { doc, collection, getDocs, query, where, getDoc, updateDoc } from "firebase/firestore";
 import { useIsFocused } from "@react-navigation/native";
 import { styles, width, height } from "@/assets/style";
-
-
+import Tasks from "@/components/Tasks";
  
+const user = auth!.currentUser;
 export default function Profile() {
 
   const isFocused = useIsFocused();
@@ -85,12 +85,11 @@ export default function Profile() {
 
   return (
     <View style = {styles.background}>
-      <View style={{ justifyContent: "center", alignItems: "center", paddingTop: 80 }}>
-        <Button title="Logout" onPress={logout} color="#e74c3c" />
+      <View style={styles.ProfileHeader}>
+        <Text  style={styles.ProfileHeaderText}>Hello {user!.displayName}</Text>
       </View>
 
       <View style = {{flexDirection: 'row'}}>
-
         <View id="streak" style = {{flex : 1}}>
           <View style = {styles.streakBoxHeader}>
             <Text style = {{fontSize : 20, fontWeight: 'bold'}}>Streak</Text>
@@ -123,16 +122,18 @@ export default function Profile() {
           </View>
         </View>
 
+        </View>
         <View id = "to-do List">
-
+        <Tasks />
         </View>
 
         <View id = "heatMap">
           
         </View>
-
-
+        <View style={{ justifyContent: "center", alignItems: "center", paddingTop: 80 }}>
+        <Button title="Logout" onPress={logout} color="#e74c3c" />
       </View>
+
     </View>
   );
 }

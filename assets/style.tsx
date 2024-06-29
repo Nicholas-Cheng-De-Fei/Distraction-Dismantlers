@@ -15,9 +15,9 @@ import * as Font from "expo-font"
 // getFonts();
 
 // Custom Props
-export const NavHomeButton = ({children, onPress}) => (
+export const NavHomeButton = ({ children, onPress }) => (
   <TouchableOpacity
-    style = {{
+    style={{
       top: -30,
       justifyContent: 'center',
       alignItems: 'center',
@@ -30,7 +30,7 @@ export const NavHomeButton = ({children, onPress}) => (
     }}
     onPress={onPress}
   >
-    <View style = {{
+    <View style={{
       width: 70,
       height: 70,
       borderRadius: 35,
@@ -46,7 +46,7 @@ export const styles = StyleSheet.create({
   centerContentContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop:20
+    paddingTop: 20
   },
 
   background: {
@@ -68,13 +68,13 @@ export const styles = StyleSheet.create({
   // Nav Bar //
   /////////////
 
-  navContainer : {
-    position : "absolute",
-    bottom : 25,
-    left : 40,
-    right : 40,
-    borderRadius : 25,
-    height : height * 0.08,
+  navContainer: {
+    position: "absolute",
+    bottom: 25,
+    left: 40,
+    right: 40,
+    borderRadius: 25,
+    height: height * 0.08,
     shadowOffset: {
       width: 0,
       height: 15,
@@ -254,8 +254,18 @@ export const styles = StyleSheet.create({
   //////////////////////
   // For profile page //
   //////////////////////
-
-  streakBoxHeader : {
+  ProfileHeader: {
+    marginBottom: 20,
+    justifyContent: "center", alignItems: "center", paddingTop: 80
+  }, 
+  ProfileHeaderText: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    textDecorationLine: 'underline',
+    
+  },
+  streakBoxHeader: {
     alignItems: 'center',
     justifyContent: 'center',
     width: width * 0.3,
@@ -267,7 +277,7 @@ export const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
 
-  streakInfoBox : {
+  streakInfoBox: {
     width: width * 0.45,
     height: width * 0.25,
     backgroundColor: 'white',
@@ -276,11 +286,11 @@ export const styles = StyleSheet.create({
     zIndex: 1,
     borderWidth: 2,
     borderRadius: 20,
-    alignItems : 'center', 
+    alignItems: 'center',
     flexDirection: 'row',
   },
 
-  focusBoxHeader : {
+  focusBoxHeader: {
     alignItems: 'center',
     justifyContent: 'center',
     width: width * 0.37,
@@ -292,7 +302,7 @@ export const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
 
-  focusInfoBox : {
+  focusInfoBox: {
     width: width * 0.45,
     height: width * 0.25,
     left: width * 0.02,
@@ -301,7 +311,151 @@ export const styles = StyleSheet.create({
     zIndex: 1,
     borderWidth: 2,
     borderRadius: 20,
-    alignItems : 'center', 
+    alignItems: 'center',
     flexDirection: 'row',
+  },
+
+  //////////////////////
+  // For Task page //
+  //////////////////////
+  addButton: {
+    position: 'absolute',
+    top: 30,
+    right: 15,
+    width: 30,
+    height: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 3,
+  },
+  addButtonImage: {
+    width: 18,
+    height: 18,
+    zIndex: 1,
+  },
+
+  taskBoxHeader: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: width * 0.3,
+    height: height * 0.04,
+    left: width * 0.05,
+    zIndex: 2,
+    borderWidth: 2,
+    borderRadius: 20,
+    backgroundColor: 'white',
+  },
+
+  taskInfoBox: {
+    width: width * 0.95,
+    height: height * 0.2,
+    backgroundColor: 'white',
+    left: 10,
+    bottom: 15,
+    zIndex: 1,
+    borderWidth: 2,
+    borderRadius: 20,
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  taskHeader: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+
+  taskScrollView: {
+    marginTop: 10,
+    zIndex: 0,
+  },
+  taskBox: {
+    marginBottom: 15,
+    padding: 15,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 3,
+    elevation: 2,
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    zIndex: 10,
+  },
+  taskDueDate: {
+    fontSize: 16,
+    margin: 0,
+  },
+  completedTask: {
+    textDecorationLine: 'line-through',
+    color: '#d3d3d3',
+  },
+  taskName: {
+    fontWeight: 'bold',
+    fontSize: 18,
+    marginTop: 5,
+    textDecorationLine: 'none',
+  },
+
+
+
+  //////////////////////
+  // For Task page (Modal) //
+  //////////////////////
+  modalView: {
+    flex: 1,
+    height: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 50,
+    padding: 40,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: 'center',
+    fontSize: 20,
+  },
+  modalInput: {
+    height: 40,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    paddingHorizontal: 10,
+    marginBottom: 10,
+    width: '100%',
+    borderRadius: 5,
+  },
+  datePickerButton: {
+    marginBottom: 10,
+  },
+  datePickerText: {
+    color: '#1e90ff',
+  },
+  modalButtonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '50%',
+  },
+  deleteButton: {
+    backgroundColor: '#ff0000',
+    padding: 5,
+    borderRadius: 5,
+    marginRight: 10,
+  },
+  deleteButtonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    width: width * 0.09,
   },
 })

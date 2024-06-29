@@ -1,12 +1,7 @@
 import React from 'react';
 import { Text, View, Button, Dimensions } from 'react-native';
 import { styles, width, height } from '@/assets/style';
-import { auth } from '../firebaseConfig';
 import { NavigationContainer } from '@react-navigation/native';
-
-import Timer from '@/components/Timer';
-import Thread from '@/app/thread';
-import Profile from '@/app/profile';
 import { Tabs } from './(tabs)/homeScreenTabs';
 
 

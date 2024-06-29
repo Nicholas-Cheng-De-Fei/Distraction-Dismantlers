@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Button, ScrollView, Alert } from 'react-native';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, updateProfile } from 'firebase/auth';
+import { View, Text, TextInput, Button, Alert } from 'react-native';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, updateProfile } from '@firebase/auth';
 import { styles } from '@/assets/style';
-import { auth } from '../firebaseConfig';
+import { auth, database } from '@/firebaseConfig';
 import Home from './home'; // Import the new component
-import { useNavigation } from '@react-navigation/native';
+import { addDoc, collection, deleteDoc, doc, setDoc } from 'firebase/firestore';
 
 interface AuthScreenProps {
   username: string;
@@ -92,11 +92,11 @@ export default function Login() {
 
   // Need constant listener as even if auth.currentUser changes, react wouldnt update
   useEffect(() => {
-    const listener  = onAuthStateChanged(auth, (user) => {
+    const listener = onAuthStateChanged(auth, (user) => {
       setIsAuthenticated(!!user);
     });
 
-    return () => listener ();
+    return () => listener();
   }, []);
 
   const handleAuthentication = async () => {
@@ -120,17 +120,23 @@ export default function Login() {
       if (isLogin) {
         await signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
           // Signed in 
-          const user3 = userCredential.user;
-          console.log(user3);
+
         })
         console.log('User signed in successfully!');
 
       } else {
-        await createUserWithEmailAndPassword(auth, email, password).then((userCredential) => {
+        await createUserWithEmailAndPassword(auth, email, password).then(async (userCredential) => {
           // Signed up 
           const user = userCredential.user;
-          updateProfile(user, { displayName: username });
-          console.log('User created successfully!');
+          await updateProfile(user, { displayName: username });
+
+         const d1= await addDoc(collection(database, "tasks", user!.uid, "taskList"), {});
+         const d2=await addDoc(collection(database, "stats", user!.uid, "studySessions"), {});
+         await setDoc(doc(database, "streak", user!.uid), { Days: 0, lastStudied: null });
+// deleteDoc(d1);
+// deleteDoc(d2);
+// deleteDoc(d3);
+          console.log('User created successfully! ' + user!.uid);
         });
 
         // await signOut(auth); // User needs to login again
