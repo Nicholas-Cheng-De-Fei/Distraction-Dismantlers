@@ -3,7 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { View, Text, Dimensions} from "react-native";
 import { auth } from "@/firebaseConfig";
-const { width, height } = Dimensions.get('window');
+import { width, height } from "@/assets/style";
 
 const user = auth!.currentUser;
 export default function Thread() {

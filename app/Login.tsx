@@ -4,7 +4,7 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthState
 import { styles } from '@/assets/style';
 import { auth, database } from '@/firebaseConfig';
 import Home from './home'; // Import the new component
-import { addDoc, collection, deleteDoc, doc, setDoc } from 'firebase/firestore';
+import { addDoc, collection, deleteDoc, doc, setDoc } from '@firebase/firestore';
 
 interface AuthScreenProps {
   username: string;

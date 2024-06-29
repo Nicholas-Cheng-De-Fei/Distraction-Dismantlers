@@ -2,15 +2,14 @@ import React from "react";
 import { View, Text, Dimensions, Button, Image } from "react-native";
 import { auth, database } from "@/firebaseConfig";
 import { signOut } from "@firebase/auth";
-import { doc, collection, getDocs, query, where, getDoc, updateDoc } from "firebase/firestore";
+import { doc, collection, getDocs, query, where, getDoc, updateDoc, DocumentData } from "firebase/firestore";
 import { useIsFocused } from "@react-navigation/native";
 import { styles, width, height } from "@/assets/style";
-import Tasks from "@/components/Tasks";
- 
-const user = auth!.currentUser;
+
 export default function Profile() {
 
   const isFocused = useIsFocused();
+  const currentUserId = auth.currentUser!.uid;
   
   const yesterdayDate = new Date();
   yesterdayDate.setDate(yesterdayDate.getDate() - 1);
@@ -31,18 +30,18 @@ export default function Profile() {
   const [average, setAverage] = React.useState(0);
   const [streakCount, setStreakCount] = React.useState(0);
 
-  function resetStreak (currentData) {
-    updateDoc(doc(database, "streak", auth.currentUser!.uid), {
+  function resetStreak (currentData : DocumentData, currentUserId: string) {
+    updateDoc(doc(database, "streak", currentUserId), {
       Days : 0,
-      lastUpdated : currentData.lastUpdated,
+      lastStudied : currentData.lastStudied,
     }).then(() => {console.log("Streak Reset")});
   }
   
-  async function getUserStats () {
+  async function getUserStats (currentUserId : string) {
   
-    const statsRef = collection(database, "stats", auth.currentUser!.uid, "studySessions");
+    const statsRef = collection(database, "stats", currentUserId, "studySessions");
     const queryStats = query(statsRef,  where("Date", "<=", todayDate), where("Date", ">=", startOfWeekDate));
-    const streakRef = doc(database, "streak", auth.currentUser!.uid);
+    const streakRef = doc(database, "streak", currentUserId);
   
     let count : number = 0;
   
@@ -50,12 +49,14 @@ export default function Profile() {
       const streakDataSnap = await getDoc(streakRef);
       const streakData = streakDataSnap.data();
   
-      const time = new Date(streakData!.lastUpdated.toDate().getTime()  + 8 * 60 * 60 * 1000);
+      const time = new Date(streakData!.lastStudied.toDate().getTime()  + 8 * 60 * 60 * 1000);
       if (time.toDateString() == yesterdayDate.toDateString() || time.toDateString() == new Date().toDateString()) {
         count = streakData!.Days;
       } else {
         count = 0;
-        resetStreak(streakData);
+        if (streakData!.Days != 0) {
+          resetStreak(streakData!, currentUserId);
+        }
       }
   
       setStreakCount(count);
@@ -79,17 +80,18 @@ export default function Profile() {
 
   React.useEffect(() => {
     if (isFocused) {
-      getUserStats();
+      getUserStats(currentUserId);
     }
   }, [isFocused])
 
   return (
     <View style = {styles.background}>
-      <View style={styles.ProfileHeader}>
-        <Text  style={styles.ProfileHeaderText}>Hello {user!.displayName}</Text>
+      <View style={{ justifyContent: "center", alignItems: "center", paddingTop: 80 }}>
+        <Button title="Logout" onPress={logout} color="#e74c3c" />
       </View>
 
       <View style = {{flexDirection: 'row'}}>
+
         <View id="streak" style = {{flex : 1}}>
           <View style = {styles.streakBoxHeader}>
             <Text style = {{fontSize : 20, fontWeight: 'bold'}}>Streak</Text>
@@ -122,18 +124,16 @@ export default function Profile() {
           </View>
         </View>
 
-        </View>
         <View id = "to-do List">
-        <Tasks />
+
         </View>
 
         <View id = "heatMap">
           
         </View>
-        <View style={{ justifyContent: "center", alignItems: "center", paddingTop: 80 }}>
-        <Button title="Logout" onPress={logout} color="#e74c3c" />
-      </View>
 
+
+      </View>
     </View>
   );
 }
