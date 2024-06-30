@@ -7,8 +7,6 @@ import { auth, database } from "@/firebaseConfig";
 import { styles } from '@/assets/style';
 import { onSnapshot } from '@firebase/firestore';
 
-const user = auth!.currentUser;
-
 async function write(taskName: string, dueDate: Date) {
   try {
     let taskCreationDate = new Date().toUTCString();
@@ -74,6 +72,9 @@ async function deleteTask(taskId) {
 }
 
 export default function Task() {
+
+  const user = auth!.currentUser;
+
   const [tasks, setTasks] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [newTask, setNewTask] = useState('');
@@ -153,7 +154,7 @@ export default function Task() {
                   onValueChange={() => toggleTaskCompletion(task.id, task.isComplete)}
                 />
                 <Text style={[styles.taskName, task.isComplete && styles.completedTask]}>{task.TaskName}</Text>
-                <Text style={styles.taskDueDate, task.isComplete && styles.completedTask}>Due: {formatDate(task.DueDateTime.toDate())}</Text>
+                <Text style={[styles.taskDueDate, task.isComplete && styles.completedTask]}>Due: {formatDate(task.DueDateTime.toDate())}</Text>
 
                 <TouchableOpacity onPress={() => deleteT(task.id)} style={styles.deleteButton}>
                   <Text style={styles.deleteButtonText}>Delete</Text>

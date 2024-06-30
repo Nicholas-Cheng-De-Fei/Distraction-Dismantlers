@@ -11,9 +11,7 @@ export default function Thread() {
   return (
     <View style = {{height : height * 0.8, justifyContent : "center", alignItems : "center"}}>
         <Text>Thread Page</Text>
-        <Text>
-{user?.displayName}
-        </Text>
+        <Text>Hello</Text>
     </View>
   );
 }

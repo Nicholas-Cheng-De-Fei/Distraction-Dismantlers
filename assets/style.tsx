@@ -356,7 +356,7 @@ export const styles = StyleSheet.create({
     borderWidth: 2,
     borderRadius: 20,
     alignItems: 'center',
-    flexDirection: 'row',
+    
   },
   taskHeader: {
     fontSize: 20,

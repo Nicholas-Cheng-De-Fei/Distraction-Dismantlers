@@ -6,6 +6,17 @@ import { CountdownCircleTimer } from 'react-native-countdown-circle-timer'
 import { auth, database } from '@/firebaseConfig';
 import { doc, getDoc, setDoc, updateDoc } from '@firebase/firestore';
 
+let remainder = 0;
+let time = 0;
+let s: number;
+let t: Date;
+
+const hours = createArray(24, "Hour");
+const minutes = createArray(60, "Minute");
+
+const todaysDate = new Date();
+todaysDate.setHours(0, 0, 0);
+
 export function createArray(length: number, type: String) {
     const arr = [];
 
@@ -21,102 +32,57 @@ export function createArray(length: number, type: String) {
     return arr
 };
 
-const hours = createArray(24, "Hour");
-const minutes = createArray(60, "Minute");
-
-const todaysDate = new Date();
-todaysDate.setHours(0, 0, 0);
-
-// To store the remaining time from the timer (in seconds)
-const currentUserId = auth.currentUser?.uid
-let remainder = 0;
-let time = 0;
-let s: number;
-let t: Date;
-
-
-async function getStreakData(currentUserId : string) {
+async function getStreakData(currentUserId: string) {
     if (currentUserId != undefined) {
         const streakRef = doc(database, "streak", currentUserId);
         const streakDataSnap = await getDoc(streakRef);
         const streakData = streakDataSnap.data();
-    
+
         s = streakData!.Days;
-        t = new Date(streakData!.lastUpdated.toDate().getTime() + 8 * 60 * 60 * 1000);
+        t = new Date(streakData!.lastStudied.toDate().getTime() + 8 * 60 * 60 * 1000);
         t.setHours(0, 0, 0);
     }
 }
 
-getStreakData(currentUserId!);
+function startTimer(selectedHour: number, selectedMinute: number, duration: number, setDuration: React.Dispatch<React.SetStateAction<number>>, setIsTimerActive: React.Dispatch<React.SetStateAction<boolean>>) {
 
-export default function Timer() {
+    time = selectedHour * 60 * 60 + selectedMinute * 60
 
+    setDuration(time);
 
-    const [selectedHour, setSelectedHour] = React.useState(0);
-    const [selectedMinute, setSelectedMinute] = React.useState(5);
-    const [isTimerActive, setIsTimerActive] = React.useState(false);
-    const [duration, setDuration] = React.useState(0);
-
-    const startTimer = () => {
-
-        time = selectedHour * 60 * 60 + selectedMinute * 60
-
-        setDuration(time);
-
-        setTimeout(() => {
-            if (duration == time && time != 0) {
-                setIsTimerActive(true);
-            }
-        }, 0)
-    }
-
-    const endTimer = () => {
-        if (remainder == 0) {
-
-            setDoc(doc(database, "stats", auth.currentUser!.uid, "studySessions", new Date().toUTCString()), {
-                Date: new Date(),
-                Duration: duration,
-            }
-            );
-            if (t.toDateString() != todaysDate.toDateString()) {
-                s += 1;
-                updateDoc(doc(database, "streak", auth.currentUser!.uid), {
-                    Days: s,
-                    lastUpdated: new Date(),
-                });
-            }
+    setTimeout(() => {
+        if (duration == time && time != 0) {
+            setIsTimerActive(true);
         }
+    }, 0)
+}
 
-        setIsTimerActive(false);
-        setSelectedMinute(selectedMinute)
+function endTimer(duration: number, selectedMinute: number, setSelectedMinute: React.Dispatch<React.SetStateAction<number>>, setIsTimerActive: React.Dispatch<React.SetStateAction<boolean>>) {
+    if (remainder == 0) {
+
+        setDoc(doc(database, "stats", auth.currentUser!.uid, "studySessions", new Date().toUTCString()), {
+            Date: new Date(),
+            Duration: duration,
+        }).then(() => { console.log("Recorded the study session into the database") });
+
+        if (t.toDateString() != todaysDate.toDateString()) {
+            s += 1;
+            updateDoc(doc(database, "streak", auth.currentUser!.uid), {
+                Days: s,
+                lastUpdated: new Date(),
+            }).then(() => { console.log("Updated Streak record for the user") });
+        }
     }
 
+    setIsTimerActive(false);
+    setSelectedMinute(selectedMinute)
+}
 
-    const renderCountdownTimer = (duration: number) => (
-        <CountdownCircleTimer
-            isPlaying
-            duration={duration}
-            colors={['#004777', '#F7B801', '#A30000', '#A30000']}
-            colorsTime={[7, 5, 2, 0]}
-            isGrowing={true}
-            onComplete={() => endTimer()}
-            children={
-                (remainingTime) => {
-                    const hours = Math.floor(remainingTime.remainingTime / 3600);
-                    const minutes = Math.floor((remainingTime.remainingTime % 3600) / 60);
-                    const seconds = remainingTime.remainingTime % 60;
 
-                    remainder = remainingTime.remainingTime;
 
-                    return <Text style={{ fontSize: 30 }}>{hours}:{minutes}:{seconds}</Text>
-                }
-            }
-        >
-        </CountdownCircleTimer>
-    )
-
-    const renderPicker = () => (
-        <View testID = "Time Selector" style={{ height: 350, flexDirection: "row" }}>
+function renderPicker(selectedHour: number, selectedMinute: number, setDuration: React.Dispatch<React.SetStateAction<number>>, setSelectedHour: React.Dispatch<React.SetStateAction<number>>, setSelectedMinute: React.Dispatch<React.SetStateAction<number>>) {
+    return (
+        <View testID="Time Selector" style={{ height: 350, flexDirection: "row" }}>
             <View style={styles.scrollerContainer}>
                 <Text style={styles.timerHeaderTextStyle}>Hour</Text>
                 <ScrollPicker
@@ -154,21 +120,60 @@ export default function Timer() {
 
         </View>
     )
+}
+
+function renderCountdownTimer(duration: number, selectedMinute: number, setSelectedMinute: React.Dispatch<React.SetStateAction<number>>, setIsTimerActive: React.Dispatch<React.SetStateAction<boolean>>) {
+    return (
+        <CountdownCircleTimer
+            isPlaying
+            duration={duration}
+            colors={['#004777', '#F7B801', '#A30000', '#A30000']}
+            colorsTime={[7, 5, 2, 0]}
+            isGrowing={false}
+            size={400}
+            onComplete={() => endTimer(duration, selectedMinute, setSelectedMinute, setIsTimerActive)}
+            trailColor={'#FFFFFF'}
+            children={
+                (remainingTime) => {
+                    const hours = Math.floor(remainingTime.remainingTime / 3600);
+                    const minutes = Math.floor((remainingTime.remainingTime % 3600) / 60);
+                    const seconds = remainingTime.remainingTime % 60;
+
+                    remainder = remainingTime.remainingTime;
+
+                    return <Text style={{ fontSize: 25 }}>{hours} Hours {minutes} Minutes {seconds} Seconds</Text>
+                }
+            }
+        >
+        </CountdownCircleTimer>
+    )
+}
+
+export default function Timer() {
+
+    const currentUserId = auth.currentUser?.uid
+
+    const [selectedHour, setSelectedHour] = React.useState(0);
+    const [selectedMinute, setSelectedMinute] = React.useState(5);
+    const [isTimerActive, setIsTimerActive] = React.useState(false);
+    const [duration, setDuration] = React.useState(0);
+
+    getStreakData(currentUserId!);
 
     return (
         <View style={styles.background}>
             <View style={[styles.centerContentContainer, { height: height }]}>
                 {isTimerActive
-                    ? renderCountdownTimer(duration)
-                    : renderPicker()
+                    ? renderCountdownTimer(duration, selectedMinute, setSelectedMinute, setIsTimerActive)
+                    : renderPicker(selectedHour, selectedMinute, setDuration, setSelectedHour, setSelectedMinute)
                 }
                 <View style={{ paddingTop: 30 }}>
                     {isTimerActive
-                        ? <Pressable testID = 'Stop Button' style={styles.stopTimerButton} onPress={() => endTimer()}>
+                        ? <Pressable testID='Stop Button' style={styles.stopTimerButton} onPress={() => endTimer(duration, selectedMinute, setSelectedMinute, setIsTimerActive)}>
                             <Text style={{ color: "white", fontSize: 20 }}>Stop Timer</Text>
                         </Pressable>
 
-                        : <Pressable testID = 'Start Button' style={styles.startTimerButton} onPress={() => startTimer()}>
+                        : <Pressable testID='Start Button' style={styles.startTimerButton} onPress={() => startTimer(selectedHour, selectedMinute, duration, setDuration, setIsTimerActive)}>
                             <Text style={{ color: "white", fontSize: 20 }}>Start Timer</Text>
                         </Pressable>
                     }

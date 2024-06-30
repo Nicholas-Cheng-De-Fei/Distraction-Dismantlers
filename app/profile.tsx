@@ -7,21 +7,69 @@ import { useIsFocused } from "@react-navigation/native";
 import { styles, width, height } from "@/assets/style";
 import Tasks from "@/components/Tasks";
 
+const yesterdayDate = new Date();
+yesterdayDate.setDate(yesterdayDate.getDate() - 1);
+
+const todayDate = new Date();
+todayDate.setHours(23, 59, 59);
+
+const startOfWeekDate = new Date();
+startOfWeekDate.setDate(startOfWeekDate.getDate() - startOfWeekDate.getDay() + 1);
+startOfWeekDate.setHours(0, 0, 0);
+
+function resetStreak(currentData: DocumentData, currentUserId: string) {
+  updateDoc(doc(database, "streak", currentUserId), {
+    Days: 0,
+    lastStudied: currentData.lastStudied,
+  }).then(() => { console.log("Streak Reset") });
+}
+
+async function getUserStats(currentUserId: string, setAverage: React.Dispatch<React.SetStateAction<number>>, setStreakCount: React.Dispatch<React.SetStateAction<number>>) {
+
+  const statsRef = collection(database, "stats", currentUserId, "studySessions");
+  const queryStats = query(statsRef, where("Date", "<=", todayDate), where("Date", ">=", startOfWeekDate));
+  const streakRef = doc(database, "streak", currentUserId);
+
+  let count: number = 0;
+
+  try {
+    const streakDataSnap = await getDoc(streakRef);
+    const streakData = streakDataSnap.data();
+
+    const time = new Date(streakData!.lastStudied.toDate().getTime() + 8 * 60 * 60 * 1000);
+    if (time.toDateString() == yesterdayDate.toDateString() || time.toDateString() == new Date().toDateString()) {
+      count = streakData!.Days;
+    } else {
+      count = 0;
+      if (streakData!.Days != 0) {
+        resetStreak(streakData!, currentUserId);
+      }
+    }
+
+    setStreakCount(count);
+
+    let avg: number = 0;
+
+    const sessionsDataSnap = await getDocs(queryStats);
+    sessionsDataSnap.forEach((doc) => {
+      console.log(doc);
+      avg += doc.data().Duration / 60 / 60;
+    });
+
+    avg /= Math.max(todayDate.getDay(), 1);
+
+    setAverage(avg);
+
+  } catch (error) {
+    console.log(error);
+  }
+
+}
+
 export default function Profile() {
 
   const isFocused = useIsFocused();
   const user = auth!.currentUser;
-
-  const yesterdayDate = new Date();
-  yesterdayDate.setDate(yesterdayDate.getDate() - 1);
-
-  const todayDate = new Date();
-  todayDate.setHours(23, 59, 59);
-
-  const startOfWeekDate = new Date();
-  startOfWeekDate.setDate(startOfWeekDate.getDate() - startOfWeekDate.getDay() + 1);
-  startOfWeekDate.setHours(0, 0, 0);
-
 
   const logout = async () => {
     await signOut(auth);
@@ -31,59 +79,10 @@ export default function Profile() {
   const [average, setAverage] = React.useState(0);
   const [streakCount, setStreakCount] = React.useState(0);
 
-  function resetStreak(currentData: DocumentData, currentUserId: string) {
-    updateDoc(doc(database, "streak", currentUserId), {
-      Days: 0,
-      lastStudied: currentData.lastStudied,
-    }).then(() => { console.log("Streak Reset") });
-  }
-
-  async function getUserStats(currentUserId: string) {
-
-    const statsRef = collection(database, "stats", currentUserId, "studySessions");
-    const queryStats = query(statsRef, where("Date", "<=", todayDate), where("Date", ">=", startOfWeekDate));
-    const streakRef = doc(database, "streak", currentUserId);
-
-    let count: number = 0;
-
-    try {
-      const streakDataSnap = await getDoc(streakRef);
-      const streakData = streakDataSnap.data();
-
-      const time = new Date(streakData!.lastStudied.toDate().getTime() + 8 * 60 * 60 * 1000);
-      if (time.toDateString() == yesterdayDate.toDateString() || time.toDateString() == new Date().toDateString()) {
-        count = streakData!.Days;
-      } else {
-        count = 0;
-        if (streakData!.Days != 0) {
-          resetStreak(streakData!, currentUserId);
-        }
-      }
-
-      setStreakCount(count);
-
-      let avg: number = 0;
-
-      const sessionsDataSnap = await getDocs(queryStats);
-      sessionsDataSnap.forEach((doc) => {
-        console.log(doc);
-        avg += doc.data().Duration / 60 / 60;
-      });
-
-      avg /= Math.max(todayDate.getDay(), 1);
-
-      setAverage(avg);
-
-    } catch (error) {
-      console.log(error);
-    }
-
-  }
-
   React.useEffect(() => {
     if (isFocused) {
       if (user?.uid != null) {
-        getUserStats(user!.uid);
+        getUserStats(user!.uid, setAverage, setStreakCount);
       }
     }
   }, [isFocused])
