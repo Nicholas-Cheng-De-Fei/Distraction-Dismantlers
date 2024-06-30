@@ -90,12 +90,19 @@ export default function Login() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [isLogin, setIsLogin] = useState(true);
 
+  function resetAllFields() {
+    setUsername("");
+    setEmail("");
+    setPassword("");
+    setConfirmPassword("");
+    setIsLogin(true);
+  }
+
   // Need constant listener as even if auth.currentUser changes, react wouldnt update
   useEffect(() => {
     const listener = onAuthStateChanged(auth, (user) => {
       setIsAuthenticated(!!user);
     });
-
     return () => listener();
   }, []);
 
@@ -120,8 +127,8 @@ export default function Login() {
       if (isLogin) {
         await signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
           // Signed in 
-
         })
+        resetAllFields();
         console.log('User signed in successfully!');
 
       } else {
@@ -136,6 +143,9 @@ export default function Login() {
           // deleteDoc(d1);
           // deleteDoc(d2);
           // deleteDoc(d3);
+          resetAllFields();
+
+
           console.log('User created successfully! ' + user!.uid);
         });
 
