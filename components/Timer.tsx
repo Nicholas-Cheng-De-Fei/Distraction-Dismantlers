@@ -15,7 +15,7 @@ const hours = createArray(24, "Hour");
 const minutes = createArray(60, "Minute");
 
 const todaysDate = new Date();
-todaysDate.setHours(0, 0, 0);
+
 
 export function createArray(length: number, type: String) {
     const arr = [];
@@ -40,7 +40,7 @@ async function getStreakData(currentUserId: string) {
 
         s = streakData!.Days;
         t = new Date(streakData!.lastStudied.toDate().getTime() + 8 * 60 * 60 * 1000);
-        t.setHours(0, 0, 0);
+        t.setUTCHours(0, 0, 0, 0);
     }
 }
 
@@ -58,13 +58,14 @@ function startTimer(selectedHour: number, selectedMinute: number, duration: numb
 }
 
 function endTimer(duration: number, selectedMinute: number, setSelectedMinute: React.Dispatch<React.SetStateAction<number>>, setIsTimerActive: React.Dispatch<React.SetStateAction<boolean>>) {
+
     if (remainder == 0) {
 
         setDoc(doc(database, "stats", auth.currentUser!.uid, "studySessions", new Date().toUTCString()), {
             Date: new Date(),
-            Duration: 1000,
+            Duration: duration,
         }).then(() => { console.log("Recorded the study session into the database") });
-
+        
         if (t == null || t.toDateString() != todaysDate.toDateString()) {
             s += 1;
             updateDoc(doc(database, "streak", auth.currentUser!.uid), {
@@ -126,11 +127,11 @@ function renderCountdownTimer(duration: number, selectedMinute: number, setSelec
     return (
         <CountdownCircleTimer
             isPlaying
-            duration={2}
+            duration={10}
             colors={['#004777', '#F7B801', '#A30000', '#A30000']}
-            colorsTime={[duration*0.75, duration * 0.5, duration * 0.25, duration * 0.1]}
+            colorsTime={[60, 30, 10, 0]}
             isGrowing={false}
-            size={400}
+            size={380}
             onComplete={() => endTimer(duration, selectedMinute, setSelectedMinute, setIsTimerActive)}
             trailColor={'#FFFFFF'}
             children={

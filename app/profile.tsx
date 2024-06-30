@@ -60,8 +60,7 @@ async function getUserStats(currentUserId: string, setAverage: React.Dispatch<Re
     sessionsDataSnap.forEach((doc) => {
       avg += doc.data().Duration / 60 / 60;
     });
-
-    avg /= Math.max(todayDate.getDay(), 1);
+    avg /= Math.max(todayDate.getDay() + 1);
 
     setAverage(avg);
 
