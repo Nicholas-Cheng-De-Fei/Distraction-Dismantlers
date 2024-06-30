@@ -320,7 +320,7 @@ export const styles = StyleSheet.create({
   //////////////////////
   addButton: {
     position: 'absolute',
-    top: 30,
+    top: height*0.025,
     right: 15,
     width: 30,
     height: 30,
@@ -340,7 +340,7 @@ export const styles = StyleSheet.create({
     width: width * 0.3,
     height: height * 0.04,
     left: width * 0.05,
-    zIndex: 2,
+    zIndex: 20,
     borderWidth: 2,
     borderRadius: 20,
     backgroundColor: 'white',
@@ -348,41 +348,40 @@ export const styles = StyleSheet.create({
 
   taskInfoBox: {
     width: width * 0.95,
-    height: height * 0.2,
+    height: height * 0.23,
     backgroundColor: 'white',
     left: 10,
     bottom: 15,
-    zIndex: 1,
+    zIndex: 2,
     borderWidth: 2,
     borderRadius: 20,
     alignItems: 'center',
 
   },
   taskHeader: {
-    fontSize: 20,
+    fontSize: 23,
     fontWeight: 'bold',
-    marginBottom: 10,
+    marginBottom: 0,
+    // zIndex:30,
   },
 
   taskScrollView: {
     marginTop: 10,
+    width:width*0.9,
     zIndex: 0,
   },
   taskBox: {
     marginBottom: 15,
     padding: 10,
+    margin:0,
     backgroundColor: 'white',
-    borderRadius: 20,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 3,
-    elevation: 2,
+    borderRadius: 100,
+    elevation: 5,
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    zIndex: 10,
+    zIndex: 0,
   },
   taskDueDate: {
     fontSize: 16,
@@ -400,11 +399,9 @@ export const styles = StyleSheet.create({
   },
   taskContentBox: {
     margin: 0,
-    paddingRight: 120,
+    paddingTop:height*0.01,
+    paddingRight: width*0.3,
   },
-
-
-
 
   //////////////////////
   // For Task page (Modal) //
@@ -441,6 +438,7 @@ export const styles = StyleSheet.create({
     width: '100%',
     borderRadius: 5,
   },
+
   datePickerButton: {
     marginBottom: 10,
   },
@@ -450,8 +448,10 @@ export const styles = StyleSheet.create({
   modalButtonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    width: '50%',
+    width: width*0.4,
+    gap:0,
   },
+  
   deleteButton: {
     backgroundColor: '#ff0000',
     padding: 5,
