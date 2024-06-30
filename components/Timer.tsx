@@ -62,14 +62,14 @@ function endTimer(duration: number, selectedMinute: number, setSelectedMinute: R
 
         setDoc(doc(database, "stats", auth.currentUser!.uid, "studySessions", new Date().toUTCString()), {
             Date: new Date(),
-            Duration: duration,
+            Duration: 1000,
         }).then(() => { console.log("Recorded the study session into the database") });
 
-        if (t.toDateString() != todaysDate.toDateString()) {
+        if (t == null || t.toDateString() != todaysDate.toDateString()) {
             s += 1;
             updateDoc(doc(database, "streak", auth.currentUser!.uid), {
                 Days: s,
-                lastUpdated: new Date(),
+                lastStudied: new Date(),
             }).then(() => { console.log("Updated Streak record for the user") });
         }
     }
@@ -126,9 +126,9 @@ function renderCountdownTimer(duration: number, selectedMinute: number, setSelec
     return (
         <CountdownCircleTimer
             isPlaying
-            duration={duration}
+            duration={2}
             colors={['#004777', '#F7B801', '#A30000', '#A30000']}
-            colorsTime={[7, 5, 2, 0]}
+            colorsTime={[duration*0.75, duration * 0.5, duration * 0.25, duration * 0.1]}
             isGrowing={false}
             size={400}
             onComplete={() => endTimer(duration, selectedMinute, setSelectedMinute, setIsTimerActive)}

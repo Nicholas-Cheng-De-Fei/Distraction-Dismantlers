@@ -74,7 +74,7 @@ export const styles = StyleSheet.create({
     left: 40,
     right: 40,
     borderRadius: 25,
-    height: height * 0.08,
+    height: height * 0.1,
     shadowOffset: {
       width: 0,
       height: 15,

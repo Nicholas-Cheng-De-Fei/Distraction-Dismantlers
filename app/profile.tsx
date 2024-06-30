@@ -9,13 +9,14 @@ import Tasks from "@/components/Tasks";
 
 const yesterdayDate = new Date();
 yesterdayDate.setDate(yesterdayDate.getDate() - 1);
+yesterdayDate.setUTCHours(0,0,0,0);
 
 const todayDate = new Date();
-todayDate.setHours(23, 59, 59);
+todayDate.setUTCHours(23, 59, 59, 999);
 
 const startOfWeekDate = new Date();
-startOfWeekDate.setDate(startOfWeekDate.getDate() - startOfWeekDate.getDay() + 1);
-startOfWeekDate.setHours(0, 0, 0);
+startOfWeekDate.setDate(startOfWeekDate.getDate() - startOfWeekDate.getDay());
+startOfWeekDate.setUTCHours(0, 0, 0, 0);
 
 function resetStreak(currentData: DocumentData, currentUserId: string) {
   updateDoc(doc(database, "streak", currentUserId), {
@@ -36,23 +37,27 @@ async function getUserStats(currentUserId: string, setAverage: React.Dispatch<Re
     const streakDataSnap = await getDoc(streakRef);
     const streakData = streakDataSnap.data();
 
-    const time = new Date(streakData!.lastStudied.toDate().getTime() + 8 * 60 * 60 * 1000);
-    if (time.toDateString() == yesterdayDate.toDateString() || time.toDateString() == new Date().toDateString()) {
-      count = streakData!.Days;
-    } else {
-      count = 0;
-      if (streakData!.Days != 0) {
-        resetStreak(streakData!, currentUserId);
+    if (streakData?.lastStudied != null) {
+      const time = new Date(streakData!.lastStudied.toDate().getTime() + 8 * 60 * 60 * 1000);
+      time.setHours(0,0,0,0);
+
+      if (time.toDateString() == yesterdayDate.toDateString() || time.toDateString() == todayDate.toDateString()) {
+        count = streakData!.Days;
+      } else {
+        count = 0;
+        if (streakData!.Days != 0) {
+          resetStreak(streakData!, currentUserId);
+        }
       }
+  
+      setStreakCount(count);
     }
 
-    setStreakCount(count);
 
     let avg: number = 0;
 
     const sessionsDataSnap = await getDocs(queryStats);
     sessionsDataSnap.forEach((doc) => {
-      console.log(doc);
       avg += doc.data().Duration / 60 / 60;
     });
 
@@ -123,7 +128,7 @@ export default function Profile() {
                 height: 55,
               }}
             ></Image>
-            <Text style={{ fontSize: 27 }}>{average.toFixed(2)} hrs/wk</Text>
+            <Text style={{ fontSize: 20 }}>{average.toFixed(2)} hrs/wk</Text>
           </View>
         </View>
       </View>
