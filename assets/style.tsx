@@ -1,6 +1,6 @@
 import { Dimensions, StyleSheet, TouchableOpacity, View } from "react-native";
 export const { width, height } = Dimensions.get('window');
-import * as Font from "expo-font"
+// import * as Font from "expo-font"
 
 // const getFonts = () => {
 //   return (
@@ -257,13 +257,13 @@ export const styles = StyleSheet.create({
   ProfileHeader: {
     marginBottom: 20,
     justifyContent: "center", alignItems: "center", paddingTop: 80
-  }, 
+  },
   ProfileHeaderText: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
     textDecorationLine: 'underline',
-    
+
   },
   streakBoxHeader: {
     alignItems: 'center',
@@ -356,7 +356,7 @@ export const styles = StyleSheet.create({
     borderWidth: 2,
     borderRadius: 20,
     alignItems: 'center',
-    
+
   },
   taskHeader: {
     fontSize: 20,
@@ -370,7 +370,7 @@ export const styles = StyleSheet.create({
   },
   taskBox: {
     marginBottom: 15,
-    padding: 15,
+    padding: 10,
     backgroundColor: 'white',
     borderRadius: 20,
     shadowColor: '#000',
@@ -398,6 +398,11 @@ export const styles = StyleSheet.create({
     marginTop: 5,
     textDecorationLine: 'none',
   },
+  taskContentBox: {
+    margin: 0,
+    paddingRight: 120,
+  },
+
 
 
 
@@ -456,6 +461,7 @@ export const styles = StyleSheet.create({
   deleteButtonText: {
     color: '#fff',
     fontWeight: 'bold',
-    width: width * 0.09,
+    textAlign: "center",
+    width: width * 0.11,
   },
 })

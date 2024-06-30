@@ -18,7 +18,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/images/icon.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.DistractionDismantlers"
@@ -40,7 +40,7 @@
         "origin": false
       },
       "eas": {
-        "projectId": "68cbfe86-acc4-4944-8565-64092ff92832"
+        "projectId": "fbc48329-eaaa-40c1-bdb0-9287ea785ef4"
       }
     }
   }

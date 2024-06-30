@@ -2,15 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { ScrollView, Text, View, TouchableOpacity, Image, Modal, TextInput, Button } from 'react-native';
 import CheckBox from 'expo-checkbox';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import { collection, getDocs, setDoc, doc, DocumentData, updateDoc, deleteDoc } from "@firebase/firestore";
+import { collection, getDocs, setDoc, doc, updateDoc, deleteDoc } from "@firebase/firestore";
 import { auth, database } from "@/firebaseConfig";
 import { styles } from '@/assets/style';
 import { onSnapshot } from '@firebase/firestore';
 
-async function write(taskName: string, dueDate: Date) {
+async function write(taskName: string, dueDate: Date, userID: string) {
   try {
     let taskCreationDate = new Date().toUTCString();
-    await setDoc(doc(database, "tasks", user!.uid, "taskList", taskCreationDate), {
+    await setDoc(doc(database, "tasks", userID, "taskList", taskCreationDate), {
       id: taskCreationDate,
       TaskName: taskName,
       DueDateTime: dueDate,
@@ -31,38 +31,35 @@ function compareDates(task1, task2) {
   if (taskA > taskB) {
     return 1;
   }
-  // names must be equal
   return 0;
 }
 
 
-async function read(setTasks) {
+async function read(setTasks, userID: string) {
 
-  const querySnapshot = await getDocs(collection(database, "tasks", user!.uid, "taskList"));
+  const querySnapshot = await getDocs(collection(database, "tasks", userID, "taskList"));
   const tasks = [];
   querySnapshot.forEach((doc) => {
-    try {
-      console.log(doc.data().uid);
+    if (doc.data().id != null || typeof doc.data().id != "undefined") // make sure to not use empty doc
       tasks.push(doc.data());
-    }
-    catch (e) {
-    }
-  });
+    // console.log("P");
+  }
+  );
 
   tasks.sort(compareDates);
   setTasks(tasks);
 
 }
-async function updateTaskCompletion(taskId, isCompleted: boolean) {
-  const taskRef = doc(database, "tasks", user!.uid, "taskList", taskId);
+async function updateTaskCompletion(taskId, isCompleted: boolean, userID: string) {
+  const taskRef = doc(database, "tasks", userID, "taskList", taskId);
   try {
     await updateDoc(taskRef, { isComplete: isCompleted });
   } catch (e) {
     console.error("Error updating document: ", e);
   }
 }
-async function deleteTask(taskId) {
-  const taskRef = doc(database, "tasks", user!.uid, "taskList", taskId);
+async function deleteTask(taskId, userID: string) {
+  const taskRef = doc(database, "tasks", userID, "taskList", taskId);
   try {
     await deleteDoc(taskRef);
     // read(setTasks); // Refresh the tasks list after deletion
@@ -73,19 +70,19 @@ async function deleteTask(taskId) {
 
 export default function Task() {
 
-  const user = auth!.currentUser;
+  const userID = auth!.currentUser!.uid;
 
   const [tasks, setTasks] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [newTask, setNewTask] = useState('');
   const [dueDate, setDueDate] = useState(new Date());
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-  // console.log(user!.uid);
+  // console.log(userID);
   // read(setTasks);
   useEffect(() => {
     // Updates view whenever taskList in db changes
-    const listener = onSnapshot(collection(database, "tasks", user!.uid, "taskList"), (snapshot) => {
-      read(setTasks);
+    const listener = onSnapshot(collection(database, "tasks", userID, "taskList"), (snapshot) => {
+      read(setTasks, userID);
     });
     return () => listener();
   }, []);
@@ -94,21 +91,21 @@ export default function Task() {
     setDatePickerVisibility(false);
   };
 
-  const addTask = () => {
+  function addTask(userID: string) {
     if (newTask.trim()) {
-      write(newTask, dueDate);
-      read(setTasks); // Refresh the tasks list
+      write(newTask, dueDate, userID);
+      read(setTasks, userID); // Refresh the tasks list
       setNewTask('');
       setDueDate(new Date());
       setModalVisible(false);
     }
   };
   const toggleTaskCompletion = async (taskId, currentStatus) => {
-    await updateTaskCompletion(taskId, !currentStatus);
+    await updateTaskCompletion(taskId, !currentStatus, userID);
   };
   const deleteT = async (taskId) => {
-    await deleteTask(taskId);
-    read(setTasks); // Refresh the tasks list
+    await deleteTask(taskId, userID);
+    read(setTasks, userID); // Refresh the tasks list
   };
   function formatDate(date: Date) {
     const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -151,11 +148,12 @@ export default function Task() {
               <View key={index} style={styles.taskBox}>
                 <CheckBox
                   value={task.isComplete}
-                  onValueChange={() => toggleTaskCompletion(task.id, task.isComplete)}
+                  onValueChange={() => toggleTaskCompletion(task.id, task.isComplete, userID)}
                 />
-                <Text style={[styles.taskName, task.isComplete && styles.completedTask]}>{task.TaskName}</Text>
-                <Text style={[styles.taskDueDate, task.isComplete && styles.completedTask]}>Due: {formatDate(task.DueDateTime.toDate())}</Text>
-
+                <View style={styles.taskContentBox}>
+                  <Text style={[styles.taskName, task.isComplete && styles.completedTask]}>{task.TaskName}</Text>
+                  <Text style={[styles.taskDueDate, task.isComplete && styles.completedTask]}>Due: {formatDate(task.DueDateTime.toDate())}</Text>
+                </View>
                 <TouchableOpacity onPress={() => deleteT(task.id)} style={styles.deleteButton}>
                   <Text style={styles.deleteButtonText}>Delete</Text>
                 </TouchableOpacity>
@@ -192,7 +190,7 @@ export default function Task() {
           />
           <View style={styles.modalButtonContainer}>
             <Button title="Cancel" onPress={() => setModalVisible(false)} />
-            <Button title="Add Task" onPress={addTask} />
+            <Button title="Add Task" onPress={() => addTask(userID)} />
           </View>
         </View>
       </Modal>

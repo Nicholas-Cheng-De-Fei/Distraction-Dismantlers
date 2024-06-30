@@ -130,12 +130,12 @@ export default function Login() {
           const user = userCredential.user;
           await updateProfile(user, { displayName: username });
 
-         const d1= await addDoc(collection(database, "tasks", user!.uid, "taskList"), {});
-         const d2=await addDoc(collection(database, "stats", user!.uid, "studySessions"), {});
-         await setDoc(doc(database, "streak", user!.uid), { Days: 0, lastStudied: null });
-// deleteDoc(d1);
-// deleteDoc(d2);
-// deleteDoc(d3);
+          const d1 = await addDoc(collection(database, "tasks", user!.uid, "taskList"), {});
+          const d2 = await addDoc(collection(database, "stats", user!.uid, "studySessions"), {});
+          await setDoc(doc(database, "streak", user!.uid), { Days: 0, lastStudied: null });
+          // deleteDoc(d1);
+          // deleteDoc(d2);
+          // deleteDoc(d3);
           console.log('User created successfully! ' + user!.uid);
         });
 
