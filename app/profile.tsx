@@ -12,7 +12,8 @@ yesterdayDate.setDate(yesterdayDate.getDate() - 1);
 yesterdayDate.setUTCHours(0,0,0,0);
 
 const todayDate = new Date();
-todayDate.setUTCHours(23, 59, 59, 999);
+todayDate.setHours(23,59,59)
+
 
 const startOfWeekDate = new Date();
 startOfWeekDate.setDate(startOfWeekDate.getDate() - startOfWeekDate.getDay());
