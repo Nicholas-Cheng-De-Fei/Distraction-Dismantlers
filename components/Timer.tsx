@@ -171,7 +171,7 @@ export default function Timer() {
                 <View style={{ paddingTop: 30 }}>
                     {isTimerActive
                         ? <Pressable testID='Stop Button' style={styles.stopTimerButton} onPress={() => endTimer(duration, selectedMinute, setSelectedMinute, setIsTimerActive)}>
-                            <Text style={{ color: "white", fontSize: 20 }}>Stop Timer</Text>
+                            <Text style={{color: "white", fontSize: 20 }}>Stop Timer</Text>
                         </Pressable>
 
                         : <Pressable testID='Start Button' style={styles.startTimerButton} onPress={() => startTimer(selectedHour, selectedMinute, duration, setDuration, setIsTimerActive)}>
@@ -179,6 +179,7 @@ export default function Timer() {
                         </Pressable>
                     }
                 </View>
+                
             </View>
         </View>
     )

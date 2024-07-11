@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, Dimensions, Button, Image } from "react-native";
+import { View, Text, Dimensions, Button, Image, Pressable } from "react-native";
 import { auth, database } from "@/firebaseConfig";
 import { signOut } from "@firebase/auth";
 import { doc, collection, getDocs, query, where, getDoc, updateDoc, DocumentData } from "firebase/firestore";
@@ -91,11 +91,18 @@ export default function Profile() {
       }
     }
   }, [isFocused])
-
+  // <Button title="Logout" onPress={logout} color="#e74c3c"/>
   return (
     <View style={styles.background}>
-      <View style={styles.ProfileHeader}>
-        <Text style={styles.ProfileHeaderText}>Hello {user!.displayName}</Text>
+      <View style={[styles.ProfileHeader, {flexDirection : 'row'}]}>
+        <Text style={[styles.ProfileHeaderText, {flex : 2, paddingLeft : width * 0.1}]}>Hello {user!.displayName}</Text>
+
+        <View style={{paddingRight : width * 0.1}}>
+          <Pressable onPress={logout} style = {styles.logoutButton}>
+            <Text style = {{fontWeight: 'black', fontSize: 18}}>Logout</Text>
+          </Pressable>
+        </View>
+
       </View>
 
       <View style={{ flexDirection: 'row' }}>
@@ -138,10 +145,6 @@ export default function Profile() {
 
       <View id="heatMap">
 
-      </View>
-
-      <View style={{ justifyContent: "center", alignItems: "center", paddingTop: 80 }}>
-        <Button title="Logout" onPress={logout} color="#e74c3c" />
       </View>
     </View>
   );

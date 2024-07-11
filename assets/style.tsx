@@ -1,6 +1,6 @@
 import { Dimensions, StyleSheet, TouchableOpacity, View } from "react-native";
 export const { width, height } = Dimensions.get('window');
-// import * as Font from "expo-font"
+import * as Font from "expo-font"
 
 // const getFonts = () => {
 //   return (
@@ -13,6 +13,7 @@ export const { width, height } = Dimensions.get('window');
 // }
 
 // getFonts();
+
 
 // Custom Props
 export const NavHomeButton = ({ children, onPress }) => (
@@ -263,7 +264,6 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 20,
     textDecorationLine: 'underline',
-
   },
   streakBoxHeader: {
     alignItems: 'center',
@@ -313,6 +313,18 @@ export const styles = StyleSheet.create({
     borderRadius: 20,
     alignItems: 'center',
     flexDirection: 'row',
+  },
+
+  logoutButton: {
+    borderRadius: 10,
+    borderColor: "white",
+    width: width * 0.2,
+    height: 40,
+    bottom : 5, 
+    backgroundColor: '#FF7F7F',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 2,
   },
 
   //////////////////////

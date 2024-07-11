@@ -10,7 +10,8 @@
     "web": "expo start --web",
     "test": "jest",
     "test:watch": "jest --watchAll",
-    "lint": "expo lint"
+    "lint": "expo lint",
+    "add-courses": "add-course"
   },
   "jest": {
     "preset": "jest-expo",
