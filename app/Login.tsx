@@ -140,6 +140,7 @@ export default function Login() {
           const d1 = await addDoc(collection(database, "tasks", user!.uid, "taskList"), {});
           const d2 = await addDoc(collection(database, "stats", user!.uid, "studySessions"), {});
           await setDoc(doc(database, "streak", user!.uid), { Days: 0, lastStudied: null });
+          await setDoc(doc(database, "subscriptions", user!.uid), { courses: []});
           // deleteDoc(d1);
           // deleteDoc(d2);
           // deleteDoc(d3);

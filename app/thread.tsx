@@ -1,17 +1,30 @@
-import React, { useEffect } from "react";
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { View, Text, Dimensions} from "react-native";
+import React from "react";
+import { View, Text, TextInput } from "react-native";
 import { auth } from "@/firebaseConfig";
-import { width, height } from "@/assets/style";
+import { width, height, styles } from "@/assets/style";
+import { Image } from "react-native";
+import DisplayPosts from "@/components/DisplayPosts";
 
-const user = auth!.currentUser;
 export default function Thread() {
+  const user = auth!.currentUser;
+  const [courseSpecfic, setCourseSpecfic] = React.useState(null);
 
   return (
-    <View style = {{height : height * 0.8, justifyContent : "center", alignItems : "center"}}>
-        <Text>Thread Page</Text>
-        <Text>Hello</Text>
+    <View style={styles.background}>
+      <View style = {{flex: 1}}>
+        <View testID="search bar" style={{ flexDirection: "row", alignItems: "center", justifyContent: "center", top: height * 0.05 }}>
+          <Image source={require("@/assets/images/search-icon.png")} style={styles.searchBarIcon}></Image>
+          <TextInput
+            placeholder="Search"
+            style={styles.searchBarStyle}
+          >
+          </TextInput>
+        </View>
+      </View>
+      <View style = {{flex : 6, alignItems : "center"}}>
+        <DisplayPosts />
+      </View>
     </View>
+
   );
 }

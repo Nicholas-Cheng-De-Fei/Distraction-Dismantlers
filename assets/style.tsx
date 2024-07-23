@@ -327,9 +327,9 @@ export const styles = StyleSheet.create({
     borderWidth: 2,
   },
 
-  //////////////////////
+  ///////////////////
   // For Task page //
-  //////////////////////
+  ///////////////////
   addButton: {
     position: 'absolute',
     top: height*0.025,
@@ -415,9 +415,9 @@ export const styles = StyleSheet.create({
     paddingRight: width*0.3,
   },
 
-  //////////////////////
+  ///////////////////////////
   // For Task page (Modal) //
-  //////////////////////
+  ///////////////////////////
   modalView: {
     flex: 1,
     height: 0,
@@ -475,5 +475,25 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: "center",
     width: width * 0.11,
+  },
+
+  /////////////////////
+  // For Thread page //
+  /////////////////////
+  searchBarStyle: {
+    width : width * 0.7, 
+    height : height * 0.05,
+    borderRadius : 12, 
+    backgroundColor : "white", 
+    paddingLeft : width * 0.1, 
+    right : 20, 
+    fontSize : 18,
+  },
+
+  searchBarIcon: {
+    width : width * 0.1, 
+    height : height * 0.04, 
+    left : width * 0.06, 
+    zIndex : 1,
   },
 })

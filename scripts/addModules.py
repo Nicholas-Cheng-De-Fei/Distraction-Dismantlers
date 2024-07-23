@@ -2,6 +2,7 @@ import json
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
+from datetime import datetime
 
 cred = credentials.Certificate(r"scripts/database_key.json")
 firebase_admin.initialize_app(cred)
@@ -20,7 +21,10 @@ for course in data :
         newDoc.set({
             "moduleCode" : course['moduleCode'],
             "title" : course['title'],
-            "description" : course['description']
+            "description" : course['description'],
         })
+
+        courseThread = newDoc.collection('thread')
+        courseThread.add({})
 
 file.close();
