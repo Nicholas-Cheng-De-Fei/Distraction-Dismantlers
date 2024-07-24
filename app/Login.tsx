@@ -3,6 +3,7 @@ import { View, Text, TextInput, Button, Alert } from 'react-native';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, updateProfile } from '@firebase/auth';
 import { styles } from '@/assets/style';
 import { auth, database } from '@/firebaseConfig';
+import { sendEmailVerification, signOut } from "firebase/auth";
 import Home from './home'; // Import the new component
 import { addDoc, collection, deleteDoc, doc, setDoc } from '@firebase/firestore';
 
@@ -127,9 +128,18 @@ export default function Login() {
       if (isLogin) {
         await signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
           // Signed in 
+          const user = userCredential.user;
+          if (!user.emailVerified) { // If email not verified do not allow user to login
+            Alert.alert('Please Verify Your Email', 'Please make sure your email is verified before using our app.');
+            signOut(auth);
+            console.log('User Did not verify Email!');
+          }
+          else { // Successful Login
+            console.log('User signed in successfully!');
+          }
         })
+
         resetAllFields();
-        console.log('User signed in successfully!');
 
       } else {
         await createUserWithEmailAndPassword(auth, email, password).then(async (userCredential) => {
@@ -137,17 +147,22 @@ export default function Login() {
           const user = userCredential.user;
           await updateProfile(user, { displayName: username });
 
+          sendEmailVerification(user);
+
           const d1 = await addDoc(collection(database, "tasks", user!.uid, "taskList"), {});
           const d2 = await addDoc(collection(database, "stats", user!.uid, "studySessions"), {});
           await setDoc(doc(database, "streak", user!.uid), { Days: 0, lastStudied: null });
-          await setDoc(doc(database, "subscriptions", user!.uid), { courses: []});
+          await setDoc(doc(database, "subscriptions", user!.uid), { courses: [] });
           // deleteDoc(d1);
           // deleteDoc(d2);
           // deleteDoc(d3);
           resetAllFields();
-
-
           console.log('User created successfully! ' + user!.uid);
+
+          // Sign user out and make sure they verify email
+          Alert.alert('Please Verify Your Email', 'Please make sure your email is verified before using our app.');
+          signOut(auth);
+
         });
 
         // await signOut(auth); // User needs to login again
