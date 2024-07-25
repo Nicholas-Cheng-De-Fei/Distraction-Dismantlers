@@ -320,7 +320,7 @@ export const styles = StyleSheet.create({
     borderColor: "white",
     width: width * 0.2,
     height: 40,
-    bottom : 5, 
+    bottom: 5,
     backgroundColor: '#FF7F7F',
     alignItems: 'center',
     justifyContent: 'center',
@@ -332,7 +332,7 @@ export const styles = StyleSheet.create({
   ///////////////////
   addButton: {
     position: 'absolute',
-    top: height*0.025,
+    top: height * 0.025,
     right: 15,
     width: 30,
     height: 30,
@@ -379,13 +379,13 @@ export const styles = StyleSheet.create({
 
   taskScrollView: {
     marginTop: 10,
-    width:width*0.9,
+    width: width * 0.9,
     zIndex: 0,
   },
   taskBox: {
     marginBottom: 15,
     padding: 10,
-    margin:0,
+    margin: 0,
     backgroundColor: 'white',
     borderRadius: 100,
     elevation: 5,
@@ -411,8 +411,8 @@ export const styles = StyleSheet.create({
   },
   taskContentBox: {
     margin: 0,
-    paddingTop:height*0.01,
-    paddingRight: width*0.3,
+    paddingTop: height * 0.01,
+    paddingRight: width * 0.3,
   },
 
   ///////////////////////////
@@ -460,10 +460,10 @@ export const styles = StyleSheet.create({
   modalButtonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    width: width*0.4,
-    gap:0,
+    width: width * 0.4,
+    gap: 0,
   },
-  
+
   deleteButton: {
     backgroundColor: '#ff0000',
     padding: 5,
@@ -478,31 +478,80 @@ export const styles = StyleSheet.create({
   },
 
   /////////////////////
+  // For Profile (Activity Tracker) //
+  /////////////////////
+
+  weekdaysRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginBottom: 5,
+  },
+  weekdayText: {
+    fontWeight: 'bold',
+  },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginBottom: 5,
+  },
+  cell: {
+    width: 30,
+    height: 30,
+    margin: 2,
+    borderRadius: 5,
+  },
+  selectedInfo: {
+    marginTop: 10,
+    alignItems: 'center',
+  },
+  /////////////////////
   // For Thread page //
   /////////////////////
   searchBarStyle: {
-    width : width * 0.7, 
-    height : height * 0.05,
-    borderRadius : 12, 
-    backgroundColor : "white", 
-    paddingLeft : width * 0.1, 
-    right : 20, 
-    fontSize : 18,
+    width: width * 1,
+    height: height * 0.05,
+    borderRadius: 12,
+    backgroundColor: "white",
+    paddingLeft: width * 0.1,
+    right: 20,
+    fontSize: 18,
   },
 
   searchBarIcon: {
-    width : width * 0.1, 
-    height : height * 0.04, 
-    left : width * 0.06, 
-    zIndex : 1,
+    width: width * 0.1,
+    height: height * 0.04,
+    left: width * 0.06,
+    zIndex: 1,
   },
 
   subscribeButton: {
-    justifyContent : "center",
-    alignItems : "center",
-    borderRadius : 10,
-    height : height * 0.03,
-    width : width * 0.2,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 10,
+    height: height * 0.03,
+    width: width * 0.2,
+  },
+
+  /////////////////////
+  // For Thread page (AutoComplete) //
+  /////////////////////
+  suggestionsContainer: {
+    position: 'absolute',
+    top: height * 0.05, // Adjust to position the list below the search bar
+    left: 0,
+    right: 0,
+    backgroundColor: '#fff',
+    borderColor: '#ccc',
+    borderWidth: 1,
+    borderRadius: 5,
+    height:height*0.3,
+    zIndex: 10,
+  },
+  suggestionItem: {
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+    zIndex:11,
   },
 
 })

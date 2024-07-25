@@ -1,18 +1,19 @@
 import React from "react";
-import { View, Text, Dimensions, Button, Image, Pressable } from "react-native";
+import { View, Text, Dimensions, Button, Image, Pressable, SafeAreaView } from "react-native";
 import { auth, database } from "@/firebaseConfig";
 import { signOut } from "@firebase/auth";
 import { doc, collection, getDocs, query, where, getDoc, updateDoc, DocumentData } from "firebase/firestore";
 import { useIsFocused } from "@react-navigation/native";
 import { styles, width, height } from "@/assets/style";
 import Tasks from "@/components/Tasks";
+import ActivityGrid from "@/components/ActivityGrid";
 
 const yesterdayDate = new Date();
 yesterdayDate.setDate(yesterdayDate.getDate() - 1);
-yesterdayDate.setUTCHours(0,0,0,0);
+yesterdayDate.setUTCHours(0, 0, 0, 0);
 
 const todayDate = new Date();
-todayDate.setHours(23,59,59)
+todayDate.setHours(23, 59, 59)
 
 
 const startOfWeekDate = new Date();
@@ -40,7 +41,7 @@ async function getUserStats(currentUserId: string, setAverage: React.Dispatch<Re
 
     if (streakData?.lastStudied != null) {
       const time = new Date(streakData!.lastStudied.toDate().getTime() + 8 * 60 * 60 * 1000);
-      time.setHours(0,0,0,0);
+      time.setHours(0, 0, 0, 0);
 
       if (time.toDateString() == yesterdayDate.toDateString() || time.toDateString() == todayDate.toDateString()) {
         count = streakData!.Days;
@@ -50,7 +51,7 @@ async function getUserStats(currentUserId: string, setAverage: React.Dispatch<Re
           resetStreak(streakData!, currentUserId);
         }
       }
-  
+
       setStreakCount(count);
     }
 
@@ -94,12 +95,12 @@ export default function Profile() {
   // <Button title="Logout" onPress={logout} color="#e74c3c"/>
   return (
     <View style={styles.background}>
-      <View style={[styles.ProfileHeader, {flexDirection : 'row'}]}>
-        <Text style={[styles.ProfileHeaderText, {flex : 2, paddingLeft : width * 0.1}]}>Hello {user!.displayName}</Text>
+      <View style={[styles.ProfileHeader, { flexDirection: 'row' }]}>
+        <Text style={[styles.ProfileHeaderText, { flex: 2, paddingLeft: width * 0.1 }]}>Hello {user!.displayName}</Text>
 
-        <View style={{paddingRight : width * 0.1}}>
-          <Pressable onPress={logout} style = {styles.logoutButton}>
-            <Text style = {{fontWeight: 'black', fontSize: 18}}>Logout</Text>
+        <View style={{ paddingRight: width * 0.1 }}>
+          <Pressable onPress={logout} style={styles.logoutButton}>
+            <Text style={{ fontWeight: 'black', fontSize: 18 }}>Logout</Text>
           </Pressable>
         </View>
 
@@ -139,9 +140,13 @@ export default function Profile() {
           </View>
         </View>
       </View>
+      
       <View id="to-do List">
         <Tasks />
       </View>
+      <SafeAreaView id="to-do List">
+        <ActivityGrid />
+      </SafeAreaView>
 
       <View id="heatMap">
 
