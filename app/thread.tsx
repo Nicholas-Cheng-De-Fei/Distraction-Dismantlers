@@ -2,28 +2,24 @@ import React from "react";
 import { View, Text, TextInput } from "react-native";
 import { auth } from "@/firebaseConfig";
 import { width, height, styles } from "@/assets/style";
-import { Image } from "react-native";
 import DisplayPosts from "@/components/DisplayPosts";
+import PostView from "@/components/PostView";
+import CourseSub from "@/components/CourseSub";
 
 export default function Thread() {
   const user = auth!.currentUser;
-  const [courseSpecfic, setCourseSpecfic] = React.useState(null);
+  const [pannel, setPannel] = React.useState("Personal");
+  const [mod, setMod] = React.useState(null);
+  const [post, setPost] = React.useState(null);
 
   return (
     <View style={styles.background}>
-      <View style = {{flex: 1}}>
-        <View testID="search bar" style={{ flexDirection: "row", alignItems: "center", justifyContent: "center", top: height * 0.05 }}>
-          <Image source={require("@/assets/images/search-icon.png")} style={styles.searchBarIcon}></Image>
-          <TextInput
-            placeholder="Search"
-            style={styles.searchBarStyle}
-          >
-          </TextInput>
-        </View>
-      </View>
-      <View style = {{flex : 6, alignItems : "center"}}>
-        <DisplayPosts />
-      </View>
+      {pannel == "Personal"
+      ? <DisplayPosts setPannel={setPannel} setMod={setMod} setPost={setPost}/>
+      : pannel == "Post"
+        ? <PostView setPannel = {setPannel} postId={post}/>
+        : <CourseSub setPannel = {setPannel} courseCode = {mod} lastPage = {"Personal"}/>
+      }
     </View>
 
   );

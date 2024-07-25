@@ -47,7 +47,7 @@ export const styles = StyleSheet.create({
   centerContentContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: 20
+
   },
 
   background: {
@@ -496,4 +496,13 @@ export const styles = StyleSheet.create({
     left : width * 0.06, 
     zIndex : 1,
   },
+
+  subscribeButton: {
+    justifyContent : "center",
+    alignItems : "center",
+    borderRadius : 10,
+    height : height * 0.03,
+    width : width * 0.2,
+  },
+
 })
