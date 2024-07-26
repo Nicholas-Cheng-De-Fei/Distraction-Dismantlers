@@ -483,22 +483,30 @@ export const styles = StyleSheet.create({
 
   weekdaysRow: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
-    marginBottom: 5,
+    justifyContent: 'space-evenly',
+    marginBottom: height * 0.01,
+    marginTop: height * 0.01,
   },
   weekdayText: {
     fontWeight: 'bold',
+    
   },
   row: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginBottom: 5,
+    marginBottom: 0,
   },
   cell: {
-    width: 30,
-    height: 30,
+    width: 25,
+    height: 25,
     margin: 2,
     borderRadius: 5,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  dayText: {
+    fontSize: 12,
+    color: '#000',
   },
   selectedInfo: {
     marginTop: 10,
