@@ -43,7 +43,7 @@ export default function ActivityGrid() {
           }
         }
       });
-      tempData[currentDate - 1] = parseFloat((totalDuration / 3600).toFixed(2));;
+      tempData[currentDate - 1] = parseFloat((totalDuration / 3600).toFixed(2));
 
       for (let index = 0; index < dayInMth; index++) {
         if (!tempData[index]) tempData[index] = 0;

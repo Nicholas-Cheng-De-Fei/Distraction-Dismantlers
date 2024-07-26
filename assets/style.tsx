@@ -257,13 +257,19 @@ export const styles = StyleSheet.create({
   //////////////////////
   ProfileHeader: {
     marginBottom: 20,
-    justifyContent: "center", alignItems: "center", paddingTop: 80
+    justifyContent: "center",
+    alignItems: "center",
+    paddingTop: 80,
   },
   ProfileHeaderText: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 20,
+    marginBottom: 5, // Adjusted spacing
     textDecorationLine: 'underline',
+  },
+  RankHeaderText: {
+    fontSize: 18,
+    color: 'black', textDecorationLine: 'underline',
   },
   streakBoxHeader: {
     alignItems: 'center',
@@ -489,7 +495,7 @@ export const styles = StyleSheet.create({
   },
   weekdayText: {
     fontWeight: 'bold',
-    
+
   },
   row: {
     flexDirection: 'row',
@@ -552,14 +558,14 @@ export const styles = StyleSheet.create({
     borderColor: '#ccc',
     borderWidth: 1,
     borderRadius: 5,
-    height:height*0.3,
+    height: height * 0.3,
     zIndex: 10,
   },
   suggestionItem: {
     padding: 10,
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
-    zIndex:11,
+    zIndex: 11,
   },
 
 })

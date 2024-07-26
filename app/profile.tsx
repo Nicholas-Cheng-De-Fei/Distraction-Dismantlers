@@ -2,11 +2,13 @@ import React from "react";
 import { View, Text, Dimensions, Button, Image, Pressable, SafeAreaView } from "react-native";
 import { auth, database } from "@/firebaseConfig";
 import { signOut } from "@firebase/auth";
-import { doc, collection, getDocs, query, where, getDoc, updateDoc, DocumentData } from "firebase/firestore";
+import { doc, collection, getDocs, query, where, getDoc, updateDoc, DocumentData, orderBy } from "firebase/firestore";
 import { useIsFocused } from "@react-navigation/native";
 import { styles, width, height } from "@/assets/style";
 import Tasks from "@/components/Tasks";
 import ActivityGrid from "@/components/ActivityGrid";
+import Leaderboard from "@/components/LeaderBoard";
+
 
 const yesterdayDate = new Date();
 yesterdayDate.setDate(yesterdayDate.getDate() - 1);
@@ -71,11 +73,34 @@ async function getUserStats(currentUserId: string, setAverage: React.Dispatch<Re
   }
 
 }
+async function findRank(uid: string) {
+
+  try {
+    const q = query(collection(database, "points"), orderBy("Points", "desc"));
+    const querySnapshot = await getDocs(q);
+    var position: number = 0;
+
+    querySnapshot.forEach(documentSnapshot => {
+      let data = documentSnapshot.data();
+      if (data.Uid == uid) {
+        return;
+      }
+      else {
+        position += 1;
+      }
+    });
+    console.warn(position);
+    return position;
+  } catch (error) {
+    console.error("Error fetching users: ", error);
+  }
+};
+// let rank: number= await findRank(auth.currentUser!.uid)!;
 
 export default function Profile() {
 
-  const isFocused = useIsFocused();
   const user = auth!.currentUser;
+  const isFocused = useIsFocused();
 
   const logout = async () => {
     await signOut(auth);
@@ -93,19 +118,24 @@ export default function Profile() {
     }
   }, [isFocused])
   // <Button title="Logout" onPress={logout} color="#e74c3c"/>
+
+  // console.log(rank);
+
   return (
     <View style={styles.background}>
-      <View style={[styles.ProfileHeader, { flexDirection: 'row' }]}>
-        <Text style={[styles.ProfileHeaderText, { flex: 2, paddingLeft: width * 0.1 }]}>Hello {user!.displayName}</Text>
-
+      <View style={[styles.ProfileHeader, { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }]}>
+        <View style={{ flexDirection: 'column', flex: 2, paddingLeft: width * 0.1 }}>
+          <Text style={styles.ProfileHeaderText}>Hello {user!.displayName}</Text>
+          <Pressable onPress={() => console.log("R")}>
+            <Text style={[styles.RankHeaderText, { fontWeight: 'black', fontSize: 18 }]}>Rank</Text>
+          </Pressable>
+        </View>
         <View style={{ paddingRight: width * 0.1 }}>
           <Pressable onPress={logout} style={styles.logoutButton}>
             <Text style={{ fontWeight: 'black', fontSize: 18 }}>Logout</Text>
           </Pressable>
         </View>
-
       </View>
-
       <View style={{ flexDirection: 'row' }}>
 
         <View id="streak" style={{ flex: 1 }}>
@@ -140,17 +170,23 @@ export default function Profile() {
           </View>
         </View>
       </View>
-      
+
       <View id="to-do List">
         <Tasks />
       </View>
-      <SafeAreaView id="to-do List">
+      {/* <SafeAreaView id="to-do List">
         <ActivityGrid />
-      </SafeAreaView>
+      </SafeAreaView> */}
 
       <View id="heatMap">
 
       </View>
     </View>
   );
+
+  // return (
+  //   <View>
+  //     <Leaderboard/>
+  //   </View>
+  // )
 }
