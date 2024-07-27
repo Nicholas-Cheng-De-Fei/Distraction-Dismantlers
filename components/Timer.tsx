@@ -10,6 +10,7 @@ let remainder = 0;
 let time = 0;
 let s: number;
 let t: Date;
+let points: number;
 
 const hours = createArray(24, "Hour");
 const minutes = createArray(60, "Minute");
@@ -41,6 +42,10 @@ async function getStreakData(currentUserId: string) {
         s = streakData!.Days;
         t = new Date(streakData!.lastStudied.toDate().getTime() + 8 * 60 * 60 * 1000);
         t.setUTCHours(0, 0, 0, 0);
+
+        const pointsRef = doc(database, "points", auth.currentUser!.uid);
+        const pointsDataSnap = await getDoc(pointsRef);
+        points = pointsDataSnap.data()!.Points;
     }
 }
 
@@ -65,7 +70,12 @@ function endTimer(duration: number, selectedMinute: number, setSelectedMinute: R
             Date: new Date(),
             Duration: duration,
         }).then(() => { console.log("Recorded the study session into the database") });
-        
+
+
+        updateDoc(doc(database, "points", auth.currentUser!.uid), {
+            Points: points + duration,
+        }).then(() => { console.log("Updated Points record for the user") });
+
         if (t == null || t.toDateString() != todaysDate.toDateString()) {
             s += 1;
             updateDoc(doc(database, "streak", auth.currentUser!.uid), {
@@ -171,7 +181,7 @@ export default function Timer() {
                 <View style={{ paddingTop: 30 }}>
                     {isTimerActive
                         ? <Pressable testID='Stop Button' style={styles.stopTimerButton} onPress={() => endTimer(duration, selectedMinute, setSelectedMinute, setIsTimerActive)}>
-                            <Text style={{color: "white", fontSize: 20 }}>Stop Timer</Text>
+                            <Text style={{ color: "white", fontSize: 20 }}>Stop Timer</Text>
                         </Pressable>
 
                         : <Pressable testID='Start Button' style={styles.startTimerButton} onPress={() => startTimer(selectedHour, selectedMinute, duration, setDuration, setIsTimerActive)}>
@@ -179,7 +189,7 @@ export default function Timer() {
                         </Pressable>
                     }
                 </View>
-                
+
             </View>
         </View>
     )

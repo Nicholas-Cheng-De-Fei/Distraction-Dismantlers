@@ -2,8 +2,8 @@ import React from "react";
 import { View, Text, Dimensions, Button, Image, Pressable, SafeAreaView } from "react-native";
 import { auth, database } from "@/firebaseConfig";
 import { signOut } from "@firebase/auth";
-import { doc, collection, getDocs, query, where, getDoc, updateDoc, DocumentData } from "firebase/firestore";
-import { useIsFocused } from "@react-navigation/native";
+import { doc, collection, getDocs, query, where, getDoc, updateDoc, DocumentData, orderBy } from "firebase/firestore";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
 import { styles, width, height } from "@/assets/style";
 import Tasks from "@/components/Tasks";
 import ActivityGrid from "@/components/ActivityGrid";
@@ -71,11 +71,44 @@ async function getUserStats(currentUserId: string, setAverage: React.Dispatch<Re
   }
 
 }
+async function getRank(uid: string, setRank: React.Dispatch<React.SetStateAction<number>>, setPoints: React.Dispatch<React.SetStateAction<number>>) {
+  try {
+    const q = query(collection(database, "points"), orderBy("Points", "desc"));
+    const querySnapshot = await getDocs(q);
+    let position: number = 1;
+    let final: number = 0;
+    let points: number = 0;
 
-export default function Profile() {
+    querySnapshot.forEach(documentSnapshot => {
+      let data = documentSnapshot.data();
+      // console.log(data.DisplayName);
+      // console.log(uid == data.Uid);
+      if (data.Uid === uid) {
+        final = position;
+        points = data.Points;
+        return;
+      } else {
+        position += 1;
+      }
+    });
 
-  const isFocused = useIsFocused();
+    // console.warn(final);
+    if (final != 0) {
+      setRank(final);
+      setPoints((points/3600));
+    }
+    else {
+      setRank(position);
+    }
+  } catch (error) {
+    console.error("Error Getting Rank: ", error);
+  }
+}
+
+export default function Profile({}) {
+
   const user = auth!.currentUser;
+  const isFocused = useIsFocused();
 
   const logout = async () => {
     await signOut(auth);
@@ -84,6 +117,10 @@ export default function Profile() {
 
   const [average, setAverage] = React.useState(0);
   const [streakCount, setStreakCount] = React.useState(0);
+  const [rank, setRank] = React.useState(0);
+  const [points, setPoints] = React.useState(0);
+
+  React.useEffect(() => { getRank(user!.uid, setRank,setPoints); })
 
   React.useEffect(() => {
     if (isFocused) {
@@ -93,19 +130,23 @@ export default function Profile() {
     }
   }, [isFocused])
   // <Button title="Logout" onPress={logout} color="#e74c3c"/>
+const navigation = useNavigation();
   return (
     <View style={styles.background}>
-      <View style={[styles.ProfileHeader, { flexDirection: 'row' }]}>
-        <Text style={[styles.ProfileHeaderText, { flex: 2, paddingLeft: width * 0.1 }]}>Hello {user!.displayName}</Text>
-
+      <View style={[styles.ProfileHeader, { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }]}>
+        <View style={{ flexDirection: 'column', flex: 2, paddingLeft: width * 0.1 }}>
+          <Text style={styles.ProfileHeaderText}>Hello {user!.displayName}</Text>
+          <Pressable onPress={() => navigation.navigate("Leaderboard")}>
+            <Text style={[styles.RankHeaderText, { fontWeight: 'black', fontSize: 18,color:"green", }]}>Points: {points.toFixed(2)} (#{rank})</Text>
+            <Text style={[styles.RankHeaderText, { fontWeight: 'black', fontSize: 18,color:"green", }]}>Click for more info</Text>
+          </Pressable>
+        </View>
         <View style={{ paddingRight: width * 0.1 }}>
           <Pressable onPress={logout} style={styles.logoutButton}>
             <Text style={{ fontWeight: 'black', fontSize: 18 }}>Logout</Text>
           </Pressable>
         </View>
-
       </View>
-
       <View style={{ flexDirection: 'row' }}>
 
         <View id="streak" style={{ flex: 1 }}>
@@ -140,7 +181,7 @@ export default function Profile() {
           </View>
         </View>
       </View>
-      
+
       <View id="to-do List">
         <Tasks />
       </View>
@@ -153,4 +194,10 @@ export default function Profile() {
       </View>
     </View>
   );
+
+  // return (
+  //   <View>
+  //     <Leaderboard/>
+  //   </View>
+  // )
 }

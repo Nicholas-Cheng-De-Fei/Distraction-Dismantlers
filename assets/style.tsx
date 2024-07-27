@@ -257,13 +257,19 @@ export const styles = StyleSheet.create({
   //////////////////////
   ProfileHeader: {
     marginBottom: 20,
-    justifyContent: "center", alignItems: "center", paddingTop: 80
+    justifyContent: "center",
+    alignItems: "center",
+    paddingTop: height*0.06,
   },
   ProfileHeaderText: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 20,
+    marginBottom: 5, // Adjusted spacing
     textDecorationLine: 'underline',
+  },
+  RankHeaderText: {
+    fontSize: 18,
+    color: 'black', textDecorationLine: 'underline',
   },
   streakBoxHeader: {
     alignItems: 'center',
@@ -483,26 +489,76 @@ export const styles = StyleSheet.create({
 
   weekdaysRow: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
-    marginBottom: 5,
+    justifyContent: 'space-evenly',
+    marginBottom: height * 0.01,
+    marginTop: height * 0.01,
   },
   weekdayText: {
     fontWeight: 'bold',
+
   },
   row: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginBottom: 5,
+    marginBottom: 0,
   },
   cell: {
-    width: 30,
-    height: 30,
+    width: 25,
+    height: 25,
     margin: 2,
     borderRadius: 5,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  dayText: {
+    fontSize: 12,
+    color: '#000',
   },
   selectedInfo: {
     marginTop: 10,
     alignItems: 'center',
+  },
+  /////////////////////
+  // For Leaderboard //
+  /////////////////////
+
+  leaderboardHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 10,
+    backgroundColor: '#f8f8f8',
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+  },
+  backButton: {
+    padding: 10,
+  },
+  backButtonText: {
+    fontSize: 16,
+    color: '#007bff',
+  },
+  leaderboardHeaderTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  leaderboardItem: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 20,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+  },
+  leaderboardRank: {
+    width: 50,
+    fontWeight: 'bold',
+  },
+  leaderboardName: {
+    flex: 1,
+  },
+  points: {
+    width: 50,
+    textAlign: 'right',
   },
   /////////////////////
   // For Thread page //
@@ -552,14 +608,14 @@ export const styles = StyleSheet.create({
     borderColor: '#ccc',
     borderWidth: 1,
     borderRadius: 5,
-    height:height*0.3,
+    height: height * 0.3,
     zIndex: 10,
   },
   suggestionItem: {
     padding: 10,
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
-    zIndex:10,
+    zIndex: 11,
   },
 
 })
