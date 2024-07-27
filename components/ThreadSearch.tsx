@@ -32,7 +32,7 @@ export default function ThreadSearch({ setPannel, setMod }) {
     };
 
     return (
-        <View testID="search bar" style={{ flexDirection: "row", alignItems: "center", justifyContent: "center", top: height * 0.05 }}>
+        <View testID="search bar" style={{ flexDirection: "row", alignItems: "center", justifyContent: "center", top: height * 0.05, zIndex : 11}}>
             <Image
                 source={require("@/assets/images/search-icon.png")} style={styles.searchBarIcon} />
             <TextInput style={styles.searchBarStyle}

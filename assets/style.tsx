@@ -564,7 +564,7 @@ export const styles = StyleSheet.create({
   // For Thread page //
   /////////////////////
   searchBarStyle: {
-    width: width * 1,
+    width: width * 0.95,
     height: height * 0.05,
     borderRadius: 12,
     backgroundColor: "white",
@@ -588,9 +588,17 @@ export const styles = StyleSheet.create({
     width: width * 0.2,
   },
 
-  /////////////////////
+  newPostButton: {
+    width : width * 0.25, 
+    height : height * 0.03, 
+    alignItems : "center", 
+    justifyContent : "center", 
+    borderRadius : 10,
+  },
+
+  ////////////////////////////////////
   // For Thread page (AutoComplete) //
-  /////////////////////
+  ////////////////////////////////////
   suggestionsContainer: {
     position: 'absolute',
     top: height * 0.05, // Adjust to position the list below the search bar

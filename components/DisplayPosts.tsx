@@ -40,69 +40,73 @@ function changePannel(setPannel: any, setMod: any, setPost: any, pannel: string,
     setPannel(pannel);
 }
 
-export default function DisplayPosts({ setPannel, setMod, setPost }) {
+export default function DisplayPosts({ setPannel, setMod, setPost }: any) {
 
     const user = auth!.currentUser;
     const [courseData, setData] = React.useState([]);
+    const [canRender, setCanRender] = React.useState(false);
 
     React.useEffect(() => {
-        getUserSubcribedCourses(user!.uid, setData);
+        getUserSubcribedCourses(user!.uid, setData).then(() => { setCanRender(true) });
     }, []);
 
     return (
         <View>
-            {/* <View testID="search bar" style={{ flexDirection: "row", alignItems: "center", justifyContent: "center", top: height * 0.05}}>
-                <Image source={require("@/assets/images/search-icon.png")} style={styles.searchBarIcon}></Image>
-                <TextInput
-                placeholder="Search Courses"
-                style={styles.searchBarStyle}
-                >
-                </TextInput>
-            </View> */}
-            <ThreadSearch setPannel={setPannel} setMod={setMod} />
-            <View style={{ top: height * 0.1 }}>
-                {
-                    courseData.length == 0
-                        ? <View style={{ alignItems: "center" }}>
-                            {/* <Image source={require("@/assets/images/empty-list-icon.png")} style={{ width: 400, height: 400 }}></Image>
-                            <Text style={{ fontSize: 24, fontWeight: "bold", flexWrap: 'wrap', textAlign: "center" }}>Start following courses and see them appear here!</Text> */}
-                        </View>
-                        : <View>
-                            <FlatList
-                                data={courseData}
-                                renderItem={(item) => {
-                                    const post = item.item.data();
-                                    const time = new Date(post!.datePosted.toDate().getTime() + 8 * 60 * 60 * 1000);
-                                    return (
-                                        <View style={{ paddingBottom: height * 0.02, paddingLeft: width * 0.05, width: width }}>
-                                            <View style={{ flexDirection: "row" }}>
-                                                <View style={{ flex: 2 }}>
-                                                    <Pressable onPress={() => changePannel(setPannel, setMod, setPost, "Module", post.course)}>
-                                                        <View>
-                                                            <Text style={{ fontSize: 20, fontWeight: "bold" }} numberOfLines={1}>{post.course} - {post.title}</Text>
+            {
+                canRender
+                    ?
+                    <View>
+                        <ThreadSearch setPannel={setPannel} setMod={setMod} />
+                        <View style={{ top: height * 0.1 }}>
+                            {
+                                courseData.length == 0
+                                    ? <View style={{ alignItems: "center" }}>
+                                        <Image source={require("@/assets/images/empty-list-icon.png")} style={{ width: 400, height: 400 }}></Image>
+                                        <Text style={{ fontSize: 24, fontWeight: "bold", flexWrap: 'wrap', textAlign: "center" }}>Start following courses and see them appear here!</Text>
+                                    </View>
+                                    : <View>
+                                        <FlatList
+                                            data={courseData}
+                                            renderItem={(item) => {
+                                                const post = item.item.data();
+                                                const time = new Date(post!.datePosted.toDate().getTime() + 8 * 60 * 60 * 1000);
+                                                return (
+                                                    <View style={{ paddingBottom: height * 0.02, paddingLeft: width * 0.05, width: width, zIndex: 1 }}>
+                                                        <View style={{ flexDirection: "row" }}>
+                                                            <View style={{ flex: 2 }}>
+                                                                <Pressable onPress={() => changePannel(setPannel, setMod, setPost, "Module", post.course)}>
+                                                                    <View>
+                                                                        <Text style={{ fontSize: 20, fontWeight: "bold" }} numberOfLines={1}>{post.course} - {post.title}</Text>
+                                                                    </View>
+                                                                </Pressable>
+                                                                <View>
+                                                                    <Pressable onPress={() => { changePannel(setPannel, setMod, setPost, "Post", item.item.id) }}>
+                                                                        <Text>Date posted : {time.toDateString()}</Text>
+                                                                        <Text numberOfLines={2}>{post.description}</Text>
+                                                                    </Pressable>
+                                                                </View>
+                                                            </View>
+                                                            <View style={{ justifyContent: 'center', alignItems: "center", flex: 1 }}>
+                                                                <View style={{ flexDirection: "row" }}>
+                                                                    <Image source={require("@/assets/images/reply-icon.png")} style={{ width: 50, height: 50 }}></Image>
+                                                                    <Text style={{ top: height * 0.01, fontSize: 20 }}>{post.noReplies}</Text>
+                                                                </View>
+                                                            </View>
                                                         </View>
-                                                    </Pressable>
-                                                    <View>
-                                                        <Pressable onPress={() => { changePannel(setPannel, setMod, setPost, "Post", item.item.id) }}>
-                                                            <Text>Date posted : {time.toDateString()}</Text>
-                                                            <Text numberOfLines={2}>{post.description}</Text>
-                                                        </Pressable>
                                                     </View>
-                                                </View>
-                                                <View style={{ justifyContent: 'center', alignItems: "center", flex: 1 }}>
-                                                    <View style={{ flexDirection: "row" }}>
-                                                        <Image source={require("@/assets/images/reply-icon.png")} style={{ width: 50, height: 50 }}></Image>
-                                                        <Text style={{ top: height * 0.01, fontSize: 20 }}>{post.noReplies}</Text>
-                                                    </View>
-                                                </View>
-                                            </View>
-                                        </View>
-                                    )
-                                }}
-                            />
+                                                )
+                                            }}
+                                        />
+                                    </View>
+                            }
                         </View>
-                }
-            </View>
+                    </View>
+                    :
+                    <View style={{ justifyContent: "center", alignItems: "center", height: height }}>
+                        <Image source={require("@/assets/images/loading-icon.png")} style={{ width: 400, height: 400 }}></Image>
+                        <Text style={{ fontWeight: "bold", fontSize: 20 }}>Loading...</Text>
+                    </View>
+            }
         </View>
     )
 }
