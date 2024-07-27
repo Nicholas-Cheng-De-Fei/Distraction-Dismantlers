@@ -9,6 +9,7 @@ import Tasks from "@/components/Tasks";
 import ActivityGrid from "@/components/ActivityGrid";
 import Leaderboard from "@/components/LeaderBoard";
 
+let rank: number;
 
 const yesterdayDate = new Date();
 yesterdayDate.setDate(yesterdayDate.getDate() - 1);
@@ -73,29 +74,36 @@ async function getUserStats(currentUserId: string, setAverage: React.Dispatch<Re
   }
 
 }
-async function findRank(uid: string) {
-
+async function getRank(uid: string, setRank: React.Dispatch<React.SetStateAction<number>>) {
   try {
     const q = query(collection(database, "points"), orderBy("Points", "desc"));
     const querySnapshot = await getDocs(q);
-    var position: number = 0;
+    let position: number = 1;
+    let final: number = 0;
 
     querySnapshot.forEach(documentSnapshot => {
       let data = documentSnapshot.data();
-      if (data.Uid == uid) {
+      // console.log(data.DisplayName);
+      // console.log(uid == data.Uid);
+      if (data.Uid === uid) {
+        final = position;
         return;
-      }
-      else {
+      } else {
         position += 1;
       }
     });
-    console.warn(position);
-    return position;
+
+    // console.warn(final);
+    if (final != 0) {
+      setRank(final);
+    }
+    else {
+      setRank(position);
+    }
   } catch (error) {
-    console.error("Error fetching users: ", error);
+    console.error("Error Getting Rank: ", error);
   }
-};
-// let rank: number= await findRank(auth.currentUser!.uid)!;
+}
 
 export default function Profile() {
 
@@ -109,6 +117,9 @@ export default function Profile() {
 
   const [average, setAverage] = React.useState(0);
   const [streakCount, setStreakCount] = React.useState(0);
+  const [rank, setRank] = React.useState(0);
+
+  React.useEffect(() => { getRank(user!.uid, setRank); })
 
   React.useEffect(() => {
     if (isFocused) {
@@ -119,15 +130,13 @@ export default function Profile() {
   }, [isFocused])
   // <Button title="Logout" onPress={logout} color="#e74c3c"/>
 
-  // console.log(rank);
-
   return (
     <View style={styles.background}>
       <View style={[styles.ProfileHeader, { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }]}>
         <View style={{ flexDirection: 'column', flex: 2, paddingLeft: width * 0.1 }}>
           <Text style={styles.ProfileHeaderText}>Hello {user!.displayName}</Text>
           <Pressable onPress={() => console.log("R")}>
-            <Text style={[styles.RankHeaderText, { fontWeight: 'black', fontSize: 18 }]}>Rank</Text>
+            <Text style={[styles.RankHeaderText, { fontWeight: 'black', fontSize: 18 }]}>Rank {rank}</Text>
           </Pressable>
         </View>
         <View style={{ paddingRight: width * 0.1 }}>
