@@ -7,6 +7,7 @@ import Onboarding from "../components/Onboarding";
 import Login from "./Login";
 import { Text, View } from "react-native";
 import { styles } from "@/assets/style";
+import Leaderboard from "@/components/LeaderBoard";
 
 export default function Index() {
 
@@ -36,6 +37,7 @@ export default function Index() {
       {hasLaunchedFirstTime ? <Stack.Screen name = "Onboarding" component = {Onboarding}></Stack.Screen> 
       : null}
       <Stack.Screen name = "Login" component = {Login}></Stack.Screen>
+      <Stack.Screen name="Leaderboard" component={Leaderboard} />
     </Stack.Navigator>    
   );
 }

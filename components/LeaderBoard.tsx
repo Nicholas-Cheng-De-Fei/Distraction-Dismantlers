@@ -3,7 +3,7 @@ import { View, Text, FlatList, StyleSheet, TouchableOpacity,Image } from 'react-
 import { useNavigation } from '@react-navigation/native';
 import { auth, database } from "@/firebaseConfig";
 import { doc, getDocs, query, collection, orderBy } from '@firebase/firestore';
-
+import { styles, width, height } from "@/assets/style";
 const Leaderboard = () => {
   const [users, setUsers] = useState([]);
   const navigation = useNavigation();
@@ -33,23 +33,23 @@ const Leaderboard = () => {
   }, []);
 
   return (
-    <View >
-      <View style={styles.header}>
+    <View style={styles.background}>
+      <View style={styles.leaderboardHeader}>
         <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
         <Image source={require("@/assets/images/back-button-icon.png")} style={{ width: 40, height: 40, tintColor: "#777777" }}></Image>
                    
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>Leaderboard (1 point = 1 hr)</Text>
+        <Text style={styles.leaderboardHeaderTitle}>Leaderboard (1 point = 1 hr)</Text>
       </View>
       
       <FlatList
         data={users}
         keyExtractor={item => item.key}
         renderItem={({ item, index }) => (
-          <View style={styles.item}>
-            <Text style={styles.rank}>{index + 1}</Text>
-            <Text style={styles.name}>
-              {item.DisplayName} {currentUserUid === item.Uid ? "(You)" : ""}
+          <View style={styles.leaderboardItem}>
+            <Text style={styles.leaderboardRank}>{index + 1}</Text>
+            <Text style={styles.leaderboardName}>
+              {item.DisplayName} {currentUserUid === item.Uid ? <Text style={{color:"purple",  fontWeight: 'bold',}}>(You)</Text> : ""}
             </Text>
             <Text style={styles.points}>{ parseFloat((item.Points / 3600).toFixed(2))}</Text>
           </View>
@@ -58,50 +58,5 @@ const Leaderboard = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: 0,
-  },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: 10,
-    backgroundColor: '#f8f8f8',
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
-  },
-  backButton: {
-    padding: 10,
-  },
-  backButtonText: {
-    fontSize: 16,
-    color: '#007bff',
-  },
-  headerTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  item: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    padding: 20,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
-  },
-  rank: {
-    width: 50,
-    fontWeight: 'bold',
-  },
-  name: {
-    flex: 1,
-  },
-  points: {
-    width: 50,
-    textAlign: 'right',
-  },
-});
 
 export default Leaderboard;

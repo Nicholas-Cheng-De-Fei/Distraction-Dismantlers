@@ -259,7 +259,7 @@ export const styles = StyleSheet.create({
     marginBottom: 20,
     justifyContent: "center",
     alignItems: "center",
-    paddingTop: 80,
+    paddingTop: height*0.06,
   },
   ProfileHeaderText: {
     fontSize: 24,
@@ -517,6 +517,48 @@ export const styles = StyleSheet.create({
   selectedInfo: {
     marginTop: 10,
     alignItems: 'center',
+  },
+  /////////////////////
+  // For Leaderboard //
+  /////////////////////
+
+  leaderboardHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 10,
+    backgroundColor: '#f8f8f8',
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+  },
+  backButton: {
+    padding: 10,
+  },
+  backButtonText: {
+    fontSize: 16,
+    color: '#007bff',
+  },
+  leaderboardHeaderTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  leaderboardItem: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 20,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+  },
+  leaderboardRank: {
+    width: 50,
+    fontWeight: 'bold',
+  },
+  leaderboardName: {
+    flex: 1,
+  },
+  points: {
+    width: 50,
+    textAlign: 'right',
   },
   /////////////////////
   // For Thread page //
