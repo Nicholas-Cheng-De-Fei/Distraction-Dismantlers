@@ -26,12 +26,13 @@ async function getPost(postId: string, setPost: any, setTime: any, setReplies: a
     setReplies(replies);
 }
 
-async function submitReply(postId: string, description: string, name: any, setModalVisible: any, setDescription: any) {
+async function submitReply(postId: string, description: string, uid : any, name: any, setModalVisible: any, setDescription: any) {
     const replyRef = collection(database, "thread", postId, "replies");
     const result = addDoc(replyRef, {
         "dateReplied": new Date(),
         "description": description,
         "author": name,
+        "uid" : uid
     });
 
     const postRef = doc(database, "thread", postId);
@@ -104,7 +105,7 @@ export default function PostView({ setPannel, postId, lastPage }: any) {
                                 </View>
                             </View>
                         </View>
-                        <View style={{ borderTopWidth: 2 }}>
+                        <View style={{ borderTopWidth: 2, height : height * 0.7 }}>
                             {
                                 replies.length == 0
                                     ?
@@ -123,8 +124,8 @@ export default function PostView({ setPannel, postId, lastPage }: any) {
                                                     <View style={{ paddingBottom: height * 0.02, paddingLeft: width * 0.05, width: width, zIndex: 1 }}>
                                                         <View style={{ flexDirection: "row" }}>
                                                             <View>
-                                                                <Text style={{ fontSize: 20 }}>Date posted : {time.toDateString()}</Text>
-                                                                <Text style={{ textAlign: "justify" }}>{post.description}</Text>
+                                                                <Text style={{ fontSize: 18, fontWeight : "bold" }}>Date posted : {time.toDateString()}</Text>
+                                                                <Text style={{ textAlign: "justify", fontSize : 20 }}>{post.description}</Text>
                                                             </View>
                                                         </View>
                                                     </View>
@@ -161,7 +162,7 @@ export default function PostView({ setPannel, postId, lastPage }: any) {
                                             </View>
                                         </Pressable>
                                         <Pressable onPress={() => {
-                                            submitReply(postId, description, user!.displayName, setModalVisible, setDescription);
+                                            submitReply(postId, description,user!.uid, user!.displayName, setModalVisible, setDescription);
                                             getPost(postId, setPost, setTime, setReplies);
                                         }}>
                                             <View style={[styles.newPostButton, { backgroundColor: "#41dc8e" }]}>

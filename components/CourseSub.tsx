@@ -89,9 +89,10 @@ function showModal(setModalVisible: any) {
     setModalVisible(true);
 }
 
-async function submitPost(courseCode: string, title: string, description: string, name: any, setModalVisible: any, setTitle: any, setDescription: any) {
+async function submitPost(courseCode: string, title: string, description: string, uid : any ,name: any, setModalVisible: any, setTitle: any, setDescription: any) {
     const threadRef = collection(database, "thread");
     const result = addDoc(threadRef, {
+        "uid" : uid,
         "course": courseCode,
         "datePosted": new Date(),
         "description": description,
@@ -170,9 +171,11 @@ export default function CourseSub({ setPannel, courseCode, lastPage, setLastPage
                                             <Image source={require("@/assets/images/no-post-icon.png")} style={{ width: 300, height: 300 }}></Image>
                                             <Text style={{ fontSize: 24, fontWeight: "bold", flexWrap: 'wrap', textAlign: "center" }}>So quiet here post something to start something!</Text>
                                         </View>
-                                        : <View>
+                                        : <View style = {{height : height * 0.6}}>
                                             <FlatList
                                                 data={data.posts}
+                                                showsHorizontalScrollIndicator={false}
+                                                bounces={false}
                                                 renderItem={(item) => {
                                                     const post = item.item.data();
                                                     const time = new Date(post!.datePosted.toDate().getTime() + 8 * 60 * 60 * 1000);
@@ -247,7 +250,7 @@ export default function CourseSub({ setPannel, courseCode, lastPage, setLastPage
                                 </View>
                             </Pressable>
                             <Pressable onPress={() => {
-                                submitPost(courseCode, title, description, user!.displayName, setModalVisible, setTitle, setDescription);
+                                submitPost(courseCode, title, description, user!.uid ,user!.displayName, setModalVisible, setTitle, setDescription);
                                 getData(user!.uid, courseCode, setData, setSubcriptions, setSubscribed);
                             }}>
                                 <View style={[styles.newPostButton, { backgroundColor: "#41dc8e" }]}>

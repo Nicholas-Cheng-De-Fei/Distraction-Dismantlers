@@ -167,7 +167,7 @@ const navigation = useNavigation();
 
         <View id="average time" style={{ flex: 1 }}>
           <View style={styles.focusBoxHeader}>
-            <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Avg Focus Time</Text>
+            <Text style={{ fontSize: 20, fontWeight: 'bold' }} numberOfLines={1}>Avg Focus Time</Text>
           </View>
           <View style={styles.focusInfoBox}>
             <Image

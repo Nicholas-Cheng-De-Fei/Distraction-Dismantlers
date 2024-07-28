@@ -56,7 +56,9 @@ export default function DisplayPosts({ setPannel, setMod, setPost }: any) {
                 canRender
                     ?
                     <View>
-                        <ThreadSearch setPannel={setPannel} setMod={setMod} />
+                        <View>
+                            <ThreadSearch setPannel={setPannel} setMod={setMod} />
+                        </View>
                         <View style={{ top: height * 0.1 }}>
                             {
                                 courseData.length == 0
@@ -64,14 +66,16 @@ export default function DisplayPosts({ setPannel, setMod, setPost }: any) {
                                         <Image source={require("@/assets/images/empty-list-icon.png")} style={{ width: 400, height: 400 }}></Image>
                                         <Text style={{ fontSize: 24, fontWeight: "bold", flexWrap: 'wrap', textAlign: "center" }}>Start following courses and see them appear here!</Text>
                                     </View>
-                                    : <View>
+                                    : <View style = {{height : height * 0.75}}>
                                         <FlatList
                                             data={courseData}
+                                            showsHorizontalScrollIndicator={false}
+                                            bounces={false}
                                             renderItem={(item) => {
                                                 const post = item.item.data();
                                                 const time = new Date(post!.datePosted.toDate().getTime() + 8 * 60 * 60 * 1000);
                                                 return (
-                                                    <View style={{ paddingBottom: height * 0.02, paddingLeft: width * 0.05, width: width, zIndex: 1 }}>
+                                                    <View style={{ paddingBottom: height * 0.02, paddingLeft: width * 0.05, width: width, zIndex: 1}}>
                                                         <View style={{ flexDirection: "row" }}>
                                                             <View style={{ flex: 2 }}>
                                                                 <Pressable onPress={() => changePannel(setPannel, setMod, setPost, "Module", post.course)}>
