@@ -65,7 +65,11 @@ async function getUserStats(currentUserId: string, setAverage: React.Dispatch<Re
     sessionsDataSnap.forEach((doc) => {
       avg += doc.data().Duration / 60 / 60;
     });
-    avg /= Math.max(todayDate.getDay());
+    let day = todayDate.getDay();
+    if (day == 0) {
+      day = 7
+    }
+    avg /= Math.max(day);
 
     setAverage(avg);
 
@@ -188,13 +192,10 @@ export default function Profile({ }) {
       <View id="to-do List">
         <Tasks />
       </View>
-      <View id="to-do List">
+      <View id="ActivityGrid">
         <ActivityGrid />
       </View>
 
-      <View id="heatMap">
-
-      </View>
     </View>
   );
 }

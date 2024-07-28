@@ -139,7 +139,7 @@ function renderCountdownTimer(duration: number, selectedMinute: number, setSelec
     return (
         <CountdownCircleTimer
             isPlaying
-            duration={2}
+            duration={duration}
             colors={['#004777', '#F7B801', '#A30000', '#A30000']}
             colorsTime={[60, 30, 10, 0]}
             isGrowing={false}
