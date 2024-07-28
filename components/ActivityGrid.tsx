@@ -147,11 +147,14 @@ export default function ActivityGrid() {
       </View>
       <View style={styles.taskInfoBox}>
         <View style={styles.weekdaysRow}>
-          {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map((day, index) => (
+          <Text style={styles.weekdayText}>
+          Mon  Tue  Wed  Thu  Fri  Sat  Sun 
+          </Text>
+          {/* {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map((day, index) => (
             <Text key={index} style={styles.weekdayText}>
               {day}{" "}
             </Text>
-          ))}
+          ))} */}
         </View>
         {renderCalendar()}
       </View>
