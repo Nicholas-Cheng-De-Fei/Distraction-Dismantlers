@@ -1,23 +1,23 @@
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-
 import Timer from "@/components/Timer";
 import Profile from "../profile";
 import Thread from "../thread";
 import Leaderboard from "@/components/LeaderBoard";
 import { styles, NavHomeButton } from "@/assets/style";
 import { View, Text, Image } from "react-native";
+
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { NavigationContainer } from "@react-navigation/native";
 
 const Stack = createNativeStackNavigator();
 
- function App(){
-    return(
-            <Stack.Navigator  initialRouteName="Profile"  screenOptions={{
-                headerShown: false,}}>
-            <Stack.Screen name="Profile" component={Profile}/>
-            <Stack.Screen name="Leaderboard" component={Leaderboard}/>
-            </Stack.Navigator>
+function ProfileNav() {
+    return (
+        <Stack.Navigator initialRouteName="Profile" screenOptions={{
+            headerShown: false,
+        }}>
+            <Stack.Screen name="Profile" component={Profile} />
+            <Stack.Screen name="Leaderboard" component={Leaderboard} />
+        </Stack.Navigator>
     )
 }
 
@@ -34,7 +34,7 @@ export const Tabs = () => {
                 tabBarShowLabel: false,
             }}
         >
-         
+
             <Tab.Screen name="Thread" component={Thread}
                 options={{
                     tabBarIcon: ({ focused }) => (
@@ -69,7 +69,7 @@ export const Tabs = () => {
                     tabBarButton: (props) => <NavHomeButton {...props} />
                 }}
             ></Tab.Screen>
-            <Tab.Screen name="Profile" component={App}
+            <Tab.Screen name="ProfileFunction" component={ProfileNav}
                 options={{
                     tabBarIcon: ({ focused }) => (
                         <View>

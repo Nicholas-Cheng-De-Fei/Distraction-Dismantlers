@@ -220,19 +220,19 @@ export default function CourseSub({ setPannel, courseCode, lastPage, setLastPage
                 onRequestClose={() => setModalVisible(false)}
             >
                 <View style={{ flex: 1, top: height * 0.2, alignItems: "center" }}>
-                    <View style={{ backgroundColor: "white", width: width * 0.9, paddingTop: 20, paddingBottom: 20 }}>
+                    <View style={styles.modalBox}>
                         <View style={{ alignItems: "center" }}>
-                            <Text style={[styles.modalText, { fontWeight: "bold" }]}>Post Title</Text>
+                            <Text style={styles.modalText}>Post Title</Text>
                             <TextInput
-                                style={[styles.modalInput, { width: width * 0.8 }]}
-                                placeholder="Task Name"
+                                style={styles.modalInput}
+                                placeholder="Post Name"
                                 value={title}
                                 onChangeText={setTitle}
                             />
 
-                            <Text style={[styles.modalText, { fontWeight: "bold" }]}>Description</Text>
+                            <Text style={styles.modalText}>Description</Text>
                             <TextInput
-                                style={[styles.modalInput, { width: width * 0.8, height: height * 0.2 }]}
+                                style={[styles.modalInput, { height: height * 0.2 }]}
                                 multiline={true}
                                 placeholder="Post Description"
                                 value={description}

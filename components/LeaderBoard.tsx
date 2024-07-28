@@ -35,7 +35,7 @@ const Leaderboard = () => {
   return (
     <View style={styles.background}>
       <View style={styles.leaderboardHeader}>
-        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+        <TouchableOpacity onPress={() => navigation.goBack()} style={{padding:0.1}}>
         <Image source={require("@/assets/images/back-button-icon.png")} style={{ width: 40, height: 40, tintColor: "#777777" }}></Image>
                    
         </TouchableOpacity>

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { ScrollView, Text, View, TouchableOpacity, Image, Modal, TextInput, Button } from 'react-native';
+import { ScrollView, Text, View, TouchableOpacity, Image, Modal, TextInput, Button, Pressable } from 'react-native';
 import CheckBox from 'expo-checkbox';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { collection, getDocs, setDoc, doc, updateDoc, deleteDoc } from "@firebase/firestore";
 import { auth, database } from "@/firebaseConfig";
-import { styles } from '@/assets/style';
+import { height, styles, width } from '@/assets/style';
 import { onSnapshot } from '@firebase/firestore';
 
 async function write(taskName: string, dueDate: Date, userID: string) {
@@ -168,29 +168,41 @@ export default function Task() {
         visible={modalVisible}
         onRequestClose={() => setModalVisible(false)}
       >
-        <View style={styles.modalView}>
-          <Text style={styles.modalText}>New Task</Text>
-          <TextInput
-            style={styles.modalInput}
-            placeholder="Task Name"
-            value={newTask}
-            onChangeText={setNewTask}
-          />
+        <View style={{ flex: 1, top: height * 0.3, alignItems: "center", }}>
+          <View style={styles.modalBox}>
 
-          <Text style={styles.modalText}>Due Date</Text>
-          <TouchableOpacity onPress={() => setDatePickerVisibility(true)} style={styles.datePickerButton}>
-            <Text style={styles.modalInput}>{dueDate.toLocaleDateString()} @ {dueDate.toLocaleTimeString()}</Text>
-          </TouchableOpacity>
-          <DateTimePickerModal
+            <View style={{ alignItems: "center" }}>
+              <Text style={styles.modalText}>New Task</Text>
+              <TextInput
+                style={[styles.modalInput]}
+                placeholder="Task Name"
+                value={newTask}
+                onChangeText={setNewTask}
+              />
 
-            isVisible={isDatePickerVisible}
-            mode="datetime"
-            onConfirm={handleConfirm}
-            onCancel={() => setDatePickerVisibility(false)}
-          />
-          <View style={styles.modalButtonContainer}>
-            <Button title="Cancel" onPress={() => setModalVisible(false)} />
-            <Button title="Add Task" onPress={() => addTask(userID)} />
+              <Text style={styles.modalText}>Due Date</Text>
+              <TouchableOpacity onPress={() => setDatePickerVisibility(true)} style={styles.datePickerButton}>
+                <Text style={[styles.modalInput, { width: width * 0.4 }]}>{dueDate.toLocaleDateString()} @ {dueDate.toLocaleTimeString()}</Text>
+              </TouchableOpacity>
+              <DateTimePickerModal
+                isVisible={isDatePickerVisible}
+                mode="datetime"
+                onConfirm={handleConfirm}
+                onCancel={() => setDatePickerVisibility(false)}
+              />
+            </View>
+            <View style={{ flexDirection: "row", justifyContent: "space-evenly" }}>
+              <Pressable onPress={() => { setModalVisible(false) }}>
+                <View style={[styles.newPostButton, { backgroundColor: "#FF7F7F" }]}>
+                  <Text style={{ fontWeight: "bold", fontSize: 20 }}>Cancel</Text>
+                </View>
+              </Pressable>
+              <Pressable onPress={() => addTask(userID)} >
+                <View style={[styles.newPostButton, { backgroundColor: "#41dc8e" }]}>
+                  <Text style={{ fontWeight: "bold", fontSize: 20 }}>Add Task</Text>
+                </View>
+              </Pressable>
+            </View>
           </View>
         </View>
       </Modal>

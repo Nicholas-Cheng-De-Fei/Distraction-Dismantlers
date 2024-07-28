@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, TextInput, FlatList, Text, TouchableOpacity, Image } from 'react-native';
 import { width, height, styles } from "@/assets/style";
+
 export default function ThreadSearch({ setPannel, setMod }) {
     const [query, setQuery] = useState('');
     const [suggestions, setSuggestions] = useState([]);

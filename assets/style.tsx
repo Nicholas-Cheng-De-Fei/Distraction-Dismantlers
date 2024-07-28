@@ -259,7 +259,7 @@ export const styles = StyleSheet.create({
     marginBottom: 20,
     justifyContent: "center",
     alignItems: "center",
-    paddingTop: height*0.06,
+    paddingTop: height * 0.06,
   },
   ProfileHeaderText: {
     fontSize: 24,
@@ -442,10 +442,19 @@ export const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
   },
+
+  modalBox: {
+    backgroundColor: "#F0F8FF",
+    width: width * 0.9,
+    paddingTop: height * 0.1,
+    paddingBottom: height * 0.1,
+    borderRadius: 20,
+  },
   modalText: {
     marginBottom: 15,
     textAlign: 'center',
     fontSize: 20,
+    fontWeight: "bold",
   },
   modalInput: {
     height: 40,
@@ -453,8 +462,8 @@ export const styles = StyleSheet.create({
     borderWidth: 1,
     paddingHorizontal: 10,
     marginBottom: 10,
-    width: '100%',
-    borderRadius: 5,
+    width: width * 0.8,
+    borderRadius: 10,
   },
 
   datePickerButton: {
@@ -491,7 +500,7 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     marginBottom: height * 0.01,
-    marginTop: height * 0.01,
+    marginTop: height * 0.02,
   },
   weekdayText: {
     fontWeight: 'bold',
@@ -526,14 +535,13 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    marginTop: height * 0.02,
     padding: 10,
-    backgroundColor: '#f8f8f8',
+    // backgroundColor: 'black',
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
   },
-  backButton: {
-    padding: 10,
-  },
+
   backButtonText: {
     fontSize: 16,
     color: '#007bff',
@@ -589,11 +597,11 @@ export const styles = StyleSheet.create({
   },
 
   newPostButton: {
-    width : width * 0.25, 
-    height : height * 0.03, 
-    alignItems : "center", 
-    justifyContent : "center", 
-    borderRadius : 10,
+    width: width * 0.25,
+    height: height * 0.03,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 10,
   },
 
   ////////////////////////////////////
