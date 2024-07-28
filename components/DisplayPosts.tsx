@@ -5,7 +5,7 @@ import { width, height, styles } from "@/assets/style";
 import { doc, getDoc, getDocs, query, collection, where, orderBy } from '@firebase/firestore';
 import ThreadSearch from "./ThreadSearch";
 
-async function getUserSubcribedCourses(currentUserId: string, setCommunityPost: any, setPersonalPost: any, setRenderData : any) {
+async function getUserSubcribedCourses(currentUserId: string, setCommunityPost: any, setPersonalPost: any, setRenderData: any) {
     if (currentUserId != undefined) {
         try {
             const followedCoursesRef = doc(database, "subscriptions", currentUserId);
@@ -27,7 +27,7 @@ async function getUserSubcribedCourses(currentUserId: string, setCommunityPost: 
             const q2 = query(collection(database, "thread"), where("uid", "==", currentUserId), orderBy("datePosted", "desc"));
             const querySnapshot2 = await getDocs(q2);
 
-            let postsPersonal= [];
+            let postsPersonal = [];
 
             querySnapshot2.forEach((doc) => {
                 // doc.data() is never undefined for query doc snapshots
@@ -68,7 +68,7 @@ export default function DisplayPosts({ setPannel, setMod, setPost }: any) {
     const [personalFocus, setPersonalFocus] = React.useState(false);
 
     React.useEffect(() => {
-        getUserSubcribedCourses(user!.uid, setCommunityPost, setPersonalPost, setRenderData).then(() => {setCanRender(true) });
+        getUserSubcribedCourses(user!.uid, setCommunityPost, setPersonalPost, setRenderData).then(() => { setCanRender(true) });
     }, []);
 
     return (
@@ -80,15 +80,15 @@ export default function DisplayPosts({ setPannel, setMod, setPost }: any) {
                         <View>
                             <ThreadSearch setPannel={setPannel} setMod={setMod} />
                         </View>
-                        <View style = {{top: height * 0.085, flexDirection : "row" ,justifyContent : "space-evenly"}}>
-                            <Pressable onPress={() => {setCommunityFocus(true); setPersonalFocus(false); setRenderData(communityPosts)}}>
-                                <View style = {{backgroundColor : "white", borderRadius : 10, width : width * 0.3, alignItems : "center"}}>
-                                    <Text style = {{fontSize : 20, color: communityFocus ? '#FF7F7F' : '#8e918f', fontWeight: communityFocus ? 'bold' : 'normal'}}>Community</Text>
+                        <View style={{ top: height * 0.085, flexDirection: "row", justifyContent: "space-evenly" }}>
+                            <Pressable onPress={() => { setCommunityFocus(true); setPersonalFocus(false); setRenderData(communityPosts) }}>
+                                <View style={{ backgroundColor: "white", borderRadius: 10, width: width * 0.3, alignItems: "center" }}>
+                                    <Text style={{ fontSize: 20, color: communityFocus ? '#FF7F7F' : '#8e918f', fontWeight: communityFocus ? 'bold' : 'normal' }}>Community</Text>
                                 </View>
                             </Pressable>
-                            <Pressable onPress={() => {setCommunityFocus(false); setPersonalFocus(true), setRenderData(personalPost)}}>
-                                <View style = {{backgroundColor : "white", borderRadius : 10, width : width * 0.3, alignItems : "center"}}>
-                                    <Text style = {{fontSize : 20, color: personalFocus ? '#FF7F7F' : '#8e918f', fontWeight: personalFocus ? 'bold' : 'normal'}}>Your Post</Text>
+                            <Pressable onPress={() => { setCommunityFocus(false); setPersonalFocus(true), setRenderData(personalPost) }}>
+                                <View style={{ backgroundColor: "white", borderRadius: 10, width: width * 0.3, alignItems: "center" }}>
+                                    <Text style={{ fontSize: 20, color: personalFocus ? '#FF7F7F' : '#8e918f', fontWeight: personalFocus ? 'bold' : 'normal' }}>Your Post</Text>
                                 </View>
                             </Pressable>
                         </View>
@@ -99,7 +99,7 @@ export default function DisplayPosts({ setPannel, setMod, setPost }: any) {
                                         <Image source={require("@/assets/images/empty-list-icon.png")} style={{ width: 400, height: 400 }}></Image>
                                         <Text style={{ fontSize: 24, fontWeight: "bold", flexWrap: 'wrap', textAlign: "center" }}>Start following courses and see them appear here!</Text>
                                     </View>
-                                    : <View style = {{height : height * 0.75}}>
+                                    : <View style={{ height: height * 0.75 }}>
                                         <FlatList
                                             data={renderData}
                                             showsHorizontalScrollIndicator={false}
@@ -108,7 +108,7 @@ export default function DisplayPosts({ setPannel, setMod, setPost }: any) {
                                                 const post = item.item.data();
                                                 const time = new Date(post!.datePosted.toDate().getTime() + 8 * 60 * 60 * 1000);
                                                 return (
-                                                    <View style={{ paddingBottom: height * 0.02, paddingLeft: width * 0.05, width: width, zIndex: 1}}>
+                                                    <View style={{ paddingBottom: height * 0.02, paddingLeft: width * 0.05, width: width, zIndex: 1 }}>
                                                         <View style={{ flexDirection: "row" }}>
                                                             <View style={{ flex: 2 }}>
                                                                 <Pressable onPress={() => changePannel(setPannel, setMod, setPost, "Module", post.course)}>
@@ -124,10 +124,12 @@ export default function DisplayPosts({ setPannel, setMod, setPost }: any) {
                                                                 </View>
                                                             </View>
                                                             <View style={{ justifyContent: 'center', alignItems: "center", flex: 1 }}>
-                                                                <View style={{ flexDirection: "row" }}>
-                                                                    <Image source={require("@/assets/images/reply-icon.png")} style={{ width: 50, height: 50 }}></Image>
-                                                                    <Text style={{ top: height * 0.01, fontSize: 20 }}>{post.noReplies}</Text>
-                                                                </View>
+                                                                <Pressable onPress={() => { changePannel(setPannel, setMod, setPost, "Post", item.item.id)}}>
+                                                                    <View style={{ flexDirection: "row" }}>
+                                                                        <Image source={require("@/assets/images/reply-icon.png")} style={{ width: 50, height: 50 }}></Image>
+                                                                        <Text style={{ top: height * 0.01, fontSize: 20 }}>{post.noReplies}</Text>
+                                                                    </View>
+                                                                </Pressable>
                                                             </View>
                                                         </View>
                                                     </View>

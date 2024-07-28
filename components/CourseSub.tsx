@@ -89,10 +89,10 @@ function showModal(setModalVisible: any) {
     setModalVisible(true);
 }
 
-async function submitPost(courseCode: string, title: string, description: string, uid : any ,name: any, setModalVisible: any, setTitle: any, setDescription: any) {
+async function submitPost(courseCode: string, title: string, description: string, uid: any, name: any, setModalVisible: any, setTitle: any, setDescription: any) {
     const threadRef = collection(database, "thread");
     const result = addDoc(threadRef, {
-        "uid" : uid,
+        "uid": uid,
         "course": courseCode,
         "datePosted": new Date(),
         "description": description,
@@ -171,7 +171,7 @@ export default function CourseSub({ setPannel, courseCode, lastPage, setLastPage
                                             <Image source={require("@/assets/images/no-post-icon.png")} style={{ width: 300, height: 300 }}></Image>
                                             <Text style={{ fontSize: 24, fontWeight: "bold", flexWrap: 'wrap', textAlign: "center" }}>So quiet here post something to start something!</Text>
                                         </View>
-                                        : <View style = {{height : height * 0.6}}>
+                                        : <View style={{ height: height * 0.6 }}>
                                             <FlatList
                                                 data={data.posts}
                                                 showsHorizontalScrollIndicator={false}
@@ -194,10 +194,12 @@ export default function CourseSub({ setPannel, courseCode, lastPage, setLastPage
                                                                     </View>
                                                                 </View>
                                                                 <View style={{ justifyContent: 'center', alignItems: "center", flex: 1 }}>
-                                                                    <View style={{ flexDirection: "row" }}>
-                                                                        <Image source={require("@/assets/images/reply-icon.png")} style={{ width: 50, height: 50 }}></Image>
-                                                                        <Text style={{ top: height * 0.01, fontSize: 20 }}>{post.noReplies}</Text>
-                                                                    </View>
+                                                                    <Pressable onPress={() => { changePannel(setPannel, setMod, setPost, "Post", item.item.id) }}>
+                                                                        <View style={{ flexDirection: "row" }}>
+                                                                            <Image source={require("@/assets/images/reply-icon.png")} style={{ width: 50, height: 50 }}></Image>
+                                                                            <Text style={{ top: height * 0.01, fontSize: 20 }}>{post.noReplies}</Text>
+                                                                        </View>
+                                                                    </Pressable>
                                                                 </View>
                                                             </View>
                                                         </View>
@@ -250,7 +252,7 @@ export default function CourseSub({ setPannel, courseCode, lastPage, setLastPage
                                 </View>
                             </Pressable>
                             <Pressable onPress={() => {
-                                submitPost(courseCode, title, description, user!.uid ,user!.displayName, setModalVisible, setTitle, setDescription);
+                                submitPost(courseCode, title, description, user!.uid, user!.displayName, setModalVisible, setTitle, setDescription);
                                 getData(user!.uid, courseCode, setData, setSubcriptions, setSubscribed);
                             }}>
                                 <View style={[styles.newPostButton, { backgroundColor: "#41dc8e" }]}>
