@@ -571,23 +571,6 @@ export const styles = StyleSheet.create({
   /////////////////////
   // For Thread page //
   /////////////////////
-  searchBarStyle: {
-    width: width * 0.95,
-    height: height * 0.05,
-    borderRadius: 12,
-    backgroundColor: "white",
-    paddingLeft: width * 0.1,
-    right: 20,
-    fontSize: 18,
-  },
-
-  searchBarIcon: {
-    width: width * 0.1,
-    height: height * 0.04,
-    left: width * 0.06,
-    zIndex: 1,
-  },
-
   subscribeButton: {
     justifyContent: "center",
     alignItems: "center",
@@ -607,23 +590,56 @@ export const styles = StyleSheet.create({
   ////////////////////////////////////
   // For Thread page (AutoComplete) //
   ////////////////////////////////////
+  searchBarStyle: {
+    width: width * 0.95,
+    height: height * 0.05,
+    borderRadius: 12,
+    backgroundColor: "white",
+    paddingLeft: width * 0.1,
+    paddingTop: 0,
+    // right: 20,
+    fontSize: 18,
+    // zIndex:20,
+    position: 'absolute',
+  },
+
+  searchBarIcon: {
+    position: 'absolute',
+    width: width * 0.1,
+    height: height * 0.04,
+
+    left: width * 0.035,
+    zIndex: 1,
+  },
+
+  searchContainer: {
+    // position: 'absolute',
+    // flexDirection: "row", 
+    alignItems: "center",
+    justifyContent: "center",
+    top: height * 0.05,
+    zIndex: 1,
+  },
   suggestionsContainer: {
     position: 'absolute',
-    top: height * 0.05, // Adjust to position the list below the search bar
-    left: 0,
+    top: height * 0.07, // Adjust to position the list below the search bar
+    left: width * 0.03,
     right: 0,
-    backgroundColor: '#fff',
+    bottom: 0,
+    backgroundColor: '#F0F8FF',
     borderColor: '#ccc',
     borderWidth: 1,
-    borderRadius: 5,
+    borderRadius: 12,
     height: height * 0.25,
-    zIndex: 10,
+    width: width * 0.95,
+    zIndex: 3,
   },
   suggestionItem: {
+    // color:"purple",
     padding: 10,
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
-    zIndex: 20,
+    zIndex: 40,
   },
 
 })

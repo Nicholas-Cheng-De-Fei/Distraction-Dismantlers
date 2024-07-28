@@ -33,7 +33,9 @@ export default function ThreadSearch({ setPannel, setMod }) {
     };
 
     return (
-        <View testID="search bar" style={{ flexDirection: "row", alignItems: "center", justifyContent: "center", top: height * 0.05, zIndex : 11}}>
+        <View>
+          
+        <View testID="search bar" style={styles.searchContainer}>
             <Image
                 source={require("@/assets/images/search-icon.png")} style={styles.searchBarIcon} />
             <TextInput style={styles.searchBarStyle}
@@ -41,7 +43,10 @@ export default function ThreadSearch({ setPannel, setMod }) {
                 value={query}
                 onChangeText={handleInputChange}
             />
-            {suggestions.length > 0 ?
+           
+        </View>
+        
+        {suggestions.length > 0 ?
                 <FlatList
                     data={suggestions}
                     keyExtractor={(item) => item}
@@ -55,5 +60,6 @@ export default function ThreadSearch({ setPannel, setMod }) {
                 : <View />
             }
         </View>
+        
     );
 };
