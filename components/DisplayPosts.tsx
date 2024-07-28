@@ -95,9 +95,23 @@ export default function DisplayPosts({ setPannel, setMod, setPost }: any) {
                         <View style={{ top: height * 0.1 }}>
                             {
                                 renderData.length == 0
-                                    ? <View style={{ alignItems: "center" }}>
-                                        <Image source={require("@/assets/images/empty-list-icon.png")} style={{ width: 400, height: 400 }}></Image>
-                                        <Text style={{ fontSize: 24, fontWeight: "bold", flexWrap: 'wrap', textAlign: "center" }}>Start following courses and see them appear here!</Text>
+                                    ?
+
+                                    <View style={{ alignItems: "center" }}>
+                                        {personalFocus ?
+                                            <View>
+                                                <Image source={require("@/assets/images/write-post-icon.png")} style={{ width: 300, height: 300, display: "block", margin: "auto" }}></Image>
+
+                                                <Text style={{ fontSize: 24, fontWeight: "bold", flexWrap: 'wrap', textAlign: "center" }}>Post something and see them appear here!</Text>
+
+                                            </View>
+                                            :
+                                            <View>
+                                                <Image source={require("@/assets/images/empty-list-icon.png")} style={{ width: 400, height: 400 }}></Image>
+
+                                                <Text style={{ fontSize: 24, fontWeight: "bold", flexWrap: 'wrap', textAlign: "center" }}>Start following courses and see them appear here!</Text>
+                                            </View>
+                                        }
                                     </View>
                                     : <View style={{ height: height * 0.75 }}>
                                         <FlatList
@@ -124,7 +138,7 @@ export default function DisplayPosts({ setPannel, setMod, setPost }: any) {
                                                                 </View>
                                                             </View>
                                                             <View style={{ justifyContent: 'center', alignItems: "center", flex: 1 }}>
-                                                                <Pressable onPress={() => { changePannel(setPannel, setMod, setPost, "Post", item.item.id)}}>
+                                                                <Pressable onPress={() => { changePannel(setPannel, setMod, setPost, "Post", item.item.id) }}>
                                                                     <View style={{ flexDirection: "row" }}>
                                                                         <Image source={require("@/assets/images/reply-icon.png")} style={{ width: 50, height: 50 }}></Image>
                                                                         <Text style={{ top: height * 0.01, fontSize: 20 }}>{post.noReplies}</Text>
