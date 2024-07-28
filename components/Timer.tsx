@@ -5,18 +5,19 @@ import ScrollPicker from "react-native-wheel-scrollview-picker";
 import { CountdownCircleTimer } from 'react-native-countdown-circle-timer'
 import { auth, database } from '@/firebaseConfig';
 import { doc, getDoc, setDoc, updateDoc } from '@firebase/firestore';
+import { increment } from 'firebase/firestore';
 
 let remainder = 0;
 let time = 0;
 let s: number;
 let t: Date;
-let points: number;
 
 const hours = createArray(24, "Hour");
 const minutes = createArray(60, "Minute");
 
 const todaysDate = new Date();
-
+const hoursToAdd = 8 * 60 * 60 * 1000;
+todaysDate.setTime(todaysDate.getTime() + hoursToAdd);
 
 export function createArray(length: number, type: String) {
     const arr = [];
@@ -43,9 +44,9 @@ async function getStreakData(currentUserId: string) {
         t = new Date(streakData!.lastStudied.toDate().getTime() + 8 * 60 * 60 * 1000);
         t.setUTCHours(0, 0, 0, 0);
 
-        const pointsRef = doc(database, "points", auth.currentUser!.uid);
-        const pointsDataSnap = await getDoc(pointsRef);
-        points = pointsDataSnap.data()!.Points;
+        // const pointsRef = doc(database, "points", auth.currentUser!.uid);
+        // const pointsDataSnap = await getDoc(pointsRef);
+        // points = pointsDataSnap.data()!.Points;
     }
 }
 
@@ -66,21 +67,23 @@ function endTimer(duration: number, selectedMinute: number, setSelectedMinute: R
 
     if (remainder == 0) {
 
-        setDoc(doc(database, "stats", auth.currentUser!.uid, "studySessions", new Date().toUTCString()), {
+        setDoc(doc(database, "stats", auth.currentUser!.uid, "studySessions", todaysDate.toUTCString()), {
             Date: new Date(),
             Duration: duration,
         }).then(() => { console.log("Recorded the study session into the database") });
 
 
         updateDoc(doc(database, "points", auth.currentUser!.uid), {
-            Points: points + duration,
+            Points: increment(duration),
         }).then(() => { console.log("Updated Points record for the user") });
 
         if (t == null || t.toDateString() != todaysDate.toDateString()) {
             s += 1;
+            let date = new Date();
+            date.setTime(date.getTime() + hoursToAdd);
             updateDoc(doc(database, "streak", auth.currentUser!.uid), {
                 Days: s,
-                lastStudied: new Date(),
+                lastStudied: date,
             }).then(() => { console.log("Updated Streak record for the user") });
         }
     }
@@ -88,7 +91,6 @@ function endTimer(duration: number, selectedMinute: number, setSelectedMinute: R
     setIsTimerActive(false);
     setSelectedMinute(selectedMinute)
 }
-
 
 
 function renderPicker(selectedHour: number, selectedMinute: number, setDuration: React.Dispatch<React.SetStateAction<number>>, setSelectedHour: React.Dispatch<React.SetStateAction<number>>, setSelectedMinute: React.Dispatch<React.SetStateAction<number>>) {
@@ -137,7 +139,7 @@ function renderCountdownTimer(duration: number, selectedMinute: number, setSelec
     return (
         <CountdownCircleTimer
             isPlaying
-            duration={duration}
+            duration={2}
             colors={['#004777', '#F7B801', '#A30000', '#A30000']}
             colorsTime={[60, 30, 10, 0]}
             isGrowing={false}

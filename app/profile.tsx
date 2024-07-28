@@ -9,14 +9,17 @@ import Tasks from "@/components/Tasks";
 import ActivityGrid from "@/components/ActivityGrid";
 
 const yesterdayDate = new Date();
+const hoursToAdd = 8 * 60 * 60 * 1000;
+yesterdayDate.setTime(yesterdayDate.getTime() + hoursToAdd);
 yesterdayDate.setDate(yesterdayDate.getDate() - 1);
-yesterdayDate.setUTCHours(0, 0, 0, 0);
 
 const todayDate = new Date();
+todayDate.setTime(todayDate.getTime() + hoursToAdd);
 todayDate.setHours(23, 59, 59)
 
 
 const startOfWeekDate = new Date();
+startOfWeekDate.setTime(startOfWeekDate.getTime() + hoursToAdd);
 startOfWeekDate.setDate(startOfWeekDate.getDate() - startOfWeekDate.getDay());
 startOfWeekDate.setUTCHours(0, 0, 0, 0);
 
@@ -62,7 +65,7 @@ async function getUserStats(currentUserId: string, setAverage: React.Dispatch<Re
     sessionsDataSnap.forEach((doc) => {
       avg += doc.data().Duration / 60 / 60;
     });
-    avg /= Math.max(todayDate.getDay() + 1);
+    avg /= Math.max(todayDate.getDay());
 
     setAverage(avg);
 
@@ -95,7 +98,7 @@ async function getRank(uid: string, setRank: React.Dispatch<React.SetStateAction
     // console.warn(final);
     if (final != 0) {
       setRank(final);
-      setPoints((points/3600));
+      setPoints((points / 3600));
     }
     else {
       setRank(position);
@@ -105,7 +108,7 @@ async function getRank(uid: string, setRank: React.Dispatch<React.SetStateAction
   }
 }
 
-export default function Profile({}) {
+export default function Profile({ }) {
 
   const user = auth!.currentUser;
   const isFocused = useIsFocused();
@@ -120,7 +123,7 @@ export default function Profile({}) {
   const [rank, setRank] = React.useState(0);
   const [points, setPoints] = React.useState(0);
 
-  React.useEffect(() => { getRank(user!.uid, setRank,setPoints); })
+  React.useEffect(() => { getRank(user!.uid, setRank, setPoints); })
 
   React.useEffect(() => {
     if (isFocused) {
@@ -130,15 +133,15 @@ export default function Profile({}) {
     }
   }, [isFocused])
   // <Button title="Logout" onPress={logout} color="#e74c3c"/>
-const navigation = useNavigation();
+  const navigation = useNavigation();
   return (
     <View style={styles.background}>
       <View style={[styles.ProfileHeader, { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }]}>
         <View style={{ flexDirection: 'column', flex: 2, paddingLeft: width * 0.1 }}>
           <Text style={styles.ProfileHeaderText}>Hello {user!.displayName}</Text>
           <Pressable onPress={() => navigation.navigate("Leaderboard")}>
-            <Text style={[styles.RankHeaderText, { fontWeight: 'black', fontSize: 18,color:"green", }]}>Points: {points.toFixed(2)} (#{rank})</Text>
-            <Text style={[styles.RankHeaderText, { fontWeight: 'black', fontSize: 18,color:"green", }]}>Click for more info</Text>
+            <Text style={[styles.RankHeaderText, { fontWeight: 'black', fontSize: 18, color: "green", }]}>Points: {points.toFixed(2)} (#{rank})</Text>
+            <Text style={[styles.RankHeaderText, { fontWeight: 'black', fontSize: 18, color: "green", }]}>Click for more info</Text>
           </Pressable>
         </View>
         <View style={{ paddingRight: width * 0.1 }}>
@@ -185,19 +188,13 @@ const navigation = useNavigation();
       <View id="to-do List">
         <Tasks />
       </View>
-      <SafeAreaView id="to-do List">
+      <View id="to-do List">
         <ActivityGrid />
-      </SafeAreaView>
+      </View>
 
       <View id="heatMap">
 
       </View>
     </View>
   );
-
-  // return (
-  //   <View>
-  //     <Leaderboard/>
-  //   </View>
-  // )
 }

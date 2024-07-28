@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, StyleSheet, TouchableOpacity,Image } from 'react-native';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { auth, database } from "@/firebaseConfig";
 import { doc, getDocs, query, collection, orderBy } from '@firebase/firestore';
@@ -12,7 +12,7 @@ const Leaderboard = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       const userList = [];
-      try {   
+      try {
         const q = query(collection(database, "points"), orderBy("Points", "desc"));
         const querySnapshot = await getDocs(q);
 
@@ -35,13 +35,13 @@ const Leaderboard = () => {
   return (
     <View style={styles.background}>
       <View style={styles.leaderboardHeader}>
-        <TouchableOpacity onPress={() => navigation.goBack()} style={{padding:0.1}}>
-        <Image source={require("@/assets/images/back-button-icon.png")} style={{ width: 40, height: 40, tintColor: "#777777" }}></Image>
-                   
+        <TouchableOpacity onPress={() => navigation.goBack()} style={{ padding: 0.1 }}>
+          <Image source={require("@/assets/images/back-button-icon.png")} style={{ width: 40, height: 40, tintColor: "#777777" }}></Image>
+
         </TouchableOpacity>
         <Text style={styles.leaderboardHeaderTitle}>Leaderboard (1 point = 1 hr)</Text>
       </View>
-      
+
       <FlatList
         data={users}
         keyExtractor={item => item.key}
@@ -49,9 +49,9 @@ const Leaderboard = () => {
           <View style={styles.leaderboardItem}>
             <Text style={styles.leaderboardRank}>{index + 1}</Text>
             <Text style={styles.leaderboardName}>
-              {item.DisplayName} {currentUserUid === item.Uid ? <Text style={{color:"purple",  fontWeight: 'bold',}}>(You)</Text> : ""}
+              {item.DisplayName} {currentUserUid === item.Uid ? <Text style={{ color: "purple", fontWeight: 'bold', }}>(You)</Text> : ""}
             </Text>
-            <Text style={styles.points}>{ parseFloat((item.Points / 3600).toFixed(2))}</Text>
+            <Text style={styles.points}>{parseFloat((item.Points / 3600).toFixed(2))}</Text>
           </View>
         )}
       />

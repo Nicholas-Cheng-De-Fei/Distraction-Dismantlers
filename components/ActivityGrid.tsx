@@ -4,57 +4,81 @@ import { styles } from '@/assets/style';
 import { auth, database } from "@/firebaseConfig";
 import { collection, getDocs, query } from '@firebase/firestore';
 
+const hoursToAdd = 8 * 60 * 60 * 1000;
+
+let tdy = new Date();
+tdy.setTime(tdy.getTime() + hoursToAdd);
+let dayInMth = new Date(tdy.getFullYear(), tdy.getMonth() + 1, 0).getDate();
+
+function isEmpty(obj) {
+  return Object.keys(obj).length === 0;
+}
+
+async function getStats(setActData: React.Dispatch<React.SetStateAction<number[]>>) {
+  const q = query(collection(database, "stats", auth.currentUser!.uid, "studySessions"));
+  const querySnapshot = await getDocs(q);
+
+  let currentMonth = tdy.getMonth();
+  let currentDate = 1;
+  let totalDuration = 0;
+  let tempData: number[] = [];
+
+  try {
+    querySnapshot.forEach((doc) => {
+      // console.log(doc.data());
+      if (isEmpty(doc.data())) {
+        return;
+      }
+      let date = new Date(doc.data()!.Date.seconds * 1000);
+      date.setTime(date.getTime() + hoursToAdd);
+      // console.log(date);
+      if (date.getMonth() === currentMonth) {
+        if (currentDate == date.getDate()) {
+          totalDuration += doc.data()!.Duration;
+        } else {
+          let hrs = parseFloat((totalDuration / 3600).toFixed(2));
+          let len = tempData.length;
+          for (let index = len; index < currentDate; index++) {
+            tempData[index] = 0;
+          }
+          tempData[currentDate - 1] = hrs;
+          currentDate = date.getDate();
+          totalDuration = doc.data()!.Duration;
+        }
+
+      }
+    });
+  }
+  catch (error) {
+    console.error("Error during forEach:", error);
+  }
+  // console.log("e");
+  // console.log("H");
+  // console.log(totalDuration);
+  // console.log(parseFloat((totalDuration / 3600).toFixed(2)));
+
+  tempData[currentDate - 1] = parseFloat((totalDuration / 3600).toFixed(2));
+
+  for (let index = 0; index < dayInMth; index++) {
+    if (!tempData[index]) tempData[index] = 0;
+  }
+
+  setActData(tempData);
+
+}
+
 export default function ActivityGrid() {
   const [actData, setActData] = useState<number[]>([]);
   const [selectedInfo, setSelectedInfo] = useState<{ day: string | null, hours: number | null }>({ day: null, hours: null });
-  let tdy = new Date();
-  let dayInMth = new Date(tdy.getFullYear(), tdy.getMonth() + 1, 0).getDate();
+  // console.log("Y");
 
   useEffect(() => {
     const fetchData = async () => {
-      const q = query(collection(database, "stats", auth.currentUser!.uid, "studySessions"));
-      const querySnapshot = await getDocs(q);
-
-      let currentMonth = tdy.getMonth();
-      let currentDate = 0;
-      let totalDuration = 0;
-
-      let tempData: number[] = [];
-
-      querySnapshot.forEach((doc) => {
-
-
-        let date = new Date(doc.id);
-        if (date == null) {
-          return;
-        }
-        if (date.getMonth() === currentMonth) {
-          if (currentDate == date.getDate()) {
-            totalDuration += doc.data()!.Duration;
-          } else {
-            let hrs = parseFloat((totalDuration / 3600).toFixed(2));
-            let len = tempData.length;
-            for (let index = len; index < currentDate; index++) {
-              tempData[index] = 0;
-            }
-            tempData[currentDate - 1] = hrs;
-            currentDate = date.getDate();
-            totalDuration = doc.data()!.Duration;
-          }
-        }
-      });
-      tempData[currentDate - 1] = parseFloat((totalDuration / 3600).toFixed(2));
-
-      for (let index = 0; index < dayInMth; index++) {
-        if (!tempData[index]) tempData[index] = 0;
-      }
-
-      setActData(tempData);
+      await getStats(setActData);
     };
 
     fetchData();
   }, []);
-
 
   const getColor = (duration: number) => {
     if (duration > 2.0) {
@@ -62,10 +86,10 @@ export default function ActivityGrid() {
     } else if (duration > 1.4) {
       return "#7CFC00";
     }
-    else if(duration > 0){
+    else if (duration > 0) {
       return "#8FBC8F";
     }
-    else if(duration == 0){
+    else if (duration == 0) {
       return "grey";
     }
   };
@@ -132,7 +156,7 @@ export default function ActivityGrid() {
         <View style={styles.weekdaysRow}>
           {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map((day, index) => (
             <Text key={index} style={styles.weekdayText}>
-              {day}{" "} 
+              {day}{" "}
             </Text>
           ))}
         </View>
