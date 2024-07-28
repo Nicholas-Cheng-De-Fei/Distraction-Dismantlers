@@ -182,7 +182,7 @@ export default function Task() {
 
               <Text style={styles.modalText}>Due Date</Text>
               <TouchableOpacity onPress={() => setDatePickerVisibility(true)} style={styles.datePickerButton}>
-                <Text style={[styles.modalInput, { width: width * 0.4 }]}>{dueDate.toLocaleDateString()} @ {dueDate.toLocaleTimeString()}</Text>
+                <Text style={[styles.modalInput, { width: width * 0.45, textAlign: "center",textAlignVertical:"center" }]}>{dueDate.toLocaleDateString()} @ {dueDate.toLocaleTimeString()}</Text>
               </TouchableOpacity>
               <DateTimePickerModal
                 isVisible={isDatePickerVisible}

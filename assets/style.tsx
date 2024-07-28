@@ -500,7 +500,7 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     marginBottom: height * 0.01,
-    marginTop: height * 0.02,
+    marginTop: height * 0.015,
   },
   weekdayText: {
     fontWeight: 'bold',
@@ -515,7 +515,7 @@ export const styles = StyleSheet.create({
     width: 25,
     height: 25,
     margin: 2,
-    borderRadius: 5,
+    borderRadius: 7,
     alignItems: 'center',
     justifyContent: 'center',
   },
