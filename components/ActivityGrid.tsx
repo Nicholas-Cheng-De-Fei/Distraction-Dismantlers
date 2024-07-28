@@ -71,14 +71,7 @@ export default function ActivityGrid() {
   const [actData, setActData] = useState<number[]>([]);
   const [selectedInfo, setSelectedInfo] = useState<{ day: string | null, hours: number | null }>({ day: null, hours: null });
   // console.log("Y");
-
-  useEffect(() => {
-    const fetchData = async () => {
-      await getStats(setActData);
-    };
-
-    fetchData();
-  }, []);
+  React.useEffect(() => { getStats(setActData); })
 
   const getColor = (duration: number) => {
     if (duration > 2.0) {
