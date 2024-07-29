@@ -12,6 +12,8 @@ async function getUserSubcribedCourses(currentUserId: string, setCommunityPost: 
             const followedCoursesDataSnap = await getDoc(followedCoursesRef);
             const followedCoursesData = followedCoursesDataSnap.data();
 
+            console.log(followedCoursesData!.courses)
+
             const q = query(collection(database, "thread"), where("course", "in", followedCoursesData!.courses), orderBy("datePosted", "desc"));
             const querySnapshot = await getDocs(q);
 

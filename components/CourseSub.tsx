@@ -51,9 +51,6 @@ async function getData(currentUserId: string, courseCode: string, setData: any, 
 
 function goBack(setPannel: any, setCanRender: any, subcriptions: any, currentUserId: string, setLastPage: any) {
 
-    // Update the subcriptions
-    updateSubcriptions(currentUserId, subcriptions);
-
     setLastPage("Personal");
     setPannel("Personal");
     setCanRender(false);
@@ -72,17 +69,23 @@ function updateSubcriptions(currentUserId: string, subcriptions: any) {
     }).then(() => { console.log("Subcription Updated") });
 }
 
-function subcribe(moduleCode: string, subcriptions: any, setSubscribed: any) {
+function subcribe(currentUserId : string ,moduleCode: string, subcriptions: any, setSubscribed: any) {
     setSubscribed(true);
     subcriptions.push(moduleCode);
+
+    // Update the subcriptions
+    updateSubcriptions(currentUserId, subcriptions);
 }
 
-function unsubcribe(moduleCode: string, subcriptions: any, setSubscribed: any) {
+function unsubcribe(currentUserId : string, moduleCode: string, subcriptions: any, setSubscribed: any) {
     setSubscribed(false);
     const index = subcriptions.indexOf(moduleCode);
     if (index > -1) { // only splice array when item is found
         subcriptions.splice(index, 1); // 2nd parameter means remove one item only
     }
+
+    // Update the subcriptions
+    updateSubcriptions(currentUserId, subcriptions);
 }
 
 function showModal(setModalVisible: any) {
@@ -144,14 +147,14 @@ export default function CourseSub({ setPannel, courseCode, lastPage, setLastPage
                                         <Pressable onPress={() => showModal(setModalVisible)}>
                                             <Image source={require("@/assets/images/write-post-icon.png")} style={{ width: 35, height: 35 }}></Image>
                                         </Pressable>
-                                        <Pressable onPress={() => unsubcribe(courseCode, subcriptions, setSubscribed)}>
+                                        <Pressable onPress={() => unsubcribe(user!.uid, courseCode, subcriptions, setSubscribed)}>
                                             <View style={[styles.subscribeButton, { backgroundColor: "#777777", left: width * 0.02 }]}>
                                                 <Text style={{ fontWeight: "bold" }}>Unsubcribe</Text>
                                             </View>
                                         </Pressable>
                                     </View>
                                     :
-                                    <Pressable onPress={() => subcribe(courseCode, subcriptions, setSubscribed)}>
+                                    <Pressable onPress={() => subcribe(user!.uid, courseCode, subcriptions, setSubscribed)}>
                                         <View style={[styles.subscribeButton, { backgroundColor: "red", left: width * 0.02 }]}>
                                             <Text style={{ fontWeight: "bold" }}>Subcribe</Text>
                                         </View>
