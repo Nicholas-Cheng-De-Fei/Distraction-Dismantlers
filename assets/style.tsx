@@ -531,42 +531,45 @@ export const styles = StyleSheet.create({
   // For Leaderboard //
   /////////////////////
 
-  leaderboardHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginTop: height * 0.02,
-    padding: 10,
-    // backgroundColor: 'black',
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
-  },
-
-  backButtonText: {
-    fontSize: 16,
-    color: '#007bff',
-  },
   leaderboardHeaderTitle: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: 'bold',
+    // height:0,
+    margin:"auto",
+    // bottom:height*0.23,
+    // top:0,
+    // left:auto,
   },
   leaderboardItem: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    padding: 20,
+    position: 'relative',
+    paddingVertical: 20,
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
+    paddingLeft: 60, // Space for rank and name
+    paddingRight: 60, // Space for points
   },
   leaderboardRank: {
-    width: 50,
+    position: 'absolute',
+    left: 10,
     fontWeight: 'bold',
+    width: 50,
+    fontSize: 18,
   },
   leaderboardName: {
-    flex: 1,
+    position: 'absolute',
+    left: 70, // Adjust based on rank width and padding
+    right: 60, // Leave space for points
+    fontWeight: 'normal',
+    
+    fontSize: 18,
   },
   points: {
+    position: 'absolute',
+    right: 10,
     width: 50,
     textAlign: 'right',
+    
+    fontSize: 18,
   },
   /////////////////////
   // For Thread page //

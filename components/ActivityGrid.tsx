@@ -71,14 +71,7 @@ export default function ActivityGrid() {
   const [actData, setActData] = useState<number[]>([]);
   const [selectedInfo, setSelectedInfo] = useState<{ day: string | null, hours: number | null }>({ day: null, hours: null });
   // console.log("Y");
-
-  useEffect(() => {
-    const fetchData = async () => {
-      await getStats(setActData);
-    };
-
-    fetchData();
-  }, []);
+  React.useEffect(() => { getStats(setActData); })
 
   const getColor = (duration: number) => {
     if (duration > 2.0) {
@@ -154,11 +147,14 @@ export default function ActivityGrid() {
       </View>
       <View style={styles.taskInfoBox}>
         <View style={styles.weekdaysRow}>
-          {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map((day, index) => (
+          <Text style={styles.weekdayText}>
+          Mon  Tue  Wed  Thu  Fri  Sat  Sun 
+          </Text>
+          {/* {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map((day, index) => (
             <Text key={index} style={styles.weekdayText}>
               {day}{" "}
             </Text>
-          ))}
+          ))} */}
         </View>
         {renderCalendar()}
       </View>
