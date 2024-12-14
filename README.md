@@ -18,7 +18,7 @@
 
 <br></br>
 
-Distraction dismantlers is a use friendly modile application which aims to help users who has difficulties focusing on their work.
+Distraction dismantlers is a use friendly modile application which aims to help users who has difficulties on focusing on their daily tasks.
 
 It contains gamificaton features as well as task tracker to ensure you don't miss out on anything important. As well as a social media platform to seek others for help.
 
