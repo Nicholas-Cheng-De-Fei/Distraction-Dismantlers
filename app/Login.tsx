@@ -129,14 +129,14 @@ export default function Login() {
         await signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
           // Signed in 
           const user = userCredential.user;
-          if (!user.emailVerified) { // If email not verified do not allow user to login
-            Alert.alert('Please Verify Your Email', 'Please make sure your email is verified before using our app.');
-            signOut(auth);
-            console.log('User Did not verify Email!');
-          }
-          else { // Successful Login
-            console.log('User signed in successfully!');
-          }
+          // if (!user.emailVerified) { // If email not verified do not allow user to login
+          //   Alert.alert('Please Verify Your Email', 'Please make sure your email is verified before using our app.');
+          //   signOut(auth);
+          //   console.log('User Did not verify Email!');
+          // }
+          // else { // Successful Login
+          //   console.log('User signed in successfully!');
+          // }
         })
 
         resetAllFields();

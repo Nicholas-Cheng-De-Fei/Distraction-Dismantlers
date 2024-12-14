@@ -1,8 +1,26 @@
 # Distraction Dismantlers
+---
 
-This app is a project to help students stay focus by preventing being distracted by their phones
+[![Contributors][contributors-shield]][https://github.com/Nicholas-Cheng-De-Fei/Distraction-Dismantlers/graphs/contributors]
+[![Issues][issues-shield]][https://github.com/Nicholas-Cheng-De-Fei/Distraction-Dismantlers/issues]
+[![Projects][projects-shield]][https://github.com/Nicholas-Cheng-De-Fei/Distraction-Dismantlers/projects]
 
-## Get started
+<!-- PROJECT LOGO -->
+<div>
+   <img src = "assets\images\App-icon\app logo.png" width="600" height="600" align = "center">
+</div>
+
+Distraction dismantlers is a use friendly work focusing assistant to help people who has trouble focusing.
+
+It contains gamificaton features as well as task tracker to ensure you don't miss out on anything important.
+
+## Build With
+---
+* [![React][React.js]][React-url]
+* [![Firebase][Firebase]][Firebase-url]
+
+## Getting started
+---
 
 1. Install dependencies
 
