@@ -2,7 +2,7 @@
 ---
 
 [![Contributors][contributors-shield]][https://github.com/Nicholas-Cheng-De-Fei/Distraction-Dismantlers/graphs/contributors]
-[![Issues][issues-shield]][https://github.com/Nicholas-Cheng-De-Fei/Distraction-Dismantlers/issues]
+![GitHub Issues or Pull Requests](https://img.shields.io/github/issues/Nicholas-Cheng-De-Fei/Distraction-Dismantlers?link=https%3A%2F%2Fgithubcom%2FNicholas-Cheng-De-Fei%2FDistraction-Dismantlers%2Fissues)
 [![Projects][projects-shield]][https://github.com/Nicholas-Cheng-De-Fei/Distraction-Dismantlers/projects]
 
 <!-- PROJECT LOGO -->
