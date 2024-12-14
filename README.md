@@ -1,50 +1,53 @@
 # Distraction Dismantlers
+---
 
-This app is a project to help students stay focus by preventing being distracted by their phones
+<a href="https://github.com/Nicholas-Cheng-De-Fei/Distraction-Dismantlers/issues">
+   <img alt="GitHub Issues or Pull Requests" src="https://img.shields.io/github/issues/Nicholas-Cheng-De-Fei/Distraction-Dismantlers?style=for-the-badge">
+</a>
 
-## Get started
+<a href="https://github.com/Nicholas-Cheng-De-Fei/Distraction-Dismantlers/graphs/contributors">
+   <img alt="GitHub contributors" src="https://img.shields.io/github/contributors/Nicholas-Cheng-De-Fei/Distraction-Dismantlers?style=for-the-badge">
+</a>
 
-1. Install dependencies
+<br></br>
 
-   ```bash
-   npm install
-   ```
+<!-- PROJECT LOGO -->
+<div>
+   <img src = "assets\images\App-icon\app logo.png" width="600" height="600" align = "center">
+</div>
 
-2. Start the app
+<br></br>
 
-   ```bash
-    npx expo start
-   ```
+Distraction dismantlers is a use friendly modile application which aims to help users who has difficulties focusing on their work.
 
-## Firebase
+It contains gamificaton features as well as task tracker to ensure you don't miss out on anything important. As well as a social media platform to seek others for help.
 
-If there is an issue with firebase packages do use :
+## Built With
+---
+<div>
+   <div>
+      <a>
+         <img alt="Static Badge" src="https://img.shields.io/badge/react-blue?style=for-the-badge&logo=react">
+      </a>
+   </div>
+   <div>
+      <a href="https://reactnative.dev">
+         <img alt="Static Badge" src="https://img.shields.io/badge/firebase-orange?style=for-the-badge&logo=firebase">
+      </a>
+   </div>
+</div>
 
-```bash
-npx expo install firebase
-```
+## Getting started
+---
 
-## Jest
+### Andriod
 
-If there is a need to install Jest use :
+1. Download the `.apk` file from the [release in the github repository](https://github.com/Nicholas-Cheng-De-Fei/Distraction-Dismantlers/releases/tag/v1).
+2. Navigate to the file directory of the `.apk` file.
+3. Install the application on your mobile device.
+4. Launch the application and start using it.
 
-```bash
-npx expo install -- --save-dev jest-expo jest
-```
+## Documentation
+---
 
-For React Testing Libary :
-```bash
-npm install --save-dev @testing-library/react-native
-```
-
-There are 2 scripts to run the test cases :
-
-To run the test files once
-```bash
-npm run test
-```
-
-Continuously run the test files until termination using "crtl + c"
-```bash
-npm run test:watch
-```
+A documentation of this project can be view [here](https://docs.google.com/document/d/1pT2PsQB04get2XAIjOpvCnX9AaCnHMvd/edit?usp=sharing&ouid=110498249100755714009&rtpof=true&sd=true).

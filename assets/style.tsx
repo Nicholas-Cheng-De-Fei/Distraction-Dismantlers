@@ -483,7 +483,7 @@ export const styles = StyleSheet.create({
     backgroundColor: '#ff0000',
     padding: 5,
     borderRadius: 5,
-    marginRight: 10,
+    left : -30
   },
   deleteButtonText: {
     color: '#fff',
