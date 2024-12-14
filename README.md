@@ -1,7 +1,9 @@
 # Distraction Dismantlers
 ---
-![[GitHub Issues or Pull Requests]](https://img.shields.io/github/issues/Nicholas-Cheng-De-Fei/Distraction-Dismantlers?style=for-the-badge&link=https%3A%2F%2Fgithub.com%2FNicholas-Cheng-De-Fei%2FDistraction-Dismantlers%2Fissues)
 
+<a href="https://github.com/Nicholas-Cheng-De-Fei/Distraction-Dismantlers/issues">
+   <img alt="GitHub Issues or Pull Requests" src="https://img.shields.io/github/issues/Nicholas-Cheng-De-Fei/Distraction-Dismantlers?style=for-the-badge">
+</a>
 
 
 <!-- PROJECT LOGO -->
