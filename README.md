@@ -12,8 +12,8 @@
 <br></br>
 
 <!-- PROJECT LOGO -->
-<div>
-   <img src = "assets\images\App-icon\app logo.png" width="600" height="600" align = "center">
+<div align = "center">
+   <img src = "assets\images\App-icon\app logo.png" width="600" height="600">
 </div>
 
 <br></br>
