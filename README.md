@@ -1,9 +1,8 @@
 # Distraction Dismantlers
 ---
+![[GitHub Issues or Pull Requests]](https://img.shields.io/github/issues/Nicholas-Cheng-De-Fei/Distraction-Dismantlers?style=for-the-badge&link=https%3A%2F%2Fgithub.com%2FNicholas-Cheng-De-Fei%2FDistraction-Dismantlers%2Fissues)
 
-[![Contributors][contributors-shield]][https://github.com/Nicholas-Cheng-De-Fei/Distraction-Dismantlers/graphs/contributors]
-![GitHub Issues or Pull Requests](https://img.shields.io/github/issues/Nicholas-Cheng-De-Fei/Distraction-Dismantlers?link=https%3A%2F%2Fgithubcom%2FNicholas-Cheng-De-Fei%2FDistraction-Dismantlers%2Fissues)
-[![Projects][projects-shield]][https://github.com/Nicholas-Cheng-De-Fei/Distraction-Dismantlers/projects]
+
 
 <!-- PROJECT LOGO -->
 <div>
@@ -16,8 +15,7 @@ It contains gamificaton features as well as task tracker to ensure you don't mis
 
 ## Build With
 ---
-* [![React][React.js]][React-url]
-* [![Firebase][Firebase]][Firebase-url]
+
 
 ## Getting started
 ---
