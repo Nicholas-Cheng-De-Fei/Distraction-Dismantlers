@@ -9,14 +9,10 @@
    <img alt="GitHub contributors" src="https://img.shields.io/github/contributors/Nicholas-Cheng-De-Fei/Distraction-Dismantlers?style=for-the-badge">
 </a>
 
-<br></br>
-
 <!-- PROJECT LOGO -->
 <div align = "center">
-   <img src = "assets\images\App-icon\app logo.png" width="600" height="600">
+   <img src = "assets\images\App-icon\app logo.png" width="450" height="450">
 </div>
-
-<br></br>
 
 Distraction dismantlers is a use friendly modile application which aims to help users who has difficulties on focusing on their daily tasks.
 
@@ -26,13 +22,13 @@ It contains gamificaton features as well as task tracker to ensure you don't mis
 ---
 <div>
    <div>
-      <a>
-         <img alt="Static Badge" src="https://img.shields.io/badge/react-blue?style=for-the-badge&logo=react">
+      <a href="https://reactnative.dev">
+         <img alt="React Badge" src="https://img.shields.io/badge/react-blue?style=for-the-badge&logo=react">
       </a>
    </div>
    <div>
-      <a href="https://reactnative.dev">
-         <img alt="Static Badge" src="https://img.shields.io/badge/firebase-orange?style=for-the-badge&logo=firebase">
+      <a href="https://firebase.google.com">
+         <img alt="Firebase Badge" src="https://img.shields.io/badge/firebase-orange?style=for-the-badge&logo=firebase">
       </a>
    </div>
 </div>
@@ -50,4 +46,4 @@ It contains gamificaton features as well as task tracker to ensure you don't mis
 ## Documentation
 ---
 
-A documentation of this project can be view [here](https://docs.google.com/document/d/1pT2PsQB04get2XAIjOpvCnX9AaCnHMvd/edit?usp=sharing&ouid=110498249100755714009&rtpof=true&sd=true).
+A documentation of this project can be viewed [here](https://docs.google.com/document/d/1pT2PsQB04get2XAIjOpvCnX9AaCnHMvd/edit?usp=sharing&ouid=110498249100755714009&rtpof=true&sd=true).
