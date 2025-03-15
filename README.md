@@ -14,9 +14,11 @@
    <img src = "assets\images\App-icon\app logo.png" width="450" height="450">
 </div>
 
-Distraction dismantlers is a use friendly modile application which aims to help users who has difficulties on focusing on their daily tasks.
 
-It contains gamificaton features as well as task tracker to ensure you don't miss out on anything important. As well as a social media platform to seek others for help.
+Distraction Dismantlers is a user-friendly Android app designed to help users focus on daily tasks. 
+
+It combines gamification, task tracking, and a social media platform for support.
+
 
 ## Built With
 ---
